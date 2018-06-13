@@ -30,6 +30,7 @@
 bazel-*
 test-project-host-*
 dist/
+/static/
 
 # IDEs
 .idea/
