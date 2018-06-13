@@ -13,6 +13,10 @@ buildscript {
 	}
 }
 
+
+
+
+
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
@@ -22,6 +26,9 @@ apply plugin: 'io.spring.dependency-management'
 group = 'com.health'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+
+
 compileKotlin {
 	kotlinOptions {
 		freeCompilerArgs = ["-Xjsr305=strict"]
@@ -38,6 +45,45 @@ compileTestKotlin {
 repositories {
 	mavenCentral()
 }
+
+task buildUi {
+	   doLast {
+		  exec {
+			  workingDir 'src/main/ui'
+			  commandLine 'ng', 'build'
+		  }
+	  }
+}
+
+jar {
+	baseName = 'health-service'
+	version = '0.1.0'
+//	  manifest {
+//		  attributes 'Main-Class' : 'com.health.healthtel.HealthtelApplication'
+//	  }
+}
+
+
+task copyUi(type: Copy) {
+	from 'src/main/ui/dist/ui/'
+	into 'src/main/resources/static'
+}
+
+task cleanUi(type: Delete){
+	delete fileTree('src/main/resources/static/'){
+		include('*')
+	}
+}
+
+
+
+build.dependsOn(buildUi)
+build.dependsOn(copyUi)
+build.dependsOn(cleanUi)
+
+copyUi.mustRunAfter(buildUi)
+buildUi.mustRunAfter(cleanUi)
+build.mustRunAfter(copyUi)
 
 
 dependencies {
