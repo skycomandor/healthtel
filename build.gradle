@@ -22,6 +22,7 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "kotlin-jpa"
 
 group = 'com.health'
 version = '0.0.1-SNAPSHOT'
@@ -77,6 +78,7 @@ task cleanUi(type: Delete){
 
 
 
+
 build.dependsOn(buildUi)
 build.dependsOn(copyUi)
 build.dependsOn(cleanUi)
@@ -87,7 +89,7 @@ build.mustRunAfter(copyUi)
 
 
 dependencies {
-//	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-jersey')
 //	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
@@ -95,7 +97,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
 	runtime('org.springframework.boot:spring-boot-devtools')
-//	runtime('mysql:mysql-connector-java')
+	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 //	testCompile('org.springframework.security:spring-security-test')
 }

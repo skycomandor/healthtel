@@ -1,13 +1,15 @@
 package com.health.healthtel.rest
 
+import com.health.healthtel.entities.Employees
+import com.health.healthtel.repository.EmployeeRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class UserRest {
+class UserRest(private val employeeRepository: EmployeeRepository) {
 
-    @GetMapping("user")
-    fun getUser(): User = User("Hello")
+    @GetMapping("employee")
+    fun getAllEmploees(): List<Employees> = employeeRepository.findAll()
 
 }
 
