@@ -12,5 +12,3 @@ class UserRest(private val employeeRepository: EmployeeRepository) {
     fun getAllEmploees(): List<Employees> = employeeRepository.findAll()
 
 }
-
-data class User(val name: String)
