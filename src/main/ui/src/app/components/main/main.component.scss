@@ -1,0 +1,10 @@
+@import "../../style/variables";
+
+.content {
+  margin-top: 7%;
+  min-height: 450px;
+  padding: 30px 30px;
+  background-color: #fafcff;
+  border-radius: 5px;
+  border: 1px solid $border-window;
+}

@@ -1,0 +1,70 @@
+<div class="content col-12">
+  <div class="employees-list" *ngIf="listState">
+    <h3 class="col-12">Сотрудники TalMedical</h3>
+    <div class="table col-10">
+      <div class="table-head">
+        <div class="table-cell col-3"><p>Ф.И.О</p></div>
+        <div class="table-cell col-2"><p>Должность</p></div>
+        <div class="table-cell col-2"><p>Логин</p></div>
+        <div class="table-cell col-2"><p>Пароль</p></div>
+        <div class="table-cell col-3"><p>Телефон</p></div>
+      </div>
+      <div class="table-row" *ngFor="let employee of employees">
+        <div class="table-cell col-3 include-hover">
+          <p>{{ employee.lastname }} {{ employee.name }} {{employee.patronymic}}</p>
+          <div class="on-hover">
+            <!--<i class="fa fa-user-edit"></i>-->
+            <i class="fa fa-trash"></i>
+          </div>
+        </div>
+        <div class="table-cell col-2"><p>{{ employee.role }}</p></div>
+        <div class="table-cell col-2"><p>{{ employee.login }}</p></div>
+        <div class="table-cell col-2"><p>{{ employee.password }}</p></div>
+        <div class="table-cell col-3"><p>+380 {{ employee.phone }}</p></div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-3 offset-8 button-area">
+      <button class="btn btn-success green" (click)="addState = true; listState = false">Добавить</button>
+      <button class="btn btn-primary blue" (click)="returnToStart()">Меню</button>
+    </div>
+  </div>
+
+  <app-employee-add-form *ngIf="addState" (listState)="listState = $event; addState = !addState"></app-employee-add-form>
+
+
+  <!--<div class="form-area col-6" *ngIf="!state">
+    <form>
+      <label class="col-3" for="lastname">Фамилия:</label>
+      <input class="col-7 offset-1" id="lastname" type="text" placeholder="Фамилия" name="lastname" [(ngModel)]="employee.lastname">
+
+      <label class="col-3" for="name">Имя:</label>
+      <input class="col-7 offset-1" id="name" type="text" placeholder="Имя" name="name" [(ngModel)]="employee.name">
+
+      <label class="col-3" for="patronymic">Отчество:</label>
+      <input class="col-7 offset-1" id="patronymic" type="text" placeholder="Отчество" name="patronymic" [(ngModel)]="employee.patronymic">
+
+      <label class="col-3 phone" for="phone">Телефон:</label>
+      <div class="phone col-7 offset-1">
+        <input class="" id="phone" type="text" name="phone" [(ngModel)]="employee.phone" specialCharacters="' '" mask="00 000 00 00">
+      </div>
+
+      <label class="col-3" for="role">Должность:</label>
+      <div class="select col-7 offset-1" id="role">
+        <select class="col-8" name="role" name="role" [(ngModel)]="employee.role">
+          <option value="1">Админ</option>
+          <option value="2">Доктор</option>
+        </select>
+      </div>
+
+      <label class="col-3" for="login">Логин:</label>
+      <input class="col-7 offset-1" id="login" type="text" placeholder="Логин" name="login" [(ngModel)]="employee.login">
+
+      <label class="col-3" for="pass">Пароль:</label>
+      <input class="col-7 offset-1" id="pass" type="password" placeholder="Пароль" name="password" [(ngModel)]="employee.password">
+    </form>
+    <div class="button-area">
+      <button class="btn btn-success green" (click)="addNew()">Ok</button>
+      <button class="btn btn-primary blue" (click)="state = true; error = false">Назад</button>
+    </div>
+  </div>-->
+</div>

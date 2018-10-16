@@ -66,15 +66,18 @@ jar {
 
 
 task copyUi(type: Copy) {
-	from 'src/main/ui/dist/ui/'
+	from 'src/main/ui/dist/angular-clinic/'
 	into 'src/main/resources/static'
 }
 
 task cleanUi(type: Delete){
-	delete fileTree('src/main/resources/static/'){
-		include('*')
+	def dirName  = 'src/main/resources/static/'
+	file( dirName ).list().each{
+		f ->
+			delete "${dirName}/${f}"
 	}
 }
+
 
 
 

@@ -1,0 +1,85 @@
+<div class="col-sm-12 col-md-6 col-lg-6 form-area">
+  <form #clientForm="ngForm" (ngSubmit)="addClient(clientForm)">
+    <div class="form-group">
+      <label class="col-4" for="lastname">Фамилия:</label>
+      <input type="text" class="form-control col-7" id="lastname"
+             required [pattern]="myPat"
+             [(ngModel)]="client.lastname" name="lastname" #lastname="ngModel">
+
+      <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="error-message">
+        <div *ngIf="lastname.errors.required">Заполните это поле</div>
+      </div>
+      <div class="hidden" [class.error-message]="errorMessage" *ngIf="!lastname.dirty">
+        <div>Заполните это поле</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-4" for="name">Имя:</label>
+      <input type="text" class="form-control col-7" id="name"
+             required
+             [(ngModel)]="client.name" name="name" #name="ngModel">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+      <div *ngIf="name.errors.required">Заполните это поле</div>
+    </div>
+      <div class="hidden" [class.error-message]="errorMessage" *ngIf="!name.dirty">
+        <div>Заполните это поле</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-4" for="patronymic">Отчество:</label>
+      <input type="text" class="form-control col-7" id="patronymic"
+             required
+             [(ngModel)]="client.patronymic" name="patronymic" #patronymic="ngModel">
+      <div *ngIf="patronymic.invalid && (patronymic.dirty || patronymic.touched)" class="error-message">
+        <div *ngIf="patronymic.errors.required">Заполните это поле</div>
+      </div>
+      <div class="hidden" [class.error-message]="errorMessage" *ngIf="!patronymic.dirty">
+        <div>Заполните это поле</div>
+      </div>
+    </div>
+
+    <div class="form-group phone">
+      <label class="col-4" for="phone">Телефон:</label>
+      <input type="text" class="form-control col-7" id="phone"
+             required minlength="9" maxlength="9"
+             [(ngModel)]="client.phone" name="phone" #phone="ngModel">
+      <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
+        <div *ngIf="phone.errors.required">Заполните это поле</div>
+
+        <div *ngIf="phone.errors.minlength">Телефон должен состоять из 9 знаков</div>
+      </div>
+      <div class="hidden" [class.error-message]="errorMessage" *ngIf="!phone.dirty">
+        <div>Заполните это поле</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-4" for="doctor">Лечащий врач:</label>
+      <select class="form-control col-7" id="doctor" [(ngModel)]="client.doctor" name="doctor">
+        <option *ngFor="let employee of employees" [value]="employee.lastname">
+          {{employee.lastname}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="col-4" for="discount">Дисконт:</label>
+      <input type="text" class="form-control col-7" id="discount"
+             [(ngModel)]="client.discount" name="discount">
+    </div>
+
+    <div class="form-group textarea">
+      <label class="col-4" for="comment">Комментарий:</label>
+      <textarea rows="6" type="text" class="form-control col-7" id="comment"
+                [(ngModel)]="client.comment" name="comment"></textarea>
+    </div>
+
+    <div class="button-area">
+      <button type="submit" class="btn btn-success green">Ок</button>
+      <button type="button" class="btn btn-primary blue" (click)="changeBoolean(); clientForm.reset();">Назад</button>
+    </div>
+
+  </form>
+</div>

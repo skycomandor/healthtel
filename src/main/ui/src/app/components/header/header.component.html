@@ -1,0 +1,7 @@
+<div class="container">
+  <h1 class="logo col-9"><i class="fa fa-ambulance"></i> TalMedical</h1>
+  <button
+    class="btn btn-primary col-sm-2 col-md-1 log-out"
+    (click)="returnToLogin()"
+    *ngIf="location.indexOf('main') > -1">Выйти <i class="fa fa-sign-out"></i></button>
+</div>

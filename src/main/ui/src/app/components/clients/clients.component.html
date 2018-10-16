@@ -1,0 +1,271 @@
+<div class="content col-12">
+  <div class="employees-list" *ngIf="listState">
+    <h3 class="col-12">Пациенты TalMedical</h3>
+
+    <div class="table col-10">
+      <div class="table-head">
+        <div class="table-cell col-3"><p>Ф.И.О</p></div>
+        <div class="table-cell col-3"><p>Телефон</p></div>
+        <div class="table-cell col-3"><p>Лечащий врач</p></div>
+        <div class="table-cell col-3"><p>Дисконт</p></div>
+      </div>
+      <div class="table-row" *ngFor="let client of clients">
+        <div class="table-cell col-3 include-hover">
+          <p>{{ client.lastname }} {{ client.name }} {{client.patronymic}}</p>
+          <div class="on-hover">
+            <i class="fa fa-user-edit" (click)="select(client); editState=true; listState=false;"></i>
+            <i class="fa fa-trash"></i>
+          </div>
+        </div>
+        <div class="table-cell col-3 phone" (click)="createCommentsArray(client)">
+          <p>+380 {{ client.phone }}</p>
+          <span *ngIf="client.comment"></span>
+          <p class="col-10 show-comment" *ngIf="client.comment && comments.includes(client)">{{ client.comment }}</p>
+        </div>
+        <div class="table-cell col-3"><p>{{ client.doctor }}</p></div>
+        <div class="table-cell col-3"><p>{{ client.discount }}</p></div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-3 offset-8 button-area">
+      <button class="btn btn-success green" (click)="listState = false; addState = true;">Добавить</button>
+      <button class="btn btn-primary" (click)="returnToStart()">Меню</button>
+    </div>
+  </div>
+
+  <app-client-edit-form *ngIf="editState" [client]="selectedClient" (listState)="listState = $event; editState = !editState"></app-client-edit-form>
+  <app-client-add-form *ngIf="addState" (listState)="listState = $event; addState = !addState"></app-client-add-form>
+  <!--<div class="add-new col-6" *ngIf="!state">
+    <form>
+      <label class="col-4" for="lastname">Фамилия:</label>
+      <input class="col-7 offset-1" id="lastname" type="text" placeholder="Фамилия" name="lastname" [(ngModel)]="client.lastname">
+
+      <label class="col-4" for="name">Имя:</label>
+      <input class="col-7 offset-1" id="name" type="text" placeholder="Имя" name="name" [(ngModel)]="client.name">
+
+      <label class="col-4" for="patronymic">Отчество:</label>
+      <input class="col-7 offset-1" id="patronymic" type="text" placeholder="Отчество" name="patronymic" [(ngModel)]="client.patronymic">
+
+      <label class="col-4" for="phone">Телефон:</label>
+      <div class="phone col-7 offset-1">
+        <input class="" id="phone" type="text" name="phone" [(ngModel)]="client.phone" specialCharacters="' '" mask="00 000 00 00">
+        <span></span>
+      </div>
+
+      <label class="col-4" for="doctor">Лечащий врач:</label>
+      <div class="select col-7 offset-1" id="doctor">
+        <select class="col-8" name="doctor" name="doctor" [(ngModel)]="client.doctor">
+          <option *ngFor="let employee of employees" [value]="employee.lastname">{{ employee.lastname }} {{ employee.name }} {{employee.patronymic}}</option>
+        </select>
+      </div>
+
+      <label class="col-4" for="discount">Дисконт:</label>
+      <input class="col-7 offset-1" id="discount" type="number" placeholder="Дисконт" name="discount" [(ngModel)]="client.discount">
+
+      <label class="col-4" for="comment">Комментарий:</label>
+      <textarea class="col-7 offset-1" id="comment" type="text" cols="5" placeholder="Комментарий" name="comment" [(ngModel)]="client.comment"></textarea>
+    </form>
+    <div class="button-area-item">
+      <span class="error" *ngIf="error">{{ message }}</span>
+      <button class="btn btn-success add-new-employee" *ngIf="!editState" (click)="addNew()">Ok</button>
+      <button class="btn btn-success add-new-employee" *ngIf="editState" (click)="editClient()">Редактировать</button>
+      <button class="btn btn-primary" (click)="state = true; editState = false;">Назад</button>
+    </div>
+  </div>-->
+
+<!-- Form for adding -->
+
+  <!--<div class="col-sm-12 col-md-6 col-lg-6 add-new" *ngIf="!state">
+    <form #clientForm="ngForm" (ngSubmit)="addNew(clientForm)">
+      <div class="form-group">
+        <label class="col-4" for="lastname">Фамилия:</label>
+        <input type="text" class="form-control col-7" id="lastname"
+               required [pattern]="myPat"
+               [(ngModel)]="client.lastname" name="lastname" #lastname="ngModel">
+        <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
+             class="error-message">
+
+          <div *ngIf="lastname.errors.required">
+            Name is required.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="name">Имя:</label>
+        <input type="text" class="form-control col-7" id="name"
+               required minlength="4"
+               [(ngModel)]="client.name" name="name" #name="ngModel">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+             class="error-message">
+
+          <div *ngIf="name.errors.required">
+            Name is required.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="patronymic">Отчество:</label>
+        <input type="text" class="form-control col-7" id="patronymic"
+               required
+               [(ngModel)]="client.patronymic" name="patronymic" #patronymic="ngModel">
+        <div *ngIf="patronymic.invalid && (patronymic.dirty || patronymic.touched)"
+             class="error-message">
+
+          <div *ngIf="patronymic.errors.required">
+            Name is required.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group phone">
+        <label class="col-4" for="phone">Телефон:</label>
+        <input type="text" class="form-control col-7" id="phone"
+               required minlength="9" maxlength="9"
+               [(ngModel)]="client.phone" name="phone" #phone="ngModel">
+        <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+             class="error-message">
+
+          <div *ngIf="phone.errors.required">
+            Name is required.
+          </div>
+
+          <div *ngIf="phone.errors.minlength">
+            Name must be at least 9 characters long.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="doctor">Лечащий врач:</label>
+        <select class="form-control col-7" id="doctor" [(ngModel)]="client.doctor" name="doctor">
+          <option *ngFor="let employee of employees" [value]="employee.lastname">
+            {{employee.lastname}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="discount">Дисконт:</label>
+        <input type="text" class="form-control col-7" id="discount"
+               [(ngModel)]="client.discount" name="discount">
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="comment">Комментарий:</label>
+        <input type="text" class="form-control col-7" id="comment"
+               [(ngModel)]="client.comment" name="comment">
+      </div>
+
+      <div class="button-area">
+        <button type="submit" class="btn btn-success add-new-employee" [disabled]="!clientForm.form.valid">Submit</button>
+        <button class="btn btn-success add-new-employee" *ngIf="editState" (click)="editClient()">Редактировать</button>
+        <button class="btn btn-primary" (click)="state = true; editState = false; clientForm.reset();">Назад</button>
+      </div>
+
+    </form>
+  </div>-->
+
+  <!-- Form for editing -->
+
+  <!--<div class="col-sm-12 col-md-6 col-lg-6 add-new" *ngIf="!state">
+    <form #clientForm="ngForm" (ngSubmit)="addNew(clientForm)">
+      <div class="form-group">
+        <label class="col-4" for="lastname">Фамилия:</label>
+        <input type="text" class="form-control col-7" id="lastname"
+               required [pattern]="myPat"
+               [(ngModel)]="client.lastname" name="lastname" #lastname="ngModel">
+        <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
+             class="error-message">
+
+          <div *ngIf="lastname.errors.required">
+            Name is required.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="name">Имя:</label>
+        <input type="text" class="form-control col-7" id="name"
+               required minlength="4"
+               [(ngModel)]="client.name" name="name" #name="ngModel">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+             class="error-message">
+
+          <div *ngIf="name.errors.required">
+            Name is required.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="patronymic">Отчество:</label>
+        <input type="text" class="form-control col-7" id="patronymic"
+               required
+               [(ngModel)]="client.patronymic" name="patronymic" #patronymic="ngModel">
+        <div *ngIf="patronymic.invalid && (patronymic.dirty || patronymic.touched)"
+             class="error-message">
+
+          <div *ngIf="patronymic.errors.required">
+            Name is required.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group phone">
+        <label class="col-4" for="phone">Телефон:</label>
+        <input type="text" class="form-control col-7" id="phone"
+               required minlength="9" maxlength="9"
+               [(ngModel)]="client.phone" name="phone" #phone="ngModel">
+        <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+             class="error-message">
+
+          <div *ngIf="phone.errors.required">
+            Name is required.
+          </div>
+
+          <div *ngIf="phone.errors.minlength">
+            Name must be at least 9 characters long.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="doctor">Лечащий врач:</label>
+        <select class="form-control col-7" id="doctor" [(ngModel)]="client.doctor" name="doctor">
+          <option *ngFor="let employee of employees" [value]="employee.lastname">
+            {{employee.lastname}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="discount">Дисконт:</label>
+        <input type="text" class="form-control col-7" id="discount"
+               [(ngModel)]="client.discount" name="discount">
+      </div>
+
+      <div class="form-group">
+        <label class="col-4" for="comment">Комментарий:</label>
+        <input type="text" class="form-control col-7" id="comment"
+               [(ngModel)]="client.comment" name="comment">
+      </div>
+
+      <div class="button-area">
+        <button type="submit" class="btn btn-success add-new-employee" [disabled]="!clientForm.form.valid">Submit</button>
+        <button class="btn btn-success add-new-employee" *ngIf="editState" (click)="editClient()">Редактировать</button>
+        <button class="btn btn-primary" (click)="state = true; editState = false; clientForm.reset();">Назад</button>
+      </div>
+
+    </form>
+  </div>-->
+
+</div>

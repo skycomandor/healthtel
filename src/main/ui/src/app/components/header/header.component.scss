@@ -1,0 +1,27 @@
+@import "../../style/variables";
+
+.container {
+  padding: 10px;
+  background-color: $bg-window-content;
+  border: 1px solid $border-window;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+
+  h1 {
+
+    i {
+      color: $input-shadow;
+    }
+  }
+
+  button.log-out {
+    height: 80%;
+    align-self: center;
+    margin-right: 3%;
+
+    .fa {
+      color: white;
+    }
+  }
+}
