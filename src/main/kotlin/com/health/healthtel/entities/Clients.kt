@@ -7,8 +7,10 @@ data class Clients(
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
         val id: Long = 0,
         val firstname: String = "",
-        val secondname: String = "",
-        val fathername: String = "",
+        @Column(name = "secondname")
+        val lastname: String = "",
+        @Column(name = "fathername")
+        val patronymic: String = "",
         val gender: Char = Character.MIN_VALUE,
         val email: String = "",
         val discount: String = "",
