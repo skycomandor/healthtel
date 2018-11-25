@@ -1,16 +1,16 @@
 buildscript {
-	ext {
-		kotlinVersion = '1.2.41'
-		springBootVersion = '2.0.2.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-	}
+    ext {
+        kotlinVersion = '1.2.41'
+        springBootVersion = '2.0.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+    }
 }
 
 
@@ -31,34 +31,34 @@ sourceCompatibility = 1.8
 
 
 compileKotlin {
-	kotlinOptions {
-		freeCompilerArgs = ["-Xjsr305=strict"]
-		jvmTarget = "1.8"
-	}
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
 }
 compileTestKotlin {
-	kotlinOptions {
-		freeCompilerArgs = ["-Xjsr305=strict"]
-		jvmTarget = "1.8"
-	}
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 task buildUi {
-	   doLast {
-		  exec {
-			  workingDir 'src/main/ui'
-			  commandLine 'ng', 'build'
-		  }
-	  }
+    doLast {
+        exec {
+            workingDir 'src/main/ui'
+            commandLine 'ng', 'build'
+        }
+    }
 }
 
 jar {
-	baseName = 'health-service'
-	version = '0.1.0'
+    baseName = 'health-service'
+    version = '0.1.0'
 //	  manifest {
 //		  attributes 'Main-Class' : 'com.health.healthtel.HealthtelApplication'
 //	  }
@@ -66,16 +66,16 @@ jar {
 
 
 task copyUi(type: Copy) {
-	from 'src/main/ui/dist/angular-clinic/'
-	into 'src/main/resources/static'
+    from 'src/main/ui/dist/angular-clinic/'
+    into 'src/main/resources/static'
 }
 
-task cleanUi(type: Delete){
-	def dirName  = 'src/main/resources/static/'
-	file( dirName ).list().each{
-		f ->
-			delete "${dirName}/${f}"
-	}
+task cleanUi(type: Delete) {
+    def dirName = 'src/main/resources/static/'
+    file(dirName).list().each {
+        f ->
+            delete "${dirName}/${f}"
+    }
 }
 
 
@@ -92,15 +92,15 @@ build.mustRunAfter(copyUi)
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-jersey')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-jersey')
 //	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('com.fasterxml.jackson.module:jackson-module-kotlin')
-	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	compile("org.jetbrains.kotlin:kotlin-reflect")
-	runtime('org.springframework.boot:spring-boot-devtools')
-	runtime('mysql:mysql-connector-java')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compile("org.jetbrains.kotlin:kotlin-reflect")
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('mysql:mysql-connector-java')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 //	testCompile('org.springframework.security:spring-security-test')
 }
