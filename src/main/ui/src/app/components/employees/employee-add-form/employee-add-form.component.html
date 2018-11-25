@@ -3,7 +3,7 @@
     <div class="form-group">
       <label class="col-4" for="lastname">Фамилия:</label>
       <input type="text" class="form-control col-7" id="lastname"
-             required [pattern]="myPat"
+             required
              [(ngModel)]="employee.lastname" name="lastname" #lastname="ngModel">
 
       <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="error-message">
@@ -83,7 +83,7 @@
 
     <div class="button-area">
       <button type="submit" class="btn btn-success green">Ок</button>
-      <button type="button" class="btn btn-primary blue" (click)="changeBoolean(); employeeForm.reset();">Назад</button>
+      <button type="button" class="btn btn-primary blue" (click)="close(); employeeForm.reset();">Назад</button>
     </div>
 
   </form>

@@ -13,6 +13,7 @@ import { Employee } from '../../../models/employee';
 })
 export class ClientAddFormComponent implements OnInit {
   @Output() listState = new EventEmitter<boolean>();
+  @Output() closeState = new EventEmitter<boolean>();
   client: Client;
   employees: Employee[];
   errorMessage: boolean;
@@ -28,8 +29,12 @@ export class ClientAddFormComponent implements OnInit {
       );
   }
 
-  private changeBoolean() {
-    this.listState.emit(true);
+  changeBoolean(client) {
+    this.listState.emit(client);
+  }
+
+  close() {
+    this.closeState.emit(true);
   }
 
   addClient(form) {
@@ -43,20 +48,19 @@ export class ClientAddFormComponent implements OnInit {
     newClient.name = value.name;
     newClient.patronymic = value.patronymic;
     newClient.phone = value.phone;
-   /* newClient.comment = value.comment;
-    newClient.discount = value.discount;
-    newClient.doctor = value.doctor;*/
+    newClient.comment = value.comment || null;
+    newClient.discount = value.discount || null;
+    newClient.doctor = value.doctor || null;
 
-    // this.changeBoolean(); // TODO: remove after DB connecting
-    this.clientService.addClient(newClient)
+    this.changeBoolean(newClient); // TODO: remove after DB connecting
+    /*this.clientService.addClient(newClient)
       .subscribe(
         (res) => {
 
           this.changeBoolean();
         },
-        // (error) => this.router.navigate(['/error'])
-        (error) => console.log(error)
-      );
+        (error) => this.router.navigate(['/error'])
+      );*/
   }
 
 }

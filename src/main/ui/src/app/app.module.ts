@@ -1,12 +1,13 @@
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './router/app-routing/app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaskModule } from 'ngx-mask';
 
 import { HttpClientModule } from '@angular/common/http';
-import {HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
+import { SearchPipe } from './pipes/search.pipe';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -22,6 +23,7 @@ import { ClientService } from './services/client-service/client.service';
 import { ClientAddFormComponent } from './components/clients/client-add-form/client-add-form.component';
 import { ClientEditFormComponent } from './components/clients/client-edit-form/client-edit-form.component';
 import { EmployeeAddFormComponent } from './components/employees/employee-add-form/employee-add-form.component';
+import { WorkComponent } from './components/work/work.component'; // TODO: temporary page, delete after content creation
 
 @NgModule({
   declarations: [
@@ -36,10 +38,13 @@ import { EmployeeAddFormComponent } from './components/employees/employee-add-fo
     ClientsComponent,
     ClientAddFormComponent,
     ClientEditFormComponent,
-    EmployeeAddFormComponent
+    EmployeeAddFormComponent,
+    SearchPipe,
+    WorkComponent // TODO: temporary page, delete after content creation
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

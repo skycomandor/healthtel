@@ -13,12 +13,15 @@ export class EmployeesComponent implements OnInit {
   employees: Employee[];
   listState: boolean;
   addState: boolean;
+  modalWindow: boolean;
+  indexDeleteEmployee: number;
 
   constructor(private router: Router, private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.listState = true;
     this.addState = false;
+    this.modalWindow = false;
     this.employee = new Employee;
     this.employee.role = 2;
     this.employeeService.getEmployees()
@@ -32,32 +35,28 @@ export class EmployeesComponent implements OnInit {
     this.router.navigate(['/main/start']);
   }
 
-  /*addNew() {
-    if (!this.employee.lastname || !this.employee.name || !this.employee.login || !this.employee.password) {
-      this.error = true;
-      this.message = 'Fill in all fields, please';
-    } else {
-      this.error = false;
-      this.employeeService.addEmployee(this.employee)
-        .subscribe(
-          (res) => this.state = !this.state,
-          (error) => this.router.navigate(['/error'])
-        );
-    }
-  }*/
+  addEmployee(newEmployee) {
+    this.employees.push(newEmployee);
 
-  /*submit(form): void {
-    if (form.invalid) {
+    this.employeeService.refreshEmployee(this.employees)
+      .subscribe(
+        (res) => {},
+        (error) => this.router.navigate(['/error'])
+      );
+  }
 
-      return;
-    }
-    this.submitted = true;
-    const serviceResponse = this.userService.createUser(this.user);
-    serviceResponse.subscribe(
-      () => this.router.navigate([{ outlets: { popup: 'summary' }}]),
-      () => console.log('Something wrong: the database error')
-    );
-  }*/
+  openDeleteWindow(i) {
+    this.modalWindow = true;
+    this.indexDeleteEmployee = i;
+  }
 
+  deleteEmployee() {
+    this.employees.splice(this.indexDeleteEmployee, 1);
+    this.employeeService.refreshEmployee(this.employees)
+      .subscribe(
+        (res) => {},
+        (error) => this.router.navigate(['/error'])
+      );
+  }
 
 }

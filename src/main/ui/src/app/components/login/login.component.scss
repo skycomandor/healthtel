@@ -7,39 +7,44 @@ div.container {
   background-color: $bg-window;
   border: 1px solid $border-window;
   border-radius: 5px;
-}
 
-label + div {
-  display: inline-block;
-}
+  .form-horizontal {
 
-.fa {
-  position: absolute;
-  color: $input-shadow;
-  top: 25%;
-  left: 25px;
-}
+    .form-group {
 
-input {
-  padding-left: 30px;
-  border-radius: 5px;
-  border: 1px solid $border-window;
-  outline: none;
-  box-shadow: none;
+      div {
+        display: inline-block;
 
-  @include placeholder {
-    color: #c4d9ff;
-    font-size: 14px;
-    font-style: italic;
-    opacity: 1;
-    transition: opacity 200ms;
-  }
+        .fa {
+          position: absolute;
+          color: $input-shadow;
+          top: 25%;
+          left: 25px;
+        }
 
-  &:focus {
-    box-shadow: 0 0 5px $input-shadow;
-    @include placeholder {
-      opacity: 0;
+        input {
+          padding-left: 30px;
+          border-radius: 5px;
+          border: 1px solid $border-window;
+          outline: none;
+          box-shadow: none;
+
+          @include placeholder {
+            color: #c4d9ff;
+            font-size: 14px;
+            font-style: italic;
+            opacity: 1;
+            transition: opacity 200ms;
+          }
+
+          &:focus {
+            box-shadow: 0 0 5px $input-shadow;
+            @include placeholder {
+              opacity: 0;
+            }
+          }
+        }
+      }
     }
   }
 }
-

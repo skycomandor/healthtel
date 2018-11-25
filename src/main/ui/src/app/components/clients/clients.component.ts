@@ -15,19 +15,23 @@ export class ClientsComponent implements OnInit {
   employees: Employee[];
   client: Client;
   clients: Client[];
-  listState: boolean;
-  editState: boolean;
-  addState: boolean;
+  public mode: string;
+  modalWindow: boolean;
+  searchState: boolean;
   comments = [];
   selectedClient: Client;
+  indexEditClient: number;
+  indexDeleteClient: number;
+
+  searchName = '';
 
   constructor(private router: Router, private clientService: ClientService, private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.client = new Client;
-    this.listState = true;
-    this.editState = false;
-    this.addState = false;
+    this.mode = '';
+    this.modalWindow = false;
+    this.searchState = false;
     this.employeeService.getEmployees()
       .subscribe(
         (res: Employee[]) => this.employees = res,
@@ -47,8 +51,10 @@ export class ClientsComponent implements OnInit {
     this.router.navigate(['/main/start']);
   }
 
-  select(client) {
+  select(client, index) {
+    this.mode = 'edit';
     this.selectedClient = client;
+    this.indexEditClient = index;
   }
 
   createCommentsArray(client): void {
@@ -58,5 +64,38 @@ export class ClientsComponent implements OnInit {
       this.comments = [];
       this.comments.push(client);
     }
+  }
+
+  addClient(newClient) {
+    this.clients.push(newClient);
+      this.clientService.refreshClient(this.clients)
+        .subscribe(
+          (res) => {},
+          (error) => this.router.navigate(['/error'])
+        );
+  }
+
+  openDeleteWindow(i) {
+    this.modalWindow = true;
+    this.indexDeleteClient = i;
+  }
+
+  deleteClient() {
+    this.clients.splice(this.indexDeleteClient, 1);
+    this.clientService.refreshClient(this.clients)
+      .subscribe(
+        (res) => {},
+        (error) => this.router.navigate(['/error'])
+      );
+  }
+
+  editClient(client) {
+    this.clients.splice(this.indexEditClient, 1, client);
+    console.log(this.clients);
+    this.clientService.refreshClient(this.clients)
+      .subscribe(
+        (res) => {},
+        (error) => this.router.navigate(['/error'])
+      );
   }
 }

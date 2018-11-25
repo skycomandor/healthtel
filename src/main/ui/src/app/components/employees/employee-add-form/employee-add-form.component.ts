@@ -10,6 +10,7 @@ import { Employee } from '../../../models/employee';
 })
 export class EmployeeAddFormComponent implements OnInit {
   @Output() listState = new EventEmitter<boolean>();
+  @Output() closeState = new EventEmitter<boolean>();
 
   employee: Employee;
   errorMessage: boolean;
@@ -20,8 +21,12 @@ export class EmployeeAddFormComponent implements OnInit {
     this.employee = new Employee;
   }
 
-  changeBoolean() {
-    this.listState.emit(true);
+  changeBoolean(newEmployee) {
+    this.listState.emit(newEmployee);
+  }
+
+  close() {
+    this.closeState.emit(true);
   }
 
   addEmployee(form) {
@@ -33,13 +38,13 @@ export class EmployeeAddFormComponent implements OnInit {
     const newEmployee = new Employee;
     newEmployee.lastname = value.lastname;
     newEmployee.name = value.name;
-    newEmployee.patronymic = value.patronymic;
-    newEmployee.phone = value.phone;
-    newEmployee.login = value.comment;
-    newEmployee.password = value.discount;
-    newEmployee.role = value.doctor;
+    newEmployee.patronymic = value.patronymic || null;
+    newEmployee.phone = value.phone || null;
+    newEmployee.login = value.login;
+    newEmployee.password = value.password;
+    newEmployee.role = value.role;
 
-    this.changeBoolean(); // TODO: remove after DB connecting
+    this.changeBoolean(newEmployee); // TODO: remove after DB connecting
     /*this.employeeService.addEmployee(newEmployee)
       .subscribe(
         (res) => this.changeBoolean(),

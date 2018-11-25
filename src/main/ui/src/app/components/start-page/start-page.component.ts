@@ -21,4 +21,8 @@ export class StartPageComponent implements OnInit {
     this.router.navigate(['main/clients']);
   }
 
+  moveToWorkPage() {
+    this.router.navigate(['main/work']);
+  }
+
 }

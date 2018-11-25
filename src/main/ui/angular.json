@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-clinic": {
+    "clinic_project": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-clinic",
+            "outputPath": "dist/clinic_project",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -54,18 +54,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-clinic:build"
+            "browserTarget": "clinic_project:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-clinic:build:production"
+              "browserTarget": "clinic_project:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-clinic:build"
+            "browserTarget": "clinic_project:build"
           }
         },
         "test": {
@@ -99,7 +99,7 @@
         }
       }
     },
-    "angular-clinic-e2e": {
+    "clinic_project-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -107,11 +107,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-clinic:serve"
+            "devServerTarget": "clinic_project:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-clinic:serve:production"
+              "devServerTarget": "clinic_project:serve:production"
             }
           }
         },
@@ -127,5 +127,5 @@
       }
     }
   },
-  "defaultProject": "angular-clinic"
+  "defaultProject": "clinic_project"
 }

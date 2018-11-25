@@ -7,11 +7,13 @@ import { ErrorComponent } from '../../components/error/error.component';
 import { EmployeesComponent } from '../../components/employees/employees.component';
 import { StartPageComponent } from '../../components/start-page/start-page.component';
 import { ClientsComponent } from '../../components/clients/clients.component';
+import { WorkComponent } from '../../components/work/work.component'; // TODO: temporary page, delete after content creation
 
 const contentRoutes: Routes = [
   { path: 'start', component: StartPageComponent },
   { path: 'employees', component: EmployeesComponent },
-  { path: 'clients', component: ClientsComponent }
+  { path: 'clients', component: ClientsComponent },
+  { path: 'work', component: WorkComponent }  // TODO: temporary page, delete after content creation
 ];
 
 
