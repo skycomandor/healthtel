@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.ws.rs.QueryParam
 
 @RestController
 class ClientRest(private val clientRepo: ClientRepository) {

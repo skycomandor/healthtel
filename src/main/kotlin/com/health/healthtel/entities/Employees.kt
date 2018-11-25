@@ -4,15 +4,17 @@ import javax.persistence.*
 
 @Entity(name = "employees")
 data class Employees(
-       @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-       val id: Long = 0,
-       val firstname: String = "",
-       val secondname: String = "",
-       val fathername: String? = null,
-       val sex: String = "",
-       val profile: String = "",
-       val login: String = "",
-       @Column(name = "passwordHash", length = 100)
-       val passwordHash: String = "",
-       val priority: Int = 0
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val id: Long? = null,
+        val firstname: String? = null,
+        @Column(name = "secondname")
+        val lastname: String? = null,
+        @Column(name = "fathername")
+        val patronymic: String? = null,
+        val sex: String? = null,
+        val profile: String? = null,
+        val login: String? = null,
+        @Column(name = "passwordHash", length = 100)
+        val passwordHash: String? = null,
+        val priority: Int? = null
 )
