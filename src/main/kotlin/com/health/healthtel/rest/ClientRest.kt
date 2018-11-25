@@ -5,7 +5,10 @@ import com.health.healthtel.entities.Client
 import com.health.healthtel.repository.ClientRepository
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.PageRequest
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.ws.rs.QueryParam
 
 @RestController
 class ClientRest(private val clientRepo: ClientRepository) {
@@ -35,6 +38,26 @@ class ClientRest(private val clientRepo: ClientRepository) {
    @PostMapping("clients")
     fun addClient(@RequestBody client: Client){
         clientRepo.save(client)
+    }
+
+    @DeleteMapping("clients/{id}")
+     fun removeClients(@PathVariable("id") id: Long){
+        clientRepo.deleteById(id)
+    }
+
+    @PatchMapping("/clients")
+     fun updateClients(@RequestBody client: Client): ResponseEntity<Client> {
+        if(client.id != null) {
+           if (clientRepo.findById(client.id).isPresent) {
+               clientRepo.save(client)
+               return ResponseEntity(HttpStatus.OK)
+           } else {
+               return ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+           }
+
+        } else {
+            return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
     }
 
 }
