@@ -1,15 +1,40 @@
 package com.health.healthtel.rest
 
-import com.health.healthtel.entities.Clients
-import com.health.healthtel.entities.Employees
+import com.health.healthtel.dto.ResponseDto
+import com.health.healthtel.entities.Client
 import com.health.healthtel.repository.ClientRepository
+import org.springframework.data.domain.Example
+import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ClientRest(private val clientRepo: ClientRepository){
+class ClientRest(private val clientRepo: ClientRepository) {
 
     @GetMapping("clients")
-    fun getAllEmploees(): List<Clients> = clientRepo.findAll()
+    fun getAllClients(
+            @RequestParam(value = "id", required = false) id: Long?,
+            @RequestParam(value = "firstname", required = false) firstname: String?,
+            @RequestParam(value = "lastname", required = false) lastname: String?,
+            @RequestParam(value = "patronymic", required = false) patronymic: String?,
+            @RequestParam(value = "email", required = false) email: String?,
+            @RequestParam(value = "size", required = false, defaultValue = "10") size: Int,
+            @RequestParam(value = "page", required = false, defaultValue = "0") page: Int
+
+    ): ResponseDto<Client> {
+        val clientExample = Example.of(Client(id = id,
+                firstname = firstname,
+                lastname = lastname,
+                patronymic = patronymic,
+                email = email))
+
+
+        val page = PageRequest.of(page, size)
+        val result = clientRepo.findAll(clientExample, page)
+
+
+        return ResponseDto(result.content, 0)
+    }
 
 }
