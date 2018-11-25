@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'app/style/variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+.btn-primary {
+  background-color: $input-shadow;
+  border-color: $input-shadow;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.btn-success {
+  background-color: #61C180;
+  border-color: #61C180;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}

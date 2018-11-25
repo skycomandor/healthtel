@@ -1,0 +1,47 @@
+@import "../../style/variables";
+
+.content {
+
+  .top-content,
+  .bottom-content {
+    padding: 10px;
+
+    >div {
+      display: inline-block;
+      padding: 10px;
+      background-color: $bg-window;
+      border: 1px solid $border-window;
+      border-radius: 5px;
+
+      div {
+        padding: 10px 25px;
+        background-color: #dbedff;
+        text-align: center;
+
+        i {
+          margin-top: 2%;
+
+          &::before {
+            color: white;
+            font-size: 5em;
+          }
+        }
+      }
+
+      p {
+        margin: 5px auto 0;
+        text-align: center;
+      }
+    }
+
+    >div:hover {
+      box-shadow: 0 0 5px $input-shadow;
+    }
+  }
+
+  .bottom-content {
+    margin-top: 30px;
+  }
+}
+
+@import "start-page-responsive";

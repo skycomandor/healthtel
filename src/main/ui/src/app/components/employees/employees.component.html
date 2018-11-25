@@ -1,0 +1,60 @@
+<div class="content col-12">
+  <div class="employees-list" *ngIf="listState">
+    <h3 class="col-12">Сотрудники TalMedical</h3>
+
+    <div class="table col-10">
+
+      <div class="table-head">
+        <div class="table-cell col-3"><p>Ф.И.О</p></div>
+        <div class="table-cell col-2"><p>Должность</p></div>
+        <div class="table-cell col-2"><p>Логин</p></div>
+        <div class="table-cell col-2"><p>Пароль</p></div>
+        <div class="table-cell col-3"><p>Телефон</p></div>
+      </div>
+
+      <div class="table-row" *ngFor="let employee of employees; let i = index">
+        <div class="table-cell col-3 include-hover">
+          <p>{{ employee.lastname }} {{ employee.name }} {{employee.patronymic}}</p>
+          <div class="on-hover">
+            <!--<i class="fa fa-user-edit"></i>-->
+            <i class="fa fa-trash" (click)="openDeleteWindow(i)"></i>
+          </div>
+        </div>
+        <div class="table-cell col-2">
+          <p>{{ employee.role == '1' ? 'Админ' : (employee.role == '2' ? 'Доктор' : 'Определите роль') }}</p>
+        </div>
+        <div class="table-cell col-2"><p>{{ employee.login }}</p></div>
+        <div class="table-cell col-2"><p>{{ employee.password }}</p></div>
+        <div class="table-cell col-3">
+          <p *ngIf="employee.phone">+380 {{ employee.phone }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-md-3 offset-sm-8 button-area">
+      <button class="btn btn-success green" (click)="addState = true; listState = false">Добавить</button>
+      <button class="btn btn-primary blue" (click)="returnToStart()">Меню</button>
+    </div>
+
+  </div>
+
+  <app-employee-add-form
+          *ngIf="addState"
+          (listState)="listState = $event; addState = !addState; addEmployee($event)"
+          (closeState)="listState = $event; addState = !addState;"></app-employee-add-form>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal-window" *ngIf="modalWindow">
+  <div class="modal-content col-8 col-md-4">
+    <p>Удалить сотрудника
+      <span style="white-space: nowrap">
+        {{employees[indexDeleteEmployee].lastname}}
+        {{employees[indexDeleteEmployee].name[0]}}.
+        {{employees[indexDeleteEmployee].patronymic ? employees[indexDeleteEmployee].patronymic[0] + "." : null}}?</span></p>
+    <footer>
+      <button class="btn btn-success" (click)="modalWindow=!modalWindow; deleteEmployee()">Да</button>
+      <button class="btn btn-primary" (click)="modalWindow=!modalWindow">Назад</button>
+    </footer>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="content col-12">
+  <div class="employees-list" *ngIf="mode!=='edit' && mode!=='add'">
+    <h3 class="col-12">Пациенты TalMedical</h3>
+
+
+    <div class="table col-10">
+      <div class="table-head">
+
+        <div class="table-cell col-3 name">
+          <div class="col-sm-10">
+            <p *ngIf="!searchState">Ф.И.О</p>
+            <input *ngIf="searchState" [(ngModel)]="searchName"
+                   class="search-field" type="text" name="search"
+                   placeholder="Введите фамилию" autofocus>
+          </div>
+
+          <span class="col-sm-1">
+            <i *ngIf="!searchState" class="fa fa-search" (click)="searchState=true;"></i>
+            <i *ngIf="searchState" class="fa fa-times" (click)="searchState=false; searchName=''"></i>
+          </span>
+        </div>
+
+        <div class="table-cell col-3"><p>Телефон</p></div>
+        <div class="table-cell col-3"><p>Лечащий врач</p></div>
+        <div class="table-cell col-3"><p>Дисконт</p></div>
+      </div>
+
+      <div class="table-row" *ngFor="let client of clients | search:'lastname':searchName let i = index">
+        <div class="table-cell col-3 include-hover">
+          <p>{{ client.lastname }} {{ client.name }} {{client.patronymic}}</p>
+          <div class="on-hover">
+            <i class="fa fa-user-edit" (click)="select(client, i)"></i>
+            <i class="fa fa-trash" (click)="openDeleteWindow(i)"></i>
+          </div>
+        </div>
+        <div class="table-cell col-3 phone" (click)="createCommentsArray(client)">
+          <p>+380 {{ client.phone }}</p>
+          <span *ngIf="client.comment"></span>
+          <p class="col-10 show-comment" *ngIf="client.comment && comments.includes(client)">{{ client.comment }}</p>
+        </div>
+        <div class="table-cell col-3"><p>{{ client.doctor }}</p></div>
+        <div class="table-cell col-3"><p>{{ client.discount }}</p></div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-3 offset-sm-8 button-area">
+      <button class="btn btn-success green" (click)="mode='add';">Добавить</button>
+      <button class="btn btn-primary" (click)="returnToStart()">Меню</button>
+    </div>
+
+  </div>
+
+  <app-client-edit-form
+          *ngIf="mode==='edit' || mode==='add'"
+          [mode]="mode"
+          [client]="selectedClient"
+          (listState)="mode=''; editClient($event)"
+          (closeState)="mode='';"></app-client-edit-form>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal-window" *ngIf="modalWindow">
+  <div class="modal-content col-8 col-md-4">
+    <p>Удалить клиента
+      <span style="white-space: nowrap">
+        {{clients[indexDeleteClient].lastname}}
+        {{clients[indexDeleteClient].name[0]}}.
+        {{clients[indexDeleteClient].patronymic[0]}}.?</span></p>
+    <footer>
+      <button class="btn btn-success" (click)="modalWindow=!modalWindow; deleteClient()">Да</button>
+      <button class="btn btn-primary" (click)="modalWindow=!modalWindow">Назад</button>
+    </footer>
+  </div>
+</div>
+
+
