@@ -55,9 +55,9 @@ task buildUi {
 jar {
     baseName = 'health-service'
     version = '0.1.0'
-//	  manifest {
-//		  attributes 'Main-Class' : 'com.health.healthtel.HealthtelApplication'
-//	  }
+	  manifest {
+		  attributes 'Main-Class' : 'com.health.healthtel.HealthtelApplication'
+	  }
 }
 
 
