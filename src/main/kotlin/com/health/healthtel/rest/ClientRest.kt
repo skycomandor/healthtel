@@ -5,9 +5,7 @@ import com.health.healthtel.entities.Client
 import com.health.healthtel.repository.ClientRepository
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.PageRequest
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class ClientRest(private val clientRepo: ClientRepository) {
@@ -21,7 +19,6 @@ class ClientRest(private val clientRepo: ClientRepository) {
             @RequestParam(value = "email", required = false) email: String?,
             @RequestParam(value = "size", required = false, defaultValue = "10") size: Int,
             @RequestParam(value = "page", required = false, defaultValue = "0") page: Int
-
     ): ResponseDto<Client> {
         val clientExample = Example.of(Client(id = id,
                 firstname = firstname,
@@ -29,12 +26,15 @@ class ClientRest(private val clientRepo: ClientRepository) {
                 patronymic = patronymic,
                 email = email))
 
-
         val page = PageRequest.of(page, size)
         val result = clientRepo.findAll(clientExample, page)
 
-
         return ResponseDto(result.content, 0)
+    }
+
+   @PostMapping("clients")
+    fun addClient(@RequestBody client: Client){
+        clientRepo.save(client)
     }
 
 }
