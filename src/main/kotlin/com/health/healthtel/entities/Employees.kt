@@ -2,7 +2,7 @@ package com.health.healthtel.entities
 
 import javax.persistence.*
 
-@Entity
+@Entity(name = "employees")
 data class Employees(
        @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
        val id: Long = 0,
