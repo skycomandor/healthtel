@@ -66,13 +66,13 @@ task copyUi(type: Copy) {
     into 'src/main/resources/static'
 }
 
-task cleanUi(type: Delete) {
-    def dirName = 'src/main/resources/static/'
-    file(dirName).list().each {
-        f ->
-            delete "${dirName}/${f}"
-    }
-}
+//task cleanUi(type: Delete) {
+//    def dirName = 'src/main/resources/static/'
+//    file(dirName).list().each {
+//        f ->
+//            delete "${dirName}/${f}"
+//    }
+//}
 
 
 
@@ -80,10 +80,10 @@ task cleanUi(type: Delete) {
 
 build.dependsOn(buildUi)
 build.dependsOn(copyUi)
-build.dependsOn(cleanUi)
+//build.dependsOn(cleanUi)
 
 copyUi.mustRunAfter(buildUi)
-buildUi.mustRunAfter(cleanUi)
+//buildUi.mustRunAfter(cleanUi)
 build.mustRunAfter(copyUi)
 
 
