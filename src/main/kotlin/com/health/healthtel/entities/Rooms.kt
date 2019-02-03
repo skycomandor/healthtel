@@ -9,6 +9,6 @@ import javax.persistence.Id
 data class Rooms(
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
         val id: Int = 0,
-        val name: String = "",
-        val description: String = ""
+        val name: String? = null,
+        val description: String? = null
 )

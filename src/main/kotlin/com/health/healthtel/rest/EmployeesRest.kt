@@ -42,7 +42,7 @@ class EmployeesRest(private val employeeRepository: EmployeeRepository) {
         employeeRepository.deleteById(id)
     }
 
-    @PatchMapping("/employee")
+    @PatchMapping("employee")
     fun updateClients(@RequestBody employees: Employees): ResponseEntity<Employees> {
         if(employees.id != null) {
             if (employeeRepository.findById(employees.id).isPresent) {
