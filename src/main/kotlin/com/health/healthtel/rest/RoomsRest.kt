@@ -28,17 +28,17 @@ class RoomsRest(val roomRepository: RoomRepository){
     }
 
     @PostMapping("rooms")
-    fun addClient(@RequestBody rooms: Rooms){
+    fun addRooms(@RequestBody rooms: Rooms){
         roomRepository.save(rooms)
     }
 
     @DeleteMapping("rooms/{id}")
-    fun removeClients(@PathVariable("id") id: Int){
+    fun removeRooms(@PathVariable("id") id: Int){
         roomRepository.deleteById(id)
     }
 
     @PatchMapping("rooms")
-    fun updateClients(@RequestBody rooms: Rooms): ResponseEntity<Rooms> {
+    fun updateRooms(@RequestBody rooms: Rooms): ResponseEntity<Rooms> {
         if(rooms.id != null) {
             if (roomRepository.findById(rooms.id).isPresent) {
                 roomRepository.save(rooms)

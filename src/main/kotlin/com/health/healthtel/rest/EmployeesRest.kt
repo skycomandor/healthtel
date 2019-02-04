@@ -33,17 +33,17 @@ class EmployeesRest(private val employeeRepository: EmployeeRepository) {
     }
 
     @PostMapping("employee")
-    fun addClient(@RequestBody employees: Employees){
+    fun addEmploees(@RequestBody employees: Employees){
         employeeRepository.save(employees)
     }
 
     @DeleteMapping("employee/{id}")
-    fun removeClients(@PathVariable("id") id: Long){
+    fun removeEmploees(@PathVariable("id") id: Long){
         employeeRepository.deleteById(id)
     }
 
     @PatchMapping("employee")
-    fun updateClients(@RequestBody employees: Employees): ResponseEntity<Employees> {
+    fun updateEmploees(@RequestBody employees: Employees): ResponseEntity<Employees> {
         if(employees.id != null) {
             if (employeeRepository.findById(employees.id).isPresent) {
                 employeeRepository.save(employees)
