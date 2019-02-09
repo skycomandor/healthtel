@@ -1,5 +1,6 @@
 package com.health.healthtel.rest
 
+import com.health.healthtel.dto.MessageDto
 import com.health.healthtel.dto.ResponseDto
 import com.health.healthtel.entities.Client
 import com.health.healthtel.repository.ClientRepository
@@ -36,8 +37,9 @@ class ClientRest(private val clientRepo: ClientRepository) {
     }
 
    @PostMapping("clients")
-    fun addClient(@RequestBody client: Client){
+    fun addClient(@RequestBody client: Client): MessageDto{
         clientRepo.save(client)
+        return MessageDto(true, "client was created")
     }
 
     @DeleteMapping("clients/{id}")
@@ -46,17 +48,17 @@ class ClientRest(private val clientRepo: ClientRepository) {
     }
 
     @PatchMapping("/clients")
-     fun updateClients(@RequestBody client: Client): ResponseEntity<Client> {
+     fun updateClients(@RequestBody client: Client): ResponseEntity<MessageDto> {
         if(client.id != null) {
            if (clientRepo.findById(client.id).isPresent) {
                clientRepo.save(client)
-               return ResponseEntity(HttpStatus.OK)
+               return ResponseEntity(MessageDto(true, "client was updated"), HttpStatus.OK)
            } else {
-               return ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+               return ResponseEntity(MessageDto(false, "can not find client by id " + client.id), HttpStatus.NOT_ACCEPTABLE)
            }
 
         } else {
-            return ResponseEntity(HttpStatus.BAD_REQUEST)
+            return ResponseEntity(MessageDto(false, "error during update of client"), HttpStatus.BAD_REQUEST)
         }
     }
 
