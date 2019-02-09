@@ -14,14 +14,6 @@ buildscript {
 }
 
 
-plugins {
-    id 'application'
-}
-
-application {
-    mainClassName = 'com.health.healthtel.HealthtelApplication'
-}
-
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
