@@ -71,7 +71,7 @@ jar {
 
 
 task copyUi(type: Copy) {
-    from 'src/main/ui/dist/angular-clinic/'
+    from 'src/main/ui/dist/clinic/'
     into 'src/main/resources/static'
 }
 
