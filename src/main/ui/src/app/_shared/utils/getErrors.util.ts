@@ -10,22 +10,19 @@ export function getErrors(field: string, form: FormGroup, fbArray?: string) {
   }
   if (type) {
     if (type.required) {
-      return 'This field is required';
+      return 'Заполните поле';
     }
     if (type.minlength) {
-      return `Minimum length ${type.minlength.requiredLength} characters`;
+      return `Минимальное количество символов ${type.minlength.requiredLength}`;
     }
     if (type.invalidEmail) {
-      return 'E-Mail is invalid';
+      return 'Введите правильный E-Mail';
     }
     if (type.emailAlreadyTaken) {
-      return 'User with this email already exist';
+      return 'Пользователь с таким E-Mail уже существует';
     }
     if (type.emailNotRegTaken) {
-      return 'User with this email not registred';
-    }
-    if (type.nameAlreadyTaken) {
-      return 'This name is not available';
+      return 'Пользователь с таким E-Mail не существует';
     }
   }
   return '';

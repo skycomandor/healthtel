@@ -15,6 +15,10 @@ import { ClientsComponent } from './clients/clients.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { CreateClientComponent } from './clients/create-client/create-client.component';
 import { ClientComponent } from './clients/client/client.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeesService } from './employees/employees.service';
+import { EmployeeComponent } from './employees/employee/employee.component';
+import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,10 @@ import { ClientComponent } from './clients/client/client.component';
     ClientsComponent,
     DeleteModalComponent,
     CreateClientComponent,
-    ClientComponent
+    ClientComponent,
+    EmployeesComponent,
+    EmployeeComponent,
+    CreateEmployeeComponent
   ],
   imports: [
     AppRoutingModule,
@@ -33,10 +40,15 @@ import { ClientComponent } from './clients/client/client.component';
     MaterialModule,
     SharedModule
   ],
-  providers: [DashboardService, ClientsService],
+  providers: [
+    DashboardService,
+    ClientsService,
+    EmployeesService
+  ],
   entryComponents: [
     CreateClientComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    CreateEmployeeComponent
   ]
 })
 export class DashboardModule { }

@@ -1,0 +1,89 @@
+<div class="modal">
+  <div class="modal__header">
+    <span class="modal__header_title">
+      <ng-container *ngIf="mode === 'add'">Создание нового сотрудника</ng-container>
+      <ng-container *ngIf="mode === 'edit'">Редактирование сотрудника</ng-container>
+    </span>
+    <span class="grey-icon modal__header_icon" [inlineSVG]="'/assets/icons/close.svg'" [cacheSVG]="false" (click)="close()"></span>
+  </div>
+  <form [formGroup]="employeeForm">
+    <div class="form-row">
+      <app-input
+        class="form-item col-2"
+        name="lastName"
+        label="Фамилия"
+        autofocus="true"
+        required="true"
+        [error]="getErrors('lastName')"
+        formControlName="lastName"></app-input>
+      <app-input
+        class="form-item col-2"
+        name="firstName"
+        label="Имя"
+        required="true"
+        [error]="getErrors('firstName')"
+        formControlName="firstName"></app-input>
+    </div>
+    <div class="form-row">
+      <app-input
+        class="form-item col-3"
+        name="patronymic"
+        label="Отчество"
+        required="true"
+        [error]="getErrors('patronymic')"
+        formControlName="patronymic"></app-input>
+      <app-calendar
+        class="form-item col-3"
+        label="Дата рождения"
+        required="true"
+        [error]="getErrors('birthDate')"
+        (dateSelect)="onSelectDate($event)"></app-calendar>
+      <app-input
+        class="form-item col-3"
+        label="E-Mail"
+        [error]="getErrors('email')"
+        formControlName="email"></app-input>
+    </div>
+    <div class="form-row">
+      <app-input
+        class="form-item col-2"
+        name="phone"
+        label="Телефон"
+        placeholder="000 000 00 00"
+        required="true"
+        mask="(000) 000-00-00"
+        dropSpecialCharacters="false"
+        [error]="getErrors('phone')"
+        formControlName="phone"></app-input>
+      <app-select
+        class="form-item col-2"
+        name="position"
+        label="Должность"
+        [options]="positionsMock"
+        caret="true"
+        [error]="getErrors('position')"
+        (select)="onSelect($event)"></app-select>
+    </div>
+    <div class="form-row">
+      <app-input
+        class="form-item col-2"
+        name="login"
+        label="Логин"
+        required="true"
+        [error]="getErrors('login')"
+        formControlName="login"></app-input>
+      <app-input
+        class="form-item col-2"
+        name="password"
+        type="password"
+        label="Пароль"
+        required="true"
+        [error]="getErrors('password')"
+        formControlName="password"></app-input>
+    </div>
+  </form>
+  <button class="blue-btn" (click)="onSubmit()">
+    <ng-container *ngIf="mode === 'add'">Создать</ng-container>
+    <ng-container *ngIf="mode === 'edit'">Редактировать</ng-container>
+  </button>
+</div>

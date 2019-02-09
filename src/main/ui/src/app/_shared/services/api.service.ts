@@ -70,7 +70,7 @@ export class ApiService {
       throw { error: res };
     }
 
-    if (!res.error) {
+    if (res && !res.error) {
       // console.log('success');
     }
     return res;

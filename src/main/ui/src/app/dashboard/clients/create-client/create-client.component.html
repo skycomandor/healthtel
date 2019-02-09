@@ -45,6 +45,7 @@
         class="form-item col-3"
         label="Дата рождения"
         required="true"
+        [error]="getErrors('birthDate')"
         (dateSelect)="onSelectDate($event)"></app-calendar>
       <app-input
         class="form-item col-3"
@@ -55,8 +56,9 @@
         class="form-item col-3"
         name="doctor"
         label="Доктор"
-        [options]="users"
         caret="true"
+        required="true"
+        [options]="users"
         (select)="onSelect($event)"></app-select>
     </div>
     <div class="form-row">

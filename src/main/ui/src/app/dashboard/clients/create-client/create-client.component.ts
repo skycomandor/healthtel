@@ -6,6 +6,8 @@ import { DashboardService } from '../../dashboard.service';
 import { ValidationService } from 'src/app/_shared/services/validation.service';
 import { getErrors } from 'src/app/_shared/utils/getErrors.util';
 import { ActivatedRoute } from '@angular/router';
+import { EmployeesService } from '../../employees/employees.service';
+import { PageConfig } from 'src/app/_shared/models/common.model';
 
 @Component({
   selector: 'app-create-client',
@@ -18,13 +20,13 @@ export class CreateClientComponent implements OnInit {
   public mode: string = 'add';
   public users = [];
   public clientForm: FormGroup = this.fb.group({
-    lastName: ['', Validators.required],
+    lastName: ['', [Validators.required, Validators.minLength(2)]],
     firstName: ['', Validators.required],
     patronymic: ['', Validators.required],
     gender: [''],
     birthDate: ['', Validators.required],
     email: ['', ValidationService.emailValidator],
-    doctor: [''],
+    doctor: ['', Validators.required],
     address: [''],
     discount: [''],
     phones: this.fb.array([this.createPhone()]),
@@ -37,11 +39,15 @@ export class CreateClientComponent implements OnInit {
   ];
 
   private clientID: string;
+  private config: PageConfig = {
+    page: 0,
+    size: 10
+  };
 
   constructor(
     private modal: ModalService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
+    private empService: EmployeesService,
     private clientsServ: ClientsService,
     private dashServ: DashboardService
   ) { }
@@ -140,25 +146,26 @@ export class CreateClientComponent implements OnInit {
   }
 
   private getEmploeeys() {
-    this.clientsServ.getAllUsers().subscribe(users => {
-      users = users.filter(user => user.profile === 'doctor');
-      users.forEach(user => {
-        let nameFirstLetter: string;
-        let patrFirstLetter: string;
-        user.firstname ? nameFirstLetter = `${user.firstname[0]}.` : nameFirstLetter = '';
-        user.patronymic ? patrFirstLetter = `${user.patronymic[0]}.` : patrFirstLetter = '';
-        const userMock = {
-          value: user.id,
-          title: `${user.lastname} ${nameFirstLetter} ${patrFirstLetter}`
-        };
-        this.users.push(userMock);
-      });
+    this.empService.getAllEmployees(this.config).subscribe(users => {
+      if (users) {
+        users = users.list.filter(user => user.profile === 'doctor');
+        users.forEach(user => {
+          let nameFirstLetter: string;
+          let patrFirstLetter: string;
+          user.firstname ? nameFirstLetter = `${user.firstname[0]}.` : nameFirstLetter = '';
+          user.patronymic ? patrFirstLetter = `${user.patronymic[0]}.` : patrFirstLetter = '';
+          const userMock = {
+            value: user.id,
+            title: `${user.lastname} ${nameFirstLetter} ${patrFirstLetter}`
+          };
+          this.users.push(userMock);
+        });
+      }
     });
   }
 
   private createClient(newClient) {
     this.clientsServ.createClient(newClient).subscribe(res => {
-      console.log(res);
       if (res) {
         this.dashServ.setCrudEvent({e: 'create', msg: 'Пациент создан!'});
         this.close();

@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   public isNotification: boolean;
   public menuTop = [
     { title: 'Пациенты', icon: '/assets/icons/nav-customers.svg', routerLink: 'clients' },
-    { title: 'Сотрудники', icon: '/assets/icons/nav-profile.svg', routerLink: 'users' },
+    { title: 'Сотрудники', icon: '/assets/icons/nav-profile.svg', routerLink: 'employees' },
   ];
   public menuBottom = [
     { title: 'Выйти', icon: '/assets/icons/nav-logout.svg', routerLink: 'login' }

@@ -48,6 +48,8 @@ export class CalendarComponent implements OnInit {
   @Input()
   public label: string;
   @Input()
+  public error: string;
+  @Input()
   public required: boolean;
   @Output()
   public dateSelect: EventEmitter<any> = new EventEmitter<any>();

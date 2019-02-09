@@ -6,6 +6,7 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { DashboardService } from '../dashboard.service';
 import { CreateClientComponent } from './create-client/create-client.component';
 import { Router } from '@angular/router';
+import { PageConfig } from 'src/app/_shared/models/common.model';
 
 @Component({
   selector: 'app-clients',
@@ -30,6 +31,11 @@ export class ClientsComponent implements OnInit {
   private _sort: MatSort;
   @ViewChildren('editColumn')
   private _editColumn: ElementRef[];
+
+  private config: PageConfig = {
+    page: 0,
+    size: 10
+  };
 
   constructor(
     private router: Router,
@@ -66,6 +72,7 @@ export class ClientsComponent implements OnInit {
   public openModal(mode: string, item?: any) {
     if (mode === 'delete') {
       this.modal.open({component: DeleteModalComponent});
+      item.role = 'client';
       this.dashService.setDeletedItem(item);
       return;
     }
@@ -116,7 +123,7 @@ export class ClientsComponent implements OnInit {
 
   private getClients() {
     this.loading = true;
-    this.clientsServ.getAllClients().subscribe(clients => {
+    this.clientsServ.getAllClients(this.config).subscribe(clients => {
       console.log(clients);
       if (clients) {
         this.clients = clients.list;
