@@ -1,0 +1,118 @@
+@import './variables'
+
+@mixin modal
+  width: fit-content
+  height: fit-content
+  border: 1px solid #eeeeee
+  box-shadow: 0px 2px 12px 0 rgba(0, 0, 0, 0.2)
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  display: block
+  background: #ffffff
+  border-radius: 5px
+
+@mixin login-form
+  width: 360px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+@mixin input
+  height: 32px
+  padding: 0 12px
+  border-radius: 3px
+  border: none
+  border: 1px solid $grey
+  font-family: $OpenSans
+  font-size: 14px
+  line-height: 19px
+  color: black
+  caret-color: $blue
+  &:active
+    border-color: $blue
+  &:focus
+    border-color: $blue
+    outline: none
+  &:placeholder
+    color: $grey
+
+@mixin label
+  color: black
+  font-family: $OpenSans
+  font-size: 14px
+  font-weight: 600
+
+@mixin blue-btn
+  height: 40px
+  padding: 0 16px
+  color: #FFFFFF
+  font-family: $OpenSans
+  font-size: 16px
+  font-weight: 600
+  background-color: $blue
+  border-radius: 3px
+  text-transform: capitalize
+  cursor: pointer
+
+@mixin content-table
+  height: calc(100vh - 70px)
+  > div:first-child
+    height: 70px
+    padding: 0 30px 0 20px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    > span:first-child
+      color: $dark
+      font-family: $Roboto
+      font-size: 20px	
+      font-weight: 500
+    > div:first-of-type
+      display: flex
+      align-items: center
+      > div,
+      > span
+        display: flex
+        align-items: center
+        font-family: $OpenSans
+        font-size: 13px	
+        font-weight: 600
+      > span
+        color: $green
+        cursor: pointer
+        height: 30px
+        padding: 0 5px
+        border-radius: 3px
+        transition: all .5s
+        &:hover
+          background-color: lighten($green, 50%)
+        > span
+          height: 16px
+          margin-right: 5px
+      > div
+        height: 30px
+        margin-right: 20px
+        position: relative
+        cursor: pointer
+        input
+          @include input
+          width: 0
+          height: 30px
+          opacity: 0
+          transition: all .5s
+        span
+          height: 16px
+          position: absolute
+          right: 10px
+
+@mixin search-active
+  input
+    width: 200px!important
+    opacity: 1!important
+    border-color: $blue!important
+  span
+    /deep/ use
+      fill: $blue
+

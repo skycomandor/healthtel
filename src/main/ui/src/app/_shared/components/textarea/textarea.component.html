@@ -1,0 +1,12 @@
+<div class="textarea-item">
+  <label *ngIf="label" for="name" class="label" [class.required]="required">{{label}}</label>
+  <div class="textarea-holder">
+    <textarea
+      [id]="name"
+      [name]="name"
+      [placeholder]="placeholder"
+      [rows]="rows"
+      [(ngModel)]="value"></textarea>
+    <span class="error-message" *ngIf="error">{{error}}</span>
+  </div>
+</div>

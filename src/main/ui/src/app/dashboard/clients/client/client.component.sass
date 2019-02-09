@@ -1,0 +1,27 @@
+@import '../../../../sass/mixin'
+@import '../../../../sass/variables'
+
+.client
+  height: calc(100vh - 70px)
+  &__header
+    height: 70px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 0 30px
+    &_nav
+      display: flex
+      align-items: center
+      color: $grey
+      font-family: $Roboto
+      font-size: 20px
+      font-weight: 500
+      cursor: pointer
+      > .grey-icon
+        margin-right: 15px
+        height: 16px
+        &:hover
+          /deep/ use
+            transition: all .5s
+            fill: $blue
+          
