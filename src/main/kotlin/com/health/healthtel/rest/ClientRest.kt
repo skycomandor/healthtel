@@ -32,7 +32,7 @@ class ClientRest(private val clientRepo: ClientRepository) {
         val page = PageRequest.of(page, size)
         val result = clientRepo.findAll(clientExample, page)
 
-        return ResponseDto(result.content, clientRepo.count())
+        return ResponseDto(result.content, clientRepo.count() / size)
     }
 
    @PostMapping("clients")
