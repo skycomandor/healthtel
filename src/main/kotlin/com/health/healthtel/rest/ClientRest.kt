@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin(origins = ["http://localhost:4200"], maxAge = 3600)
+@CrossOrigin
 @RestController
 class ClientRest(private val clientRepo: ClientRepository) {
 
@@ -32,7 +32,7 @@ class ClientRest(private val clientRepo: ClientRepository) {
         val page = PageRequest.of(page, size)
         val result = clientRepo.findAll(clientExample, page)
 
-        return ResponseDto(result.content, 0)
+        return ResponseDto(result.content, clientRepo.count() / size)
     }
 
    @PostMapping("clients")
