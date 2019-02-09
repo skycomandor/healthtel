@@ -1,8 +1,14 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 
-export function getErrors(field: string, form: FormGroup) {
-  const type = form.controls[field].errors;
-  if (/* form.controls[field].dirty && */ type) {
+export function getErrors(field: string, form: FormGroup, fbArray?: string) {
+  let type;
+  if (fbArray) {
+    const arr: FormArray = form.get(fbArray) as FormArray;
+    type = arr.controls[field].errors;
+  } else {
+    type = form.controls[field].errors;
+  }
+  if (type) {
     if (type.required) {
       return 'This field is required';
     }

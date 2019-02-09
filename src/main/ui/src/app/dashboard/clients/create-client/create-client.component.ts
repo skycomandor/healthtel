@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { ClientsService } from '../clients.service';
 import { DashboardService } from '../../dashboard.service';
 import { ValidationService } from 'src/app/_shared/services/validation.service';
@@ -88,13 +88,12 @@ export class CreateClientComponent implements OnInit {
     }
   }
 
-  public createPhone(): FormGroup {
-    return this.fb.group({
-      phone: ['', [Validators.required, Validators.minLength(15)]]
-    });
+  public createPhone(): FormControl {
+    return this.fb.control('', Validators.required);
   }
 
   public addPhone() {
+    this.submitted = false;
     this.phones = this.clientForm.get('phones') as FormArray;
     if (this.clientForm.get('phones').valid) {
       this.phones.push(this.createPhone());
@@ -107,9 +106,9 @@ export class CreateClientComponent implements OnInit {
     }
   }
 
-  public getErrors(field: string) {
+  public getErrors(field: string, fbArr?: string) {
     if (this.submitted) {
-      return getErrors(field, this.clientForm);
+      return getErrors(field, this.clientForm, fbArr);
     }
   }
 

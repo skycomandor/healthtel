@@ -57,7 +57,6 @@
         label="Доктор"
         [options]="users"
         caret="true"
-        [error]="getErrors('doctor')"
         (select)="onSelect($event)"></app-select>
     </div>
     <div class="form-row">
@@ -74,14 +73,15 @@
       <div class="col-2 form-item phone-creator">
         <span class="label">Телефон</span>
         <div formArrayName="phones" *ngFor="let item of clientForm.get('phones').controls; let i = index;">
-          <div class="phone-creator__wrapper" [formGroupName]="i">
+          <div class="phone-creator__wrapper">
             <app-input
               class="phone-creator__wrapper_input"
               name="phone"
               placeholder="000 000 00 00"
               mask="(000) 000-00-00"
               dropSpecialCharacters="false"
-              formControlName="phone"></app-input>
+              [error]="getErrors(i, 'phones')"
+              [formControlName]="i"></app-input>
             <span *ngIf="phones && phones.value.length > 1" class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'" [cacheSVG]="false" (click)="deletePhone(i)"></span>
           </div>
         </div>
