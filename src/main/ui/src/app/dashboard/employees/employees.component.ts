@@ -61,7 +61,7 @@ export class EmployeesComponent implements OnInit {
     this.modal.open({component: CreateEmployeeComponent});
     const settedMode = {
       type: mode,
-      // userID: item.id || ''
+      userID: item.id || ''
     };
     this.dashService.setMode(settedMode);
   }
@@ -89,7 +89,6 @@ export class EmployeesComponent implements OnInit {
   private getEmployees() {
     this.loading = true;
     this.empService.getAllEmployees(this.config).subscribe(employees => {
-      console.log(employees);
       if (employees) {
         this.employees = employees.list;
         this.dataSource.data = this.employees;

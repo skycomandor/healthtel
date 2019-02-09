@@ -79,7 +79,7 @@ export class ClientsComponent implements OnInit {
     this.modal.open({component: CreateClientComponent});
     const settedMode = {
       type: mode,
-      // userID: item.id || ''
+      userID: item.id || ''
     };
     this.dashService.setMode(settedMode);
   }
@@ -124,7 +124,6 @@ export class ClientsComponent implements OnInit {
   private getClients() {
     this.loading = true;
     this.clientsServ.getAllClients(this.config).subscribe(clients => {
-      console.log(clients);
       if (clients) {
         this.clients = clients.list;
         this.dataSource.data = this.clients;
