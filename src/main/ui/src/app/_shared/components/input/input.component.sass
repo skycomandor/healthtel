@@ -1,0 +1,61 @@
+@import '../../../../sass/mixin'
+@import '../../../../sass/variables'
+
+.input-label
+  display: inline-block
+  margin-bottom: 10px
+  @include label
+  position: relative
+  &.required
+    &:after
+      position: absolute
+      top: 0
+      right: -7px
+      width: 4px
+      height: 4px
+      content: '*'
+      color: $red
+      display: table
+
+.input-holder
+  position: relative
+  > span
+    &:not(.error-message)
+    &:not(.caret)
+      position: absolute
+      right: 12px
+      top: 12px
+    &.error-message
+      width: 100%
+      position: absolute
+      top: 100%
+      left: 0
+      color: $red
+      font-family: $OpenSans
+      font-size: 12px
+  &.search
+    .input-item
+      height: 32px
+    > span
+      top: 7px
+
+.input-item
+  width: 100%
+  @include input
+  &.active
+    border-color: $blue
+
+.caret
+  position: absolute
+  right: 12px
+  top: 10px
+  cursor: pointer
+  &.active
+    top: 8px
+    /deep/ svg
+      transform: scaleY(-1)
+    /deep/ use
+      fill: $blue
+
+.pass-icon
+  cursor: pointer

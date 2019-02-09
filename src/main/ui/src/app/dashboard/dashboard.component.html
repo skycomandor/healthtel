@@ -1,0 +1,46 @@
+<div class="dashboard">
+  <div class="side-menu">
+    <span class="side-menu__logo">TalMedical</span>
+    <div class="side-menu__menu">
+      <div class="side-menu__menu_top">
+        <div class="menu-item" *ngFor="let item of menuTop" routerLink="{{ item.routerLink }}" [class.active]="route.includes(item.routerLink)">
+          <span class="white-icon" inlineSVG="{{ item.icon }}" [cacheSVG]="false"></span>
+          {{ item.title }}
+        </div>
+      </div>
+      <div class="side-menu__menu_bottom">
+        <div class="menu-item" *ngFor="let item of menuBottom" routerLink="{{ item.routerLink }}" [class.active]="route.includes(item.routerLink)">
+          <span class="white-icon" inlineSVG="{{ item.icon }}" [cacheSVG]="false"></span>
+          {{ item.title }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="content__header">
+      <div class="content__header_user">
+        User Name
+        <span class="content__header_user-role">Admin</span>
+      </div>
+      <div class="content__header_actions">
+        <span [class.active]="confirmMsg&&isShowMsg" class="confirm-msg">{{ confirmMsg }}</span>
+        <div #notification class="notifications" (click)="isNotification=!isNotification">
+          <span class="notifications__marker">3</span>
+          <span class="grey-icon" [inlineSVG]="'/assets/icons/notification.svg'" [cacheSVG]="false"></span>
+          <div class="notifications__list" [class.active]="isNotification">
+            <div class="notifications__list_wrapper">
+              <div class="notifications__list_item" *ngFor="let i of [1,2,3]">
+                <span>BD</span>
+                <span>Somebody has a birthday</span>
+              </div>
+              <span class="notifications__list_details">детально</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content__content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,227 @@
+@import '../../../../sass/mixin'
+@import '../../../../sass/variables'
+
+\:host
+  position: relative
+
+.input-label
+  display: inline-block
+  margin-bottom: 10px
+  @include label
+  position: relative
+  &.required
+    &:after
+      position: absolute
+      top: 0
+      right: -7px
+      width: 4px
+      height: 4px
+      content: '*'
+      color: $red
+      display: table
+
+.input-holder
+  width: fit-content
+  position: relative
+  display: flex
+  .error
+    width: 100%
+    position: absolute
+    top: 100%
+    left: 0
+    color: $red
+    font-family: $OpenSans
+    font-size: 12px
+  .blue-icon
+    height: 16px
+    position: absolute
+    right: 10px
+    cursor: pointer
+    align-self: center
+  input	
+    @include input
+    width: 100%
+
+.calendar-content
+  box-sizing: border-box
+  z-index: 1
+  position: absolute
+  top: calc(100% + 3px)
+  left: 0
+  background-color: #ffffff
+  border-radius: 5px
+  box-shadow: 0px 2px 12px 0 rgba(0, 0, 0, 0.2)
+  padding: 12px 12px 5px
+  width: 236px
+  height: fit-content
+  min-height: 195px
+  opacity: 0
+  transform: translateY(50px)
+  z-index: -10
+  transition: all .5s
+  &.open
+    opacity: 1
+    transform: translateY(0)
+    z-index: 10
+ 
+.calendar
+  display: block
+  margin: 0 auto
+
+.header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  color: $dark	
+  font-family: $Roboto	
+  font-size: 13px	
+  font-weight: 500
+  &_center
+    display: flex
+    align-items: center
+    .nav-icon:last-of-type
+      transform: scaleX(-1) 
+  &_text
+    margin: 0 12px
+    cursor: pointer
+    transition: all .5s
+    &:hover
+      color: $blue
+
+.nav-icon
+  width: 16px
+  height: 16px
+  cursor: pointer
+  /deep/ use
+    fill: $light-grey
+    transition: all .5s
+  &:hover
+    /deep/ use
+      fill: $blue
+  &.single
+    &:first-of-type,
+      transform: rotate(90deg)
+    &:last-of-type
+      transform: rotate(-90deg)
+
+.day-names
+  display: flex
+  justify-content: space-between
+  color: $light-grey	
+  font-family: $Roboto	
+  font-size: 13px	
+  font-weight: 500
+  margin: 24px 0 5px
+
+.weeks
+  display: flex
+  flex-direction: column
+
+.week
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+.week-date,
+.day-name
+  text-align: center
+  display: block
+  width: 30px
+  display: flex
+  justify-content: center
+  align-items: center
+
+.date-text 
+  z-index: 10
+
+.week-date 
+  height: 26px
+  position: relative
+  color: $dark	
+  font-family: $OpenSans	
+  font-size: 13px
+  &:after 
+    content: ''
+    height: 24px
+    width: 24px
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    border-radius: 50%
+    transition: background-color 500ms linear, color 500ms linear
+    z-index: 1
+  &.enabled 
+    cursor: pointer
+    &:hover
+      .date-text
+        color: #ffffff
+      &:after
+        background-color: lighten($green, 10%)
+  &.selected
+    color: white
+    &:hover
+      &:after
+        background-color: lighten($green, 10%)
+    &:after
+      background-color: lighten($green, 10%)
+  &.disabled 
+    color: $light-grey
+
+.today
+  font-weight: bold
+
+.months
+  display: flex
+  flex-wrap: wrap
+  min-height: 208px
+  &__item
+    font-size: 13px
+.years
+  &__content
+    display: flex
+    flex-wrap: wrap
+    min-height: calc(208px - 16px)
+  &__navigate
+    width: 100%
+    max-height: 16px
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+    font-family: $Roboto
+    font-size: 13px
+    color: $dark
+    font-weight: 500
+  &__item
+    font:
+      size: 15px
+      weight: 500
+.months,
+.years
+  &__item
+    position: relative
+    width: 33%
+    border-radius: 50%
+    color: $dark
+    font-family: $Roboto
+    text-transform: capitalize
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    transition: all 500ms
+    > span
+      z-index: 2
+    &:after
+      content: ''
+      position: absolute
+      height: 35px
+      width: 100%
+      border-radius: 15px
+      z-index: 1
+      transition: all 500ms
+    &:hover
+      color: $blue
+      &:after
+        background-color: #f6f6f6
+

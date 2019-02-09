@@ -1,0 +1,76 @@
+<div class="clients content-wrapper">
+  <div class="content-wrapper__header">
+    <span class="content-wrapper__header_title">Пациенты</span>
+    <div class="content-wrapper__header_actions">
+      <div #searchBlock class="search-action action-item" [class.active]="isSearch" (click)="isSearch=!isSearch">
+        <input type="text" (click)="$event.stopPropagation()">
+        <span class="grey-icon" [inlineSVG]="'/assets/icons/search.svg'" [cacheSVG]="false"></span>
+      </div>
+      <span class="create-action action-item" (click)="openModal('add')">
+        <span class="green-icon" [inlineSVG]="'/assets/icons/create.svg'" [cacheSVG]="false"></span>
+        Добавить
+      </span>
+    </div>
+  </div>
+  <div class="content-wrapper__table">
+      <table mat-table [dataSource]="dataSource" matSort *ngIf="clients?.length > 0">
+        <!-- FullName Column -->
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ф.И.О</th>
+          <td mat-cell *matCellDef="let element" class="include-hover">
+            {{ element.lastname }} {{ element.firstname }} {{element.patronymic}}
+            <div class="on-hover">
+              <i class="fa fa-user-edit" (click)="select(element)"></i>
+              <i class="fa fa-trash" (click)="openDeleteWindow(element)"></i>
+            </div>
+          </td>
+        </ng-container>
+  
+        <!-- BirthDate Column -->
+        <ng-container matColumnDef="birthdate">
+          <th mat-header-cell *matHeaderCellDef>Дата pождения</th>
+          <td mat-cell *matCellDef="let element">{{ transformDate(element.birthDay) }}.{{ transformDate(element.birthMonth) }}.{{ element.birthyear }}</td>
+        </ng-container>
+    
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Телефон</th>
+          <td mat-cell *matCellDef="let element" (click)="createCommentsArray(client)">
+            {{element.phone}}
+            <span *ngIf="client.comment"></span>
+            <p class="col-10 show-comment" *ngIf="client.comment && comments.includes(client)">{{ client.comment }}</p>
+          </td>
+        </ng-container>
+    
+        <!-- Doctor Column -->
+        <ng-container matColumnDef="doctor">
+          <th mat-header-cell *matHeaderCellDef>Лечащий врач</th>
+          <td mat-cell *matCellDef="let element">{{ element.doctor }}</td>
+        </ng-container>
+  
+        <!-- Discount Column -->
+        <ng-container matColumnDef="discount">
+          <th mat-header-cell *matHeaderCellDef>Дисконт</th>
+          <td mat-cell *matCellDef="let element">{{ element.discount }}</td>
+        </ng-container>
+
+        <!-- edit Column -->
+      <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index" #editColumn>
+            <div class="edit-block" (click)="openActions($event, i)">
+              <span class="grey-icon" [inlineSVG]="'/assets/icons/actions.svg'" [cacheSVG]="false"></span>
+              <div class="edit-block_hidden" *ngIf="isEdit && activeRow == i">
+                <span (click)="openModal('edit', element)">Изменить</span>
+                <span (click)="openModal('delete', element)">Удалить</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" (click)="selectClient(element)"></tr>
+      </table>
+  </div>
+</div>
+<!-- <app-loader *ngIf="loading"></app-loader> -->

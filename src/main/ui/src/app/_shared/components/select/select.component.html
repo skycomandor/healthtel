@@ -1,0 +1,21 @@
+<div class="select-block">
+  <app-input
+    [name]="name"
+    [label]="label"
+    [placeholder]="placeholder"
+    [isActive]="isSelectOpen"
+    [value]="value"
+    class="pointer"
+    caret="true"
+    [error]="error"
+    [required]="required"
+    (click)="isSelectOpen=!isSelectOpen">
+  </app-input>
+  <ul
+    class="select-list"
+    [class.open]="isSelectOpen && options && options.length > 0">
+    <li *ngFor="let option of options; let i = index;" (click)="onSelect($event, option, i)">
+      <span>{{ option.title }}</span>
+    </li>
+  </ul>
+</div> 

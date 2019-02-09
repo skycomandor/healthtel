@@ -1,0 +1,24 @@
+<div class="input-component">
+  <label class="input-label" *ngIf="label" for="name" [class.required]="required">{{label}}</label>
+  <div class="input-holder" [class.search]="search">
+    <input
+      class="input-item"
+      [class.active]="isActive"
+      [id]="name"
+      [name]="name"
+      [type]="currentType"
+      [placeholder]="placeholder"
+      [mask]="mask"
+      [dropSpecialCharacters]="dropSpecialCharacters"
+      [(ngModel)]="value">
+    <span *ngIf="search" class="search-icon grey-icon" [inlineSVG]="'/assets/icons/search.svg'" [cacheSVG]="false"></span>
+    <span class="caret" [class.active]="isActive" *ngIf="caret" [inlineSVG]="'/assets/icons/arrow.svg'" [cacheSVG]="false"></span>
+    <span *ngIf="type=='password'" 
+      class="pass-icon grey-icon"
+      [class.blue-icon]="passIcon.includes('show')"
+      [inlineSVG]="passIcon"
+      [cacheSVG]="false"
+      (click)="toggleShowPass()"></span>
+    <span class="error-message" *ngIf="error">{{error}}</span>
+  </div>
+</div>

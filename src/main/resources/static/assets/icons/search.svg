@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>search</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M11.7561086,10.4567937 L14.7144207,13.4151058 C15.0268401,13.7275253 15.0268401,14.2340572 14.7144207,14.5464767 C14.4020013,14.8588961 13.8954693,14.8588961 13.5830498,14.5464767 L10.6488507,11.6122775 C9.69816798,12.3564265 8.50088506,12.8 7.2,12.8 C4.1072054,12.8 1.6,10.2927946 1.6,7.2 C1.6,4.1072054 4.1072054,1.6 7.2,1.6 C10.2927946,1.6 12.8,4.1072054 12.8,7.2 C12.8,8.41474409 12.4132259,9.53915226 11.7561086,10.4567937 Z M7.2,11.2 C9.409139,11.2 11.2,9.409139 11.2,7.2 C11.2,4.990861 9.409139,3.2 7.2,3.2 C4.990861,3.2 3.2,4.990861 3.2,7.2 C3.2,9.409139 4.990861,11.2 7.2,11.2 Z" id="path-sear"></path>
+    </defs>
+    <g id="search" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-sear" fill="white">
+            <use xlink:href="#path-sear"></use>
+        </mask>
+        <use id="Combined-Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-sear"></use>
+        <g id="colors" mask="url(#mask-sear)"></g>
+    </g>
+</svg>

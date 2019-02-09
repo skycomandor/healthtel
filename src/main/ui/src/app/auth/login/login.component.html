@@ -1,0 +1,18 @@
+<div class="login">
+  <span class="login__logo"></span>
+  <form [formGroup]="loginForm">
+    <app-input
+      class="form-item"
+      name="login"
+      placeholder="Введите логин"
+      autofocus="true"
+      formControlName="login"></app-input>
+    <app-input
+      class="form-item"
+      name="password"
+      type="password"
+      placeholder="Введите пароль"
+      formControlName="password"></app-input>
+  </form>
+  <button class="blue-btn" (click)="login()">Войти</button>
+</div>
