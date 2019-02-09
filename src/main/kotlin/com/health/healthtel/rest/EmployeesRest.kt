@@ -1,5 +1,6 @@
 package com.health.healthtel.rest
 
+import com.health.healthtel.dto.MessageDto
 import com.health.healthtel.dto.ResponseDto
 import com.health.healthtel.entities.Employees
 import com.health.healthtel.repository.EmployeeRepository
@@ -30,30 +31,32 @@ class EmployeesRest(private val employeeRepository: EmployeeRepository) {
 
         val page = PageRequest.of(page, size)
         val result = employeeRepository.findAll(clientExample, page)
-        return ResponseDto(result.content, 0)
+        return ResponseDto(result.content, 0, true)
     }
 
     @PostMapping("employee")
-    fun addEmploees(@RequestBody employees: Employees){
+    fun addEmploees(@RequestBody employees: Employees): MessageDto{
         employeeRepository.save(employees)
+        return MessageDto(true, "employee was created")
     }
 
     @DeleteMapping("employee/{id}")
-    fun removeEmploees(@PathVariable("id") id: Long){
+    fun removeEmploees(@PathVariable("id") id: Long): MessageDto{
         employeeRepository.deleteById(id)
+        return MessageDto(true, "employee was deleted")
     }
 
     @PatchMapping("employee")
-    fun updateEmploees(@RequestBody employees: Employees): ResponseEntity<Employees> {
+    fun updateEmploees(@RequestBody employees: Employees): MessageDto {
         if(employees.id != null) {
             if (employeeRepository.findById(employees.id).isPresent) {
                 employeeRepository.save(employees)
-                return ResponseEntity(HttpStatus.OK)
+                return MessageDto(true, "employee was updated")
             } else {
-                return ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+                return MessageDto(false, "can not find employee by id " + employees.id)
             }
         } else {
-            return ResponseEntity(HttpStatus.BAD_REQUEST)
+            return MessageDto(false, "error during update of employee")
         }
     }
 

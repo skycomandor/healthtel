@@ -1,5 +1,6 @@
 package com.health.healthtel.rest
 
+import com.health.healthtel.dto.MessageDto
 import com.health.healthtel.dto.ResponseDto
 import com.health.healthtel.entities.Phones
 import com.health.healthtel.entities.Rooms
@@ -26,30 +27,32 @@ class PhonesRest(private val phoneRepository: PhoneRepository){
         ))
         val page = PageRequest.of(page, size)
         val result = phoneRepository.findAll(clientExample, page)
-        return ResponseDto(result.content, 0)
+        return ResponseDto(result.content, 0, true)
     }
 
     @PostMapping("phones")
-    fun addPhones(@RequestBody phones: Phones){
+    fun addPhones(@RequestBody phones: Phones): MessageDto{
         phoneRepository.save(phones)
+        return MessageDto(true, "phone was created")
     }
 
     @DeleteMapping("phones/{id}")
-    fun removePhones(@PathVariable("id") id: Long){
+    fun removePhones(@PathVariable("id") id: Long): MessageDto{
         phoneRepository.deleteById(id)
+        return MessageDto(true, "phone was deleted")
     }
 
     @PatchMapping("phones")
-    fun updatePhones(@RequestBody phones: Phones): ResponseEntity<Phones> {
+    fun updatePhones(@RequestBody phones: Phones): MessageDto {
         if(phones.id != null) {
             if (phoneRepository.findById(phones.id).isPresent) {
                 phoneRepository.save(phones)
-                return ResponseEntity(HttpStatus.OK)
+                return return MessageDto(true, "phone was updated")
             } else {
-                return ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+                return MessageDto(false, "can not find phone by id " + phones.id)
             }
         } else {
-            return ResponseEntity(HttpStatus.BAD_REQUEST)
+            return MessageDto(false, "error during update of phone")
         }
     }
 }

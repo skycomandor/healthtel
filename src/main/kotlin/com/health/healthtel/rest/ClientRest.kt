@@ -33,7 +33,7 @@ class ClientRest(private val clientRepo: ClientRepository) {
         val page = PageRequest.of(page, size)
         val result = clientRepo.findAll(clientExample, page)
 
-        return ResponseDto(result.content, clientRepo.count() / size)
+        return ResponseDto(result.content, clientRepo.count() / size, true)
     }
 
    @PostMapping("clients")
@@ -43,22 +43,23 @@ class ClientRest(private val clientRepo: ClientRepository) {
     }
 
     @DeleteMapping("clients/{id}")
-     fun removeClients(@PathVariable("id") id: Long){
+     fun removeClients(@PathVariable("id") id: Long): MessageDto{
         clientRepo.deleteById(id)
+        return MessageDto(true, "client was deleted")
     }
 
     @PatchMapping("/clients")
-     fun updateClients(@RequestBody client: Client): ResponseEntity<MessageDto> {
+     fun updateClients(@RequestBody client: Client): MessageDto {
         if(client.id != null) {
            if (clientRepo.findById(client.id).isPresent) {
                clientRepo.save(client)
-               return ResponseEntity(MessageDto(true, "client was updated"), HttpStatus.OK)
+               return MessageDto(true, "client was updated")
            } else {
-               return ResponseEntity(MessageDto(false, "can not find client by id " + client.id), HttpStatus.NOT_ACCEPTABLE)
+               return MessageDto(false, "can not find client by id " + client.id)
            }
 
         } else {
-            return ResponseEntity(MessageDto(false, "error during update of client"), HttpStatus.BAD_REQUEST)
+            return MessageDto(false, "error during update of client")
         }
     }
 
