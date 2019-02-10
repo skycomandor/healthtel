@@ -18,6 +18,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { RadioFieldComponent } from './components/radio-field/radio-field.component';
 import { ValidationService } from './services/validation.service';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ValidationService } from './services/validation.service';
     LoaderComponent,
     CalendarComponent,
     TextareaComponent,
-    RadioFieldComponent
+    RadioFieldComponent,
+    PaginatorComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { ValidationService } from './services/validation.service';
     LoaderComponent,
     CalendarComponent,
     TextareaComponent,
-    RadioFieldComponent
+    RadioFieldComponent,
+    PaginatorComponent
   ],
   providers: [
     ModalService,

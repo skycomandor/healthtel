@@ -34,7 +34,8 @@ export class ClientsComponent implements OnInit {
 
   private config: PageConfig = {
     page: 0,
-    size: 10
+    size: 10,
+    totalPage: null
   };
 
   constructor(
@@ -65,6 +66,11 @@ export class ClientsComponent implements OnInit {
     });
   }
 
+  public onPageChange(page: number) {
+    this.config.page = page;
+    this.getClients();
+  }
+
   public selectClient(client) {
     this.router.navigateByUrl(`/dashboard/clients/${client.id}`);
   }
@@ -79,8 +85,9 @@ export class ClientsComponent implements OnInit {
     this.modal.open({component: CreateClientComponent});
     const settedMode = {
       type: mode,
-      userID: item.id || ''
+      userID: ''
     };
+    item ? settedMode.userID = item.id : settedMode.userID = '';
     this.dashService.setMode(settedMode);
   }
 
@@ -128,6 +135,7 @@ export class ClientsComponent implements OnInit {
         this.clients = clients.list;
         this.dataSource.data = this.clients;
         this.loading = false;
+        this.config.totalPage = clients.totalPages;
       }
     });
   }

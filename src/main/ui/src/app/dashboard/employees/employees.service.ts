@@ -11,7 +11,7 @@ export class EmployeesService {
 
   public getAllEmployees(config: PageConfig) {
     return this.api.get(`${this.baseUrl}/employee?page=${config.page}&size=${config.size}`).map(res => {
-      if (!res.error) {
+      if (res.success) {
         return res;
       }
       return;

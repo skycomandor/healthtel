@@ -1,0 +1,70 @@
+@import '../../../../sass/variables'
+
+\:host
+  display: block
+  width: calc(100% - 200px)
+  height: 60px
+  padding: 0 20px
+  position: fixed
+  bottom: 0
+  background-color: #fff
+
+.paginator-block
+	height: 100%
+	width: 100%
+	display: flex
+	justify-content: space-between
+	align-items: center
+	font-family: $OpenSans
+	font-size: 13px
+	color: $dark
+	&__left,
+	&__right
+		height: 32px
+		display: flex
+		align-items: center
+		&_input
+			height: 100%
+			margin-right: 20px
+			input
+				width: 60px
+				height: 100%
+				margin-left: 4px
+				padding: 5px 12px
+				box-sizing: border-box
+				border: none
+				border: 1px solid $light-grey
+				border-radius: 2px
+				&:focus,
+				&:active
+					outline: none
+					border-color: $blue
+		&_navigation
+			display: flex
+			align-items: center
+			>span
+				margin: 0 15px
+				cursor: pointer
+				&:first-child
+					margin-left: 0
+				&:last-child
+					margin-right: 0
+		&_navigation-icon
+			/deep/ polygon,
+			/deep/ path
+				fill: $dark
+			&.disabled
+				cursor: default!important
+				/deep/ polygon,
+				/deep/ path
+					fill: $light-grey
+			&.left
+				transform: scaleX(-1)
+		&_navigation-item
+			color: $light-grey
+			font-size: 12px
+			font-weight: 600
+			&.active
+				color: $blue
+	&__right
+		font-weight: 600

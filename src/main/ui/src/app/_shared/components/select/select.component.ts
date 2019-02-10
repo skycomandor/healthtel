@@ -1,5 +1,6 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output, HostListener, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Option } from '../../models/common.model';
 
 @Component({
   selector: 'app-select',
@@ -19,7 +20,7 @@ export class SelectComponent implements OnInit {
   @Input()
   public label: string;
   @Input()
-  public options: any;
+  public options: Option[];
   @Input()
   public value: any;
   @Input()

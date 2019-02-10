@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
-import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DashboardService } from '../../dashboard.service';
 import { ValidationService } from 'src/app/_shared/services/validation.service';
 import { getErrors } from 'src/app/_shared/utils/getErrors.util';
-import { ActivatedRoute } from '@angular/router';
+import { Option } from 'src/app/_shared/models/common.model';
 
 @Component({
   selector: 'app-create-employee',
@@ -16,7 +16,7 @@ export class CreateEmployeeComponent implements OnInit {
   public employeeID: string;
   public submitted: boolean;
 
-  public positionsMock = [
+  public positionsMock: Option[] = [
     { title: 'Админ', value: 1 },
     { title: 'Доктор', value: 2 },
   ];
@@ -36,7 +36,6 @@ export class CreateEmployeeComponent implements OnInit {
   constructor(
     private modal: ModalService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private dashServ: DashboardService
   ) { }
 
