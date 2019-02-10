@@ -9,7 +9,7 @@ constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService)
 
   public getAllClients(config: PageConfig) {
     return this.api.get(`${this.baseUrl}/clients?page=${config.page}&size=${config.size}`).map(res => {
-      if (!res.error) {
+      if (res && res.success) {
         return res;
       }
       return;
@@ -18,7 +18,7 @@ constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService)
 
   public getClient(id: string) {
     return this.api.get(`${this.baseUrl}/clients?id=${id}`).map(res => {
-      if (!res.error) {
+      if (res && res.success) {
         return res;
       }
       return;
@@ -27,7 +27,7 @@ constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService)
 
   public createClient(client: any) {
     return this.api.post(`${this.baseUrl}/clients/`, client).map(res => {
-      if (res && !res.error) {
+      if (res && res.success) {
         return res;
       }
       return;
@@ -36,7 +36,7 @@ constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService)
 
   public updateClient(client: any) {
     return this.api.patch(`${this.baseUrl}/clients/`, client).map(res => {
-      if (!res.error) {
+      if (res && res.success) {
         return res;
       }
       return;
@@ -45,7 +45,7 @@ constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService)
 
   public deleteClient(id: any) {
     return this.api.delete(`${this.baseUrl}/clients/${id}`).map(res => {
-      if (!res.error) {
+      if (res && res.success) {
         return res;
       }
       return;

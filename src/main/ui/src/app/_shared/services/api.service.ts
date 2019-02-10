@@ -66,11 +66,11 @@ export class ApiService {
 
   // Method for request with success
   private _handleSuccess(res: any): Observable<any> {
-    if (res && res.error) {
+    if (res && !res.success) {
       throw { error: res };
     }
 
-    if (res && !res.error) {
+    if (res && res.success) {
       // console.log('success');
     }
     return res;

@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { ClientsService } from '../clients.service';
 import { DashboardService } from '../../dashboard.service';
 import { ValidationService } from 'src/app/_shared/services/validation.service';
 import { getErrors } from 'src/app/_shared/utils/getErrors.util';
-import { ActivatedRoute } from '@angular/router';
 import { EmployeesService } from '../../employees/employees.service';
 import { PageConfig } from 'src/app/_shared/models/common.model';
 
@@ -41,7 +40,8 @@ export class CreateClientComponent implements OnInit {
   private clientID: string;
   private config: PageConfig = {
     page: 0,
-    size: 10
+    size: 10,
+    totalPage: null
   };
 
   constructor(

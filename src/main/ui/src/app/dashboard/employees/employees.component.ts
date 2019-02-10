@@ -32,7 +32,8 @@ export class EmployeesComponent implements OnInit {
   private _editColumn: ElementRef[];
   private config: PageConfig = {
     page: 0,
-    size: 10
+    size: 10,
+    totalPage: null
   };
 
   constructor(
@@ -61,8 +62,9 @@ export class EmployeesComponent implements OnInit {
     this.modal.open({component: CreateEmployeeComponent});
     const settedMode = {
       type: mode,
-      userID: item.id || ''
+      userID: ''
     };
+    item ? settedMode.userID = item.id : settedMode.userID = '';
     this.dashService.setMode(settedMode);
   }
 
@@ -93,6 +95,7 @@ export class EmployeesComponent implements OnInit {
         this.employees = employees.list;
         this.dataSource.data = this.employees;
         this.loading = false;
+        this.config.totalPage = employees.totalPages;
       }
     });
   }

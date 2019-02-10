@@ -1,0 +1,68 @@
+<div class="paginator-block">
+  <div class="paginator-block__left">
+    <div class="paginator-block__left_input">
+      Page
+      <input type="text" name="page" mask="0*" [value]="activePage" (input)="onPageChange($event.target.value)">
+    </div>
+
+    <div class="paginator-block__left_navigation">
+      <span
+        class="paginator-block__left_navigation-icon left"
+        [class.disabled]="activePage == 1"
+        [inlineSVG]="'/assets/icons/pagination-arrow-2.svg'"
+        [cacheSVG]="false"
+        (click)="onPageChange(1)"></span>
+      <span
+        class="paginator-block__left_navigation-icon left"
+        [class.disabled]="activePage == 1"
+        [inlineSVG]="'/assets/icons/pagination-arrow.svg'"
+        [cacheSVG]="false"
+        (click)="updatePage('minus')"></span>
+
+      <ng-container *ngIf="6 > totalPage">
+        <span 
+          class="paginator-block__left_navigation-item"
+          [class.active]="activePage == (i + 1)"
+          *ngFor="let page of generateSmallArr(); let i = index"
+          (click)="onPageChange(page)">{{ page }}</span>
+      </ng-container>
+
+      <ng-container *ngIf="activePage > totalPage - 6">
+        <span 
+          class="paginator-block__left_navigation-item"
+          [class.active]="activePage == page"
+          *ngFor="let page of generateEndArr(); let i = index"
+          (click)="onPageChange(page)">{{ page }}</span>
+      </ng-container>
+
+      <ng-container *ngIf="totalPage > 5 && totalPage - 5 > activePage">
+        <span 
+          class="paginator-block__left_navigation-item"
+          [class.active]="activePage == page"
+          *ngFor="let page of generateStartArr(); let i = index"
+          (click)="onPageChange(page)">{{ page }}</span>
+        <span class="paginator-block__left_navigation-item">. . .</span>
+        <span 
+          class="paginator-block__left_navigation-item"
+          [class.active]="activePage == page"
+          *ngFor="let page of generateEndArr(); let i = index"
+          (click)="onPageChange(page)">{{ page }}</span>
+      </ng-container>
+
+      <span
+        class="paginator-block__left_navigation-icon"
+        [class.disabled]="activePage == totalPage"
+        [inlineSVG]="'/assets/icons/pagination-arrow.svg'"
+        [cacheSVG]="false"
+        (click)="updatePage('plus')"></span>
+      <span
+        class="paginator-block__left_navigation-icon"
+        [class.disabled]="activePage == totalPage"
+        [inlineSVG]="'/assets/icons/pagination-arrow-2.svg'"
+        [cacheSVG]="false"
+        (click)="onPageChange(totalPage)"></span>
+    </div>
+  </div>
+
+  <!-- <div class="paginator-block__right">1 - 14 of 28</div> -->
+</div>

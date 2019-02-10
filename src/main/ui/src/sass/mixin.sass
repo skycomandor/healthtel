@@ -58,6 +58,8 @@
 
 @mixin content-table
   height: calc(100vh - 70px)
+  padding-bottom: 60px
+  position: relative
   > div:first-child
     height: 70px
     padding: 0 30px 0 20px
@@ -106,6 +108,11 @@
           height: 16px
           position: absolute
           right: 10px
+
+@mixin content-table-holder
+  padding: 0 20px
+  height: calc(100vh - 200px)
+  overflow: auto
 
 @mixin search-active
   input
