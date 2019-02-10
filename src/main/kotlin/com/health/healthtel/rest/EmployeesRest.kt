@@ -31,7 +31,7 @@ class EmployeesRest(private val employeeRepository: EmployeeRepository) {
 
         val page = PageRequest.of(page, size)
         val result = employeeRepository.findAll(clientExample, page)
-        return ResponseDto(result.content, 0, true)
+        return ResponseDto(result.content, (employeeRepository.count() / size) - 1, true)
     }
 
     @PostMapping("employee")

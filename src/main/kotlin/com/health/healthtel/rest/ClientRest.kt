@@ -22,7 +22,7 @@ class ClientRest(private val clientRepo: ClientRepository) {
             @RequestParam(value = "patronymic", required = false) patronymic: String?,
             @RequestParam(value = "email", required = false) email: String?,
             @RequestParam(value = "size", required = false, defaultValue = "10") size: Int,
-            @RequestParam(value = "page", required = false, defaultValue = "0") page: Int
+            @RequestParam(value = "page", required = false, defaultValue = "1") page: Int
     ): ResponseDto<Client> {
         val clientExample = Example.of(Client(id = id,
                 firstname = firstname,
@@ -30,10 +30,10 @@ class ClientRest(private val clientRepo: ClientRepository) {
                 patronymic = patronymic,
                 email = email))
 
-        val page = PageRequest.of(page, size)
+        val page = PageRequest.of(page - 1, size)
         val result = clientRepo.findAll(clientExample, page)
 
-        return ResponseDto(result.content, clientRepo.count() / size, true)
+        return ResponseDto(result.content, (clientRepo.count() / size) - 1, true)
     }
 
    @PostMapping("clients")
