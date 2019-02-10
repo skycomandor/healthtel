@@ -5,6 +5,7 @@ import { DashboardService } from '../../dashboard.service';
 import { ValidationService } from 'src/app/_shared/services/validation.service';
 import { getErrors } from 'src/app/_shared/utils/getErrors.util';
 import { Option } from 'src/app/_shared/models/common.model';
+import { EmployeesService } from '../employees.service';
 
 @Component({
   selector: 'app-create-employee',
@@ -17,16 +18,21 @@ export class CreateEmployeeComponent implements OnInit {
   public submitted: boolean;
 
   public positionsMock: Option[] = [
-    { title: 'Админ', value: 1 },
-    { title: 'Доктор', value: 2 },
+    { title: 'Админ', value: 'admin' },
+    { title: 'Доктор', value: 'doctor' },
+  ];
+
+  public genderOptions = [
+    { label: 'Муж.', value: 'm' },
+    { label: 'Жен.', value: 'f' },
   ];
 
   public employeeForm: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     patronymic: ['', Validators.required],
-    birthDate: [''],
-    email: ['', ValidationService.emailValidator],
+    birthDate: ['', Validators.required],
+    gender: ['', Validators.required],
     position: [''],
     phone: ['', Validators.required],
     login: ['', Validators.required],
@@ -36,11 +42,36 @@ export class CreateEmployeeComponent implements OnInit {
   constructor(
     private modal: ModalService,
     private fb: FormBuilder,
-    private dashServ: DashboardService
+    private dashServ: DashboardService,
+    private empService: EmployeesService
   ) { }
 
   ngOnInit() {
     this.initialize();
+  }
+
+  public onSubmit() {
+    this.submitted = true;
+    if (this.employeeForm.invalid) {
+      return;
+    }
+    const form = this.employeeForm.value;
+    const birthArr = form.birthDate.split('.');
+    const employee = {
+      firstname: form.firstName,
+      lastname: form.lastName,
+      patronymic: form.patronymic,
+      sex: form.gender,
+      birthDay: +birthArr[0],
+      birthMonth: +birthArr[1],
+      birthyear: +birthArr[2],
+      phone: form.phone,
+      profile: form.position,
+      login: form.login,
+      passwordHash: form.password,
+      priority: 2,
+    };
+    this.mode === 'add' ? this.createEmployee(employee) : this.updateEmployee(employee);
   }
 
   public onSelectDate(event) {
@@ -63,25 +94,66 @@ export class CreateEmployeeComponent implements OnInit {
 
   private initialize() {
     this.dashServ.mode$.subscribe(mode => {
-      this.employeeID = mode.userID;
-      this.mode = mode.type;
-      if (this.mode === 'edit') {
-        // this.clientsServ.getClient(this.clientID).subscribe(client => {
-        //   client = client.list[0];
-        //   this.clientForm.patchValue({
-        //     firstName: client.firstname,
-        //     lastName: client.lastname,
-        //     patronymic: client.patronymic,
-        //     gender: client.gender,
-        //     birthDate: `${client.birthDay}.${client.birthMonth}.${client.birthyear}`,
-        //     email: client.email || '',
-        //     doctor: client.doctorID || '',
-        //     address: client.address || '',
-        //     discount: client.discount || ''
-        //   });
-        // });
+      if (mode && mode.item === 'employee') {
+        this.employeeID = mode.userID;
+        this.mode = mode.type;
+        if (this.mode === 'edit') {
+          this.empService.getEmployeeById(this.employeeID).subscribe(employee => {
+            if (employee) {
+              employee = employee.list[0];
+              this.employeeForm.patchValue({
+                firstName: employee.firstname,
+                lastName: employee.lastname,
+                patronymic: employee.patronymic,
+                gender: employee.sex,
+                position: this.positionsMock[this.returnIndexByKeyValue(employee.profile, this.positionsMock)] || '',
+                phone: employee.phone || '',
+                login: employee.login || '',
+                password: employee.passwordHash || ''
+              });
+              employee.birthDay ?
+                this.employeeForm.get('birthDate').setValue(this.checkDate([employee.birthDay, employee.birthMonth]) + `.${employee.birthyear}`)
+                : this.employeeForm.get('birthDate').setValue('');
+            }
+          });
+        }
       }
     });
+  }
+
+  private createEmployee(newEmployee) {
+    this.empService.createEmployee(newEmployee).subscribe(res => {
+      if (res) {
+        this.dashServ.setCrudEvent({e: 'create', msg: `Сотрудник ${newEmployee.lastname} создан!`});
+        this.close();
+      }
+    });
+  }
+
+  private updateEmployee(employee) {
+    employee.id = this.employeeID;
+    this.empService.updateEmployee(employee).subscribe(res => {
+      if (res) {
+        this.dashServ.setCrudEvent({e: 'edit', msg: `Сотрудник ${employee.lastname} изменён!`});
+        this.close();
+      }
+    });
+  }
+
+
+  private checkDate(arr) {
+    arr.forEach((item, i) => {
+      item = item.toString();
+      if (item.length < 2) {
+        arr[i] = '0' + item;
+      }
+    });
+    return `${arr[0]}.${arr[1]}`;
+  }
+
+  private returnIndexByKeyValue(value: any, array: Option[]): number {
+    const index = array.findIndex(item => item.value === value);
+    return index;
   }
 
 }

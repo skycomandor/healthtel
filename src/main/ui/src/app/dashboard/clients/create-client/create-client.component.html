@@ -1,4 +1,4 @@
-<div class="modal">
+<div *ngIf="mode === 'add' || clientForm.value.birthDate" class="modal">
   <div class="modal__header">
     <span class="modal__header_title">
       <ng-container *ngIf="mode === 'add'">Создание нового пациента</ng-container>
@@ -46,6 +46,7 @@
         name="birthDate"
         label="Дата рождения"
         required="true"
+        [value]="clientForm.value.birthDate"
         [error]="getErrors('birthDate')"
         (dateSelect)="onSelectDate($event)"></app-calendar>
       <app-input
@@ -58,9 +59,8 @@
         name="doctor"
         label="Доктор"
         caret="true"
-        required="true"
         [options]="users"
-        (select)="onSelect($event)"></app-select>
+        formControlName="doctor"></app-select>
     </div>
     <div class="form-row">
       <app-input

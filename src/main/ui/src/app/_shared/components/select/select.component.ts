@@ -15,14 +15,17 @@ import { Option } from '../../models/common.model';
   ]
 })
 export class SelectComponent implements OnInit {
+  @Input('value')
+  public _value: Option = {
+    title: '',
+    value: ''
+  };
   @Input()
   public name: string;
   @Input()
   public label: string;
   @Input()
   public options: Option[];
-  @Input()
-  public value: any;
   @Input()
   public required: boolean;
   @Input()
@@ -31,11 +34,20 @@ export class SelectComponent implements OnInit {
   public error: string = '';
   @Input()
   public caret: boolean;
-  @Output()
-  public select = new EventEmitter<any>();
 
   public isSelectOpen: boolean = false;
   private _isNotFirstClick: boolean = false;
+
+
+  get value() {
+    return this._value;
+  }
+
+  set value(val) {
+    this._value = val;
+    this.onChange(val.value);
+    this.onTouched();
+  }
 
   constructor(private _elementRef: ElementRef) { }
 
@@ -44,8 +56,7 @@ export class SelectComponent implements OnInit {
 
   onSelect (e, option) {
     this.isSelectOpen = false;
-    this.value = option.title;
-    this.select.emit({name: this.name, value: option.value});
+    this.value = option;
   }
 
   public capitalize(str) {

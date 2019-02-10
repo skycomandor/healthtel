@@ -6,9 +6,10 @@ export class DashboardService {
   private deletedItem = {};
   private crudEvent = {};
   private confirmMsg: string = '';
-  private mode: {type: string, userID?: string} = {
+  private mode: {type: string, userID?: string, item: string} = {
     type: '',
-    userID: ''
+    userID: '',
+    item: ''
   };
 
   private deletedItem$$: BehaviorSubject<any> = new BehaviorSubject<any>(this.deletedItem);
@@ -49,7 +50,7 @@ export class DashboardService {
     return this.mode$$.asObservable();
   }
 
-  public setMode(mode: {type: string, userId?: string}) {
+  public setMode(mode: {type: string, userId?: string, item: string}) {
     this.mode = mode;
     this.mode$$.next(this.mode);
   }

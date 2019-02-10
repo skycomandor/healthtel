@@ -30,6 +30,12 @@ form
       margin-top: 15px
     .form-item
       display: inline
+      &.radio-field
+        display: flex
+        justify-content: center
+        /deep/ span.label
+          color: transparent
+          margin-bottom: 10px
       &:not(:first-child)
         margin-left: 10px
       &.col-1

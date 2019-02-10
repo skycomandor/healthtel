@@ -35,7 +35,7 @@ export class CalendarComponent implements OnInit {
   ];
   public weeks: ICalendarDate[][] = [];
   public selectedDate: ISelectedDate = {
-    mDate: '',
+    mDate: {},
     fullDate: '',
     viewDate: ''
   };
@@ -45,6 +45,8 @@ export class CalendarComponent implements OnInit {
   public isTodayClass: boolean;
   @Input()
   public name: string;
+  @Input()
+  public value: string = '';
   @Input()
   public label: string;
   @Input()
@@ -61,6 +63,10 @@ export class CalendarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    if (this.value) {
+      this.selectedDate.viewDate = this.value;
+      this.date.setValue(this.value);
+    }
     this.setDate();
   }
 

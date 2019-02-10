@@ -7,7 +7,8 @@ import { Observable , Subject, BehaviorSubject } from 'rxjs';
 export class ModalService {
   private result = {
     item: '',
-    id: ''
+    id: '',
+    navigate: false
   };
 
   private _modalSequence$$: Subject<any> = new Subject();
@@ -29,7 +30,7 @@ export class ModalService {
         return this.deleteModalResult$$.asObservable();
     }
 
-    public setDeleteModalResult(result: {item: string, id: any}) {
+    public setDeleteModalResult(result: {item: string, id: any, navigate: boolean}) {
       this.deleteModalResult$$.next(result);
     }
 }

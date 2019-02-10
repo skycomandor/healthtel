@@ -23,7 +23,23 @@
         <span class="content__header_user-role">Admin</span>
       </div>
       <div class="content__header_actions">
-        <span [class.active]="confirmMsg&&isShowMsg" class="confirm-msg">{{ confirmMsg }}</span>
+        <span [class.active]="confirmMsg&&isShowMsg" [class.alert]="!confirmMsg.includes('!')" class="confirm-msg">{{ confirmMsg }}</span>
+        <div #quick class="quick-add">
+          <span class="quick-add__title" (click)="isShowQuick=!isShowQuick">
+            <span class="blue-icon" [inlineSVG]="'/assets/icons/create.svg'" [cacheSVG]="false"></span>
+            Нужно быстро создать?
+          </span>
+          <div class="quick-add__list" [class.active]="isShowQuick">
+            <span class="quick-add__list_item" (click)="openModal('client')">
+              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-customers.svg'" [cacheSVG]="false"></span>
+              Новый пациент
+            </span>
+            <span class="quick-add__list_item" (click)="openModal('employee')">
+              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-profile.svg'" [cacheSVG]="false"></span>
+              Новый сотрудник
+            </span>
+          </div>
+        </div>
         <div #notification class="notifications" (click)="isNotification=!isNotification">
           <span class="notifications__marker">3</span>
           <span class="grey-icon" [inlineSVG]="'/assets/icons/notification.svg'" [cacheSVG]="false"></span>

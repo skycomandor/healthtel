@@ -10,7 +10,8 @@ import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 export class DeleteModalComponent implements OnInit {
   public deletedItem = {
     id: '',
-    role: ''
+    role: '',
+    navigate: false
   };
 
   constructor(private dashService: DashboardService, private modal: ModalService) { }
@@ -20,8 +21,7 @@ export class DeleteModalComponent implements OnInit {
   }
 
   public confirm() {
-    this.modal.setDeleteModalResult({item: this.deletedItem.role, id: this.deletedItem.id});
-    this.close();
+    this.modal.setDeleteModalResult({item: this.deletedItem.role, id: this.deletedItem.id, navigate: this.deletedItem.navigate});
   }
 
   public close() {

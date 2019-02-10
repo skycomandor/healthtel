@@ -1,10 +1,79 @@
-<div class="client">
+<div *ngIf="client" class="client">
   <div class="client__header">
     <span class="client__header_nav" (click)="navigate()">
       <span class="grey-icon"
         [inlineSVG]="'/assets/icons/back.svg'"
         [cacheSVG]="false"></span>
       Все пациенты
+      <app-loader *ngIf="loading"></app-loader>
     </span>
+    <div class="client__header_actions">
+      <span class="action-item" (click)="openModal('edit')">
+        <span class="green-icon" [inlineSVG]="'/assets/icons/edit.svg'" [cacheSVG]="false"></span>
+        Изменить
+      </span>
+      <span class="action-item" (click)="openModal('delete')">
+        <span class="grey-icon" [inlineSVG]="'/assets/icons/remove.svg'" [cacheSVG]="false"></span>
+        Удалить
+      </span>
+    </div>
+  </div>
+  <div class="client__content">
+    <div class="client__content_name-area">
+      <div class="client-logo">{{getInitials()}}</div>
+      <div class="client-name">
+        <span>{{ client.lastname }} {{ client.firstname }} {{ client.patronymic }}</span>
+        <span>{{ getAge() }}
+          <ng-container *ngIf="getAge() > 4">лет</ng-container>
+          <ng-container *ngIf="getAge() > 1 && 5 > getAge()">года</ng-container>
+          <ng-container *ngIf="2 > getAge()">год</ng-container>
+        </span>
+      </div>
+    </div>
+
+    <div class="client__content_info">
+      <div class="info-item">
+        <div class="info-item__title">
+          <span>Телефон:</span>
+          <span>E-Mail:</span>
+          <span>Адрес:</span>
+        </div>
+        <div class="info-item__text">
+          <span>
+            <ng-container *ngIf="client.phone">{{client.phone}}</ng-container>
+            <ng-container *ngIf="!client.phone">-</ng-container>
+          </span>
+          <span>
+            <ng-container *ngIf="client.email">{{client.email}}</ng-container>
+            <ng-container *ngIf="!client.email">-</ng-container>
+          </span>
+          <span>
+            <ng-container *ngIf="client.address">{{client.address}}</ng-container>
+            <ng-container *ngIf="!client.address">-</ng-container>
+          </span>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item__title">
+          <span>Доктор:</span>
+          <span>Дисконт:</span>
+          <span>Комментарий:</span>
+        </div>
+        <div class="info-item__text">
+          <span>
+            <ng-container *ngIf="client.doctor">{{client.doctor.lastname}} {{client.doctor.firstname[0]}}.{{client.doctor.patronymic[0]}}.</ng-container>
+            <ng-container *ngIf="!client.doctor">-</ng-container>
+          </span>
+          <span>
+            <ng-container *ngIf="client.discount">{{client.discount}}</ng-container>
+            <ng-container *ngIf="!client.discount">-</ng-container>
+          </span>
+          <span>
+            <ng-container *ngIf="client.comment">{{client.comment}}</ng-container>
+            <ng-container *ngIf="!client.comment">-</ng-container>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -31,9 +31,10 @@ export class EmployeesComponent implements OnInit {
   @ViewChildren('editColumn')
   private _editColumn: ElementRef[];
   private config: PageConfig = {
-    page: 0,
+    page: 1,
     size: 10,
-    totalPage: null
+    totalPage: null,
+    search: null
   };
 
   constructor(
@@ -45,6 +46,34 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.sort = this._sort;
+    this.getEmployees();
+    this.modal.deleteModalResult$.subscribe(res => {
+      if (res && res.item === 'employee' && !res.navigate) {
+        this.empService.deleteEmployee(res.id).subscribe(responce => {
+          if (responce) {
+            this.getEmployees();
+            this.modal.close();
+            this.dashService.setConfirmMsg('Сотрудник удалён!');
+            this.clear();
+          }
+        });
+      }
+    });
+    this.dashService.crudEvent$.subscribe(event => {
+      if (event && event.msg) {
+        this.getEmployees();
+        this.dashService.setConfirmMsg(event.msg);
+      }
+    });
+  }
+
+
+  public onSearch(searchText: string) {
+    if (searchText) {
+      this.config.search = searchText;
+    } else {
+      this.config.search = '';
+    }
     this.getEmployees();
   }
 
@@ -62,7 +91,8 @@ export class EmployeesComponent implements OnInit {
     this.modal.open({component: CreateEmployeeComponent});
     const settedMode = {
       type: mode,
-      userID: ''
+      userID: '',
+      item: 'employee'
     };
     item ? settedMode.userID = item.id : settedMode.userID = '';
     this.dashService.setMode(settedMode);
@@ -98,6 +128,12 @@ export class EmployeesComponent implements OnInit {
         this.config.totalPage = employees.totalPages;
       }
     });
+  }
+
+
+  private clear() {
+    this.dashService.setDeletedItem(null);
+    this.modal.setDeleteModalResult(null);
   }
 
 }

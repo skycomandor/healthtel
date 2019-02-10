@@ -39,11 +39,13 @@
         required="true"
         [error]="getErrors('birthDate')"
         (dateSelect)="onSelectDate($event)"></app-calendar>
-      <app-input
-        class="form-item col-3"
-        label="E-Mail"
-        [error]="getErrors('email')"
-        formControlName="email"></app-input>
+      <app-radio-field
+        class="form-item col-3 radio-field"
+        label="."
+        checked="true"
+        [options]="genderOptions"
+        [radioForm]="employeeForm"
+        fieldName="gender"></app-radio-field>
     </div>
     <div class="form-row">
       <app-input
@@ -60,10 +62,11 @@
         class="form-item col-2"
         name="position"
         label="Должность"
-        [options]="positionsMock"
         caret="true"
+        required="true"
         [error]="getErrors('position')"
-        (select)="onSelect($event)"></app-select>
+        [options]="positionsMock"
+        formControlName="position"></app-select>
     </div>
     <div class="form-row">
       <app-input

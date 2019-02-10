@@ -4,21 +4,21 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-loader',
   template: `
   <div class="loader">
-    <mat-spinner diameter="80" strokeWidth="2"></mat-spinner>
+    <mat-spinner diameter="20" strokeWidth="2"></mat-spinner>
   </div>`,
   styles: [
     `
       .loader {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        width: 20px;
+        height: 20px;
         border-radius: 4px;
-        background-color: rgba(255, 255, 255, 0.8);
-        left: 0;
+        right: -50px;
         top: 0;
         display: flex;
         align-items: center;
         justify-content: space-around;
+        z-index: 101;
       }
     `
   ]

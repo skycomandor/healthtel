@@ -33,9 +33,10 @@ export class ClientsComponent implements OnInit {
   private _editColumn: ElementRef[];
 
   private config: PageConfig = {
-    page: 0,
+    page: 1,
     size: 10,
-    totalPage: null
+    totalPage: null,
+    search: null
   };
 
   constructor(
@@ -49,11 +50,13 @@ export class ClientsComponent implements OnInit {
     this.dataSource.sort = this._sort;
     this.getClients();
     this.modal.deleteModalResult$.subscribe(res => {
-      if (res.item === 'client') {
+      if (res && res.item === 'client' && !res.navigate) {
         this.clientsServ.deleteClient(res.id).subscribe(responce => {
           if (responce) {
             this.getClients();
+            this.modal.close();
             this.dashService.setConfirmMsg('Пациент удалён!');
+            this.clear();
           }
         });
       }
@@ -64,6 +67,15 @@ export class ClientsComponent implements OnInit {
         this.dashService.setConfirmMsg(event.msg);
       }
     });
+  }
+
+  public onSearch(searchText: string) {
+    if (searchText) {
+      this.config.search = searchText;
+    } else {
+      this.config.search = '';
+    }
+    this.getClients();
   }
 
   public onPageChange(page: number) {
@@ -85,7 +97,8 @@ export class ClientsComponent implements OnInit {
     this.modal.open({component: CreateClientComponent});
     const settedMode = {
       type: mode,
-      userID: ''
+      userID: '',
+      item: 'client'
     };
     item ? settedMode.userID = item.id : settedMode.userID = '';
     this.dashService.setMode(settedMode);
@@ -134,10 +147,15 @@ export class ClientsComponent implements OnInit {
       if (clients) {
         this.clients = clients.list;
         this.dataSource.data = this.clients;
-        this.loading = false;
         this.config.totalPage = clients.totalPages;
+        this.loading = false;
       }
     });
+  }
+
+  private clear() {
+    this.dashService.setDeletedItem(null);
+    this.modal.setDeleteModalResult(null);
   }
 
 }

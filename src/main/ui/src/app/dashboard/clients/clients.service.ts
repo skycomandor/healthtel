@@ -8,7 +8,11 @@ export class ClientsService {
 constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService) {}
 
   public getAllClients(config: PageConfig) {
-    return this.api.get(`${this.baseUrl}/clients?page=${config.page}&size=${config.size}`).map(res => {
+    let searchData: string = '';
+    if (config.search) {
+      searchData = `lastname=${config.search}&`;
+    }
+    return this.api.get(`${this.baseUrl}/clients?${searchData}page=${config.page}&size=${config.size}`).map(res => {
       if (res && res.success) {
         return res;
       }
@@ -45,7 +49,7 @@ constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService)
 
   public deleteClient(id: any) {
     return this.api.delete(`${this.baseUrl}/clients/${id}`).map(res => {
-      if (res && res.success) {
+      if (res && res.success && !res.error) {
         return res;
       }
       return;

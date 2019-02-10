@@ -25,7 +25,7 @@ export class CreateClientComponent implements OnInit {
     gender: [''],
     birthDate: ['', Validators.required],
     email: ['', ValidationService.emailValidator],
-    doctor: ['', Validators.required],
+    doctor: [null],
     address: [''],
     discount: [''],
     phones: this.fb.array([this.createPhone()]),
@@ -39,7 +39,7 @@ export class CreateClientComponent implements OnInit {
 
   private clientID: string;
   private config: PageConfig = {
-    page: 0,
+    page: 1,
     size: 10,
     totalPage: null
   };
@@ -69,21 +69,20 @@ export class CreateClientComponent implements OnInit {
       lastname: form.lastName,
       patronymic: form.patronymic,
       gender: form.gender,
-      email: form.email || '',
-      discount: form.discount || '',
-      birthDay: birthArr[0],
-      birthMonth: birthArr[1],
-      birthyear: birthArr[2],
-      address: form.address || '',
-      doctorID: form.doctor
+      email: form.email,
+      discount: form.discount,
+      birthDay: +birthArr[0],
+      birthMonth: +birthArr[1],
+      birthyear: +birthArr[2],
+      address: form.address,
+      doctor: null
     };
+    form.doctor.title ?
+      client.doctor = {id: form.doctor.value}
+      : Number.isInteger(form.doctor) ?
+        client.doctor = {id: form.doctor}
+        : client.doctor = null;
     this.mode === 'add' ? this.createClient(client) : this.updateClient(client);
-  }
-
-  public onSelect(e) {
-    if (e && e.value) {
-      this.clientForm.get(e.name).setValue(e.value);
-    }
   }
 
   public onSelectDate(event) {
@@ -95,7 +94,7 @@ export class CreateClientComponent implements OnInit {
   }
 
   public createPhone(): FormControl {
-    return this.fb.control('', Validators.required);
+    return this.fb.control(''/* , Validators.required */);
   }
 
   public addPhone() {
@@ -124,23 +123,33 @@ export class CreateClientComponent implements OnInit {
 
   private initialize() {
     this.dashServ.mode$.subscribe(mode => {
-      this.clientID = mode.userID;
-      this.mode = mode.type;
-      if (this.mode === 'edit') {
-        this.clientsServ.getClient(this.clientID).subscribe(client => {
-          client = client.list[0];
-          this.clientForm.patchValue({
-            firstName: client.firstname,
-            lastName: client.lastname,
-            patronymic: client.patronymic,
-            gender: client.gender,
-            birthDate: `${client.birthDay}.${client.birthMonth}.${client.birthyear}`,
-            email: client.email || '',
-            doctor: client.doctorID || '',
-            address: client.address || '',
-            discount: client.discount || ''
+      if (mode && mode.item === 'client') {
+        this.clientID = mode.userID;
+        this.mode = mode.type;
+        if (this.mode === 'edit') {
+          this.clientsServ.getClient(this.clientID).subscribe(client => {
+            client = client.list[0];
+            this.clientForm.patchValue({
+              firstName: client.firstname,
+              lastName: client.lastname,
+              patronymic: client.patronymic,
+              gender: client.gender,
+              birthDate: this.checkDate([client.birthDay, client.birthMonth]) + `.${client.birthyear}`,
+              email: client.email || '',
+              address: client.address || '',
+              discount: client.discount || ''
+            });
+            if (client.doctor) {
+              this.clientForm.get('doctor')
+              .setValue({
+                title: `${client.doctor.lastname} ${client.doctor.firstname[0]}.${client.doctor.patronymic[0]}.`,
+                value: client.doctor.id
+              });
+            } else {
+              this.clientForm.get('doctor').setValue('');
+            }
           });
-        });
+        }
       }
     });
   }
@@ -167,7 +176,7 @@ export class CreateClientComponent implements OnInit {
   private createClient(newClient) {
     this.clientsServ.createClient(newClient).subscribe(res => {
       if (res) {
-        this.dashServ.setCrudEvent({e: 'create', msg: 'Пациент создан!'});
+        this.dashServ.setCrudEvent({e: 'create', msg: `Пациент ${newClient.lastname} создан!`});
         this.close();
       }
     });
@@ -175,7 +184,22 @@ export class CreateClientComponent implements OnInit {
 
   private updateClient(client) {
     client.id = this.clientID;
-    this.clientsServ.updateClient(client).subscribe(res => {});
+    this.clientsServ.updateClient(client).subscribe(res => {
+      if (res) {
+        this.dashServ.setCrudEvent({e: 'edit', msg: `Пациент ${client.lastname} изменён!`});
+        this.close();
+      }
+    });
+  }
+
+  private checkDate(arr) {
+    arr.forEach((item, i) => {
+      item = item.toString();
+      if (item.length < 2) {
+        arr[i] = '0' + item;
+      }
+    });
+    return `${arr[0]}.${arr[1]}`;
   }
 
 }
