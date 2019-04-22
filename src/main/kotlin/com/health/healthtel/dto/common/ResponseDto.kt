@@ -1,4 +1,4 @@
-package com.health.healthtel.dto
+package com.health.healthtel.dto.common
 
 class ResponseDto<T> (
         val list: List<T>? = null,

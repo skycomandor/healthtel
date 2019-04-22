@@ -5,7 +5,7 @@ import org.hibernate.annotations.NotFoundAction
 import javax.persistence.*
 
 @Entity(name = "clients")
-data class Client(
+data class ClientEntity(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
         val firstname: String? = null,

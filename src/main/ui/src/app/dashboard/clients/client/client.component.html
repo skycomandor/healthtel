@@ -1,4 +1,4 @@
-<div *ngIf="client" class="client">
+<div *ngIf="clientEntity" class="clientEntity">
   <div class="client__header">
     <span class="client__header_nav" (click)="navigate()">
       <span class="grey-icon"
@@ -20,9 +20,9 @@
   </div>
   <div class="client__content">
     <div class="client__content_name-area">
-      <div class="client-logo">{{getInitials()}}</div>
-      <div class="client-name">
-        <span>{{ client.lastname }} {{ client.firstname }} {{ client.patronymic }}</span>
+      <div class="clientEntity-logo">{{getInitials()}}</div>
+      <div class="clientEntity-name">
+        <span>{{ clientEntity.lastname }} {{ clientEntity.firstname }} {{ clientEntity.patronymic }}</span>
         <span>{{ getAge() }}
           <ng-container *ngIf="getAge() > 4">лет</ng-container>
           <ng-container *ngIf="getAge() > 1 && 5 > getAge()">года</ng-container>
@@ -40,16 +40,16 @@
         </div>
         <div class="info-item__text">
           <span>
-            <ng-container *ngIf="client.phone">{{client.phone}}</ng-container>
-            <ng-container *ngIf="!client.phone">-</ng-container>
+            <ng-container *ngIf="clientEntity.phone">{{clientEntity.phone}}</ng-container>
+            <ng-container *ngIf="!clientEntity.phone">-</ng-container>
           </span>
           <span>
-            <ng-container *ngIf="client.email">{{client.email}}</ng-container>
-            <ng-container *ngIf="!client.email">-</ng-container>
+            <ng-container *ngIf="clientEntity.email">{{clientEntity.email}}</ng-container>
+            <ng-container *ngIf="!clientEntity.email">-</ng-container>
           </span>
           <span>
-            <ng-container *ngIf="client.address">{{client.address}}</ng-container>
-            <ng-container *ngIf="!client.address">-</ng-container>
+            <ng-container *ngIf="clientEntity.address">{{clientEntity.address}}</ng-container>
+            <ng-container *ngIf="!clientEntity.address">-</ng-container>
           </span>
         </div>
       </div>
@@ -61,16 +61,16 @@
         </div>
         <div class="info-item__text">
           <span>
-            <ng-container *ngIf="client.doctor">{{client.doctor.lastname}} {{client.doctor.firstname[0]}}.{{client.doctor.patronymic[0]}}.</ng-container>
-            <ng-container *ngIf="!client.doctor">-</ng-container>
+            <ng-container *ngIf="clientEntity.doctor">{{clientEntity.doctor.lastname}} {{clientEntity.doctor.firstname[0]}}.{{clientEntity.doctor.patronymic[0]}}.</ng-container>
+            <ng-container *ngIf="!clientEntity.doctor">-</ng-container>
           </span>
           <span>
-            <ng-container *ngIf="client.discount">{{client.discount}}</ng-container>
-            <ng-container *ngIf="!client.discount">-</ng-container>
+            <ng-container *ngIf="clientEntity.discount">{{clientEntity.discount}}</ng-container>
+            <ng-container *ngIf="!clientEntity.discount">-</ng-container>
           </span>
           <span>
-            <ng-container *ngIf="client.comment">{{client.comment}}</ng-container>
-            <ng-container *ngIf="!client.comment">-</ng-container>
+            <ng-container *ngIf="clientEntity.comment">{{clientEntity.comment}}</ng-container>
+            <ng-container *ngIf="!clientEntity.comment">-</ng-container>
           </span>
         </div>
       </div>

@@ -1,14 +1,11 @@
 package com.health.healthtel.rest
 
-import com.health.healthtel.dto.MessageDto
-import com.health.healthtel.dto.ResponseDto
+import com.health.healthtel.dto.common.MessageDto
+import com.health.healthtel.dto.common.ResponseDto
 import com.health.healthtel.entities.Phones
-import com.health.healthtel.entities.Rooms
 import com.health.healthtel.repository.PhoneRepository
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.PageRequest
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @CrossOrigin
@@ -17,7 +14,7 @@ class PhonesRest(private val phoneRepository: PhoneRepository){
 
     @GetMapping("phones")
     fun getAllPhones(@RequestParam(value = "id", required = false) id: Long,
-                    @RequestParam(value = "clientId", required = false) clientId: Int,
+                    @RequestParam(value = "clientId", required = false) clientId: Long,
                     @RequestParam(value = "phone", required = false) phone: String,
                     @RequestParam(value = "size", required = false, defaultValue = "10") size: Int,
                     @RequestParam(value = "page", required = false, defaultValue = "0") page: Int): ResponseDto<Phones> {
@@ -31,13 +28,13 @@ class PhonesRest(private val phoneRepository: PhoneRepository){
     }
 
     @PostMapping("phones")
-    fun addPhones(@RequestBody phones: Phones): MessageDto{
+    fun addPhones(@RequestBody phones: Phones): MessageDto {
         phoneRepository.save(phones)
         return MessageDto(true, "phone was created")
     }
 
     @DeleteMapping("phones/{id}")
-    fun removePhones(@PathVariable("id") id: Long): MessageDto{
+    fun removePhones(@PathVariable("id") id: Long): MessageDto {
         phoneRepository.deleteById(id)
         return MessageDto(true, "phone was deleted")
     }
