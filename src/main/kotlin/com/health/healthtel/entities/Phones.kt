@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity(name = "phones")
 data class Phones(
-        @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
         @Column(name = "client_id")
         val clientId: Long = 0,

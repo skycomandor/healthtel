@@ -26,7 +26,7 @@ export class ClientsComponent implements OnInit {
   public searchBlock: ElementRef;
 
   public dataSource: MatTableDataSource<any> = new MatTableDataSource;
-  public displayedColumns = ['fullName', 'birthdate', 'phone', 'doctor', 'discount', 'edit'];
+  public displayedColumns = ['fullName', 'lastVisit', 'phone', 'doctor', 'discount', 'edit'];
   @ViewChild(MatSort)
   private _sort: MatSort;
   @ViewChildren('editColumn')
@@ -147,6 +147,7 @@ export class ClientsComponent implements OnInit {
       if (clients) {
         this.clients = clients.list;
         this.dataSource.data = this.clients;
+        console.log(this.clients)
         this.config.totalPage = clients.totalPages;
         this.loading = false;
       }

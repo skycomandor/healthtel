@@ -32,7 +32,7 @@ export class ClientComponent implements OnInit {
     });
     this.modal.deleteModalResult$.subscribe(res => {
       if (res && res.item === 'client' && res.navigate) {
-        this.loading = true;
+        this.loading = true
         this.clientsServ.deleteClient(res.id).subscribe(responce => {
           if (responce) {
             this.dashService.setConfirmMsg('Пациент удалён!');

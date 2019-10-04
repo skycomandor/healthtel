@@ -12,7 +12,7 @@ constructor(@Inject('baseUrl') private baseUrl: string, private api: ApiService)
     if (config.search) {
       searchData = `lastname=${config.search}&`;
     }
-    return this.api.get(`${this.baseUrl}/clients?${searchData}page=${config.page}&size=${config.size}`).map(res => {
+    return this.api.get(`${this.baseUrl}/inlineclients?${searchData}page=${config.page}&size=${config.size}`).map(res => {
       if (res && res.success) {
         return res;
       }
