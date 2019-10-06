@@ -23,7 +23,7 @@ export class DashboardService {
     return this.deletedItem$$.asObservable();
   }
 
-  public setDeletedItem(item) {
+  setDeletedItem(item) {
     this.deletedItem = item;
     this.deletedItem$$.next(this.deletedItem);
   }
@@ -32,7 +32,7 @@ export class DashboardService {
     return this.confirmMsg$$.asObservable();
   }
 
-  public setConfirmMsg(msg: string) {
+  setConfirmMsg(msg: string) {
     this.confirmMsg = msg;
     this.confirmMsg$$.next(this.confirmMsg);
   }
@@ -41,7 +41,7 @@ export class DashboardService {
     return this.crudEvent$$.asObservable();
   }
 
-  public setCrudEvent(event: any) {
+  setCrudEvent(event: any) {
     this.crudEvent = event;
     this.crudEvent$$.next(this.crudEvent);
   }
@@ -50,7 +50,7 @@ export class DashboardService {
     return this.mode$$.asObservable();
   }
 
-  public setMode(mode: {type: string, userId?: string, item: string}) {
+  setMode(mode: {type: string, userId?: string, item: string}) {
     this.mode = mode;
     this.mode$$.next(this.mode);
   }

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ClientsService } from '../clients.service';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
-import { CreateClientComponent } from '../create-client/create-client.component';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { DashboardService } from '../../dashboard.service';
+import { ApiService } from 'src/app/_shared/services/api.service';
 
 @Component({
   selector: 'app-client',
@@ -12,15 +11,15 @@ import { DashboardService } from '../../dashboard.service';
   styleUrls: ['./client.component.sass']
 })
 export class ClientComponent implements OnInit {
-  public client;
-  public loading: boolean = true;
+  client;
+  loading: boolean = true;
 
   private clientID: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clientsServ: ClientsService,
+    private api: ApiService,
     private modal: ModalService,
     private dashService: DashboardService
     ) { }
@@ -32,8 +31,8 @@ export class ClientComponent implements OnInit {
     });
     this.modal.deleteModalResult$.subscribe(res => {
       if (res && res.item === 'client' && res.navigate) {
-        this.loading = true
-        this.clientsServ.deleteClient(res.id).subscribe(responce => {
+        this.loading = true;
+        this.api.client.deleteClient(res.id).subscribe(responce => {
           if (responce) {
             this.dashService.setConfirmMsg('Пациент удалён!');
             this.clear();
@@ -54,7 +53,7 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  public openModal(mode: string) {
+  openModal(mode: string) {
     if (mode === 'delete') {
       this.modal.open({component: DeleteModalComponent});
       this.client.role = 'client';
@@ -62,20 +61,20 @@ export class ClientComponent implements OnInit {
       this.dashService.setDeletedItem(this.client);
       return;
     }
-    this.modal.open({component: CreateClientComponent});
-    const settedMode = {
+    this.router.navigateByUrl(`/dashboard/clients/${this.clientID}/edit-client`)
+    const modalMode = {
       type: mode,
       userID: this.client.id,
       item: 'client'
     };
-    this.dashService.setMode(settedMode);
+    this.dashService.setMode(modalMode);
   }
 
-  public getInitials(): string {
+  getInitials(): string {
     return `${this.client.lastname[0]}${this.client.firstname[0]}`;
   }
 
-  public getAge() {
+  getAge() {
     const today = new Date();
     const d = today.getDate();
     const m = today.getMonth() + 1;
@@ -87,12 +86,12 @@ export class ClientComponent implements OnInit {
     return clientAge;
   }
 
-  public navigate() {
+  navigate() {
     this.router.navigateByUrl('/dashboard/clients');
   }
 
   private getClient() {
-    this.clientsServ.getClient(this.clientID).subscribe(client => {
+    this.api.client.getClient(this.clientID).subscribe(client => {
       this.client = client.list[0];
       this.loading = false;
     });

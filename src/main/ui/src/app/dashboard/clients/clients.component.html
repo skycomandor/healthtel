@@ -6,10 +6,10 @@
     <div class="content-wrapper__header_actions">
       <div #searchBlock class="search-action action-item" [class.active]="isSearch" (click)="isSearch=!isSearch">
         <input type="text" (click)="$event.stopPropagation()" (input)="onSearch($event.target.value)">
-        <span class="grey-icon" [inlineSVG]="'/assets/icons/search.svg'" [cacheSVG]="false"></span>
+        <span class="grey-icon" [inlineSVG]="'/assets/icons/search.svg'"></span>
       </div>
       <span class="create-action action-item" (click)="openModal('add')">
-        <span class="green-icon" [inlineSVG]="'/assets/icons/create.svg'" [cacheSVG]="false"></span>
+        <span class="green-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
         Добавить
       </span>
     </div>
@@ -27,7 +27,7 @@
             </div>
           </td>
         </ng-container>
-  
+
         <!-- BirthDate Column -->
         <ng-container matColumnDef="lastVisit">
           <th mat-header-cell *matHeaderCellDef>Последний визит</th>
@@ -35,7 +35,7 @@
             <span *ngIf="element.lastVisitDate">{{ element.lastVisitDate }}</span>
           </td>
         </ng-container>
-    
+
         <!-- Phone Column -->
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef>Телефон</th>
@@ -43,7 +43,7 @@
             {{element.mainPhoneNumber}}
           </td>
         </ng-container>
-    
+
         <!-- Doctor Column -->
         <ng-container matColumnDef="doctor">
           <th mat-header-cell *matHeaderCellDef>Лечащий врач</th>
@@ -51,7 +51,7 @@
             <span *ngIf="element.doctorsLastName">{{ element.doctorsLastName }}</span>
           </td>
         </ng-container>
-  
+
         <!-- Discount Column -->
         <ng-container matColumnDef="discount">
           <th mat-header-cell *matHeaderCellDef>Дисконт</th>
@@ -63,7 +63,7 @@
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element; let i = index" #editColumn>
             <div class="edit-block" (click)="openActions($event, i)">
-              <span class="grey-icon" [inlineSVG]="'/assets/icons/actions.svg'" [cacheSVG]="false"></span>
+              <span class="grey-icon" [inlineSVG]="'/assets/icons/actions.svg'"></span>
               <div class="edit-block_menu" *ngIf="isEdit && activeRow == i">
                 <span (click)="openModal('edit', element)">Изменить</span>
                 <span (click)="openModal('delete', element)">Удалить</span>
@@ -71,7 +71,7 @@
             </div>
           </td>
         </ng-container>
-    
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let element; columns: displayedColumns;" (click)="selectClient(element)"></tr>
       </table>

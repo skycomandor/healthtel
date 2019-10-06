@@ -1,11 +1,10 @@
 @import '../../../../sass/mixin'
 @import '../../../../sass/variables'
 
-.modal
-  @include modal
-  width: 570px
-  padding: 20px
+.create-client
+  padding-left: 20px
   &__header
+    height: 60px
     display: flex
     justify-content: space-between
     align-items: center
@@ -19,6 +18,11 @@
       &:hover
         /deep/ use
           fill: $blue
+  &__content
+    @include none-scrollbar
+    width: 60%
+    height: calc(100vh - #{$app-header-height} - 60px)
+    overflow: auto
 
 form
   width: 100%
@@ -59,7 +63,6 @@ form
       height: 4px
       content: '*'
       color: $red
-      display: table
   > span:not(.label)
     width: fit-content
     display: flex
@@ -91,5 +94,7 @@ form
         /deep/ use
           fill: $blue
 
-.blue-btn
-  width: 100%
+.btn-area
+  display: flex
+  > *:not(:last-child)
+    margin-right: 16px

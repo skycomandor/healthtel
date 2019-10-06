@@ -4,7 +4,7 @@
       <ng-container *ngIf="mode === 'add'">Создание нового сотрудника</ng-container>
       <ng-container *ngIf="mode === 'edit'">Редактирование сотрудника</ng-container>
     </span>
-    <span class="grey-icon modal__header_icon" [inlineSVG]="'/assets/icons/close.svg'" [cacheSVG]="false" (click)="close()"></span>
+    <span class="grey-icon modal__header_icon" [inlineSVG]="'/assets/icons/close.svg'" (click)="close()"></span>
   </div>
   <form [formGroup]="employeeForm">
     <div class="form-row">

@@ -5,8 +5,8 @@ import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 import { DashboardService } from '../dashboard.service';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
-import { EmployeesService } from './employees.service';
 import { PageConfig } from 'src/app/_shared/models/common.model';
+import { ApiService } from 'src/app/_shared/services/api.service';
 
 @Component({
   selector: 'app-employees',
@@ -39,7 +39,7 @@ export class EmployeesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private empService: EmployeesService,
+    private api: ApiService,
     private modal: ModalService,
     private dashService: DashboardService
   ) { }
@@ -49,7 +49,7 @@ export class EmployeesComponent implements OnInit {
     this.getEmployees();
     this.modal.deleteModalResult$.subscribe(res => {
       if (res && res.item === 'employee' && !res.navigate) {
-        this.empService.deleteEmployee(res.id).subscribe(responce => {
+        this.api.user.deleteUser(res.id).subscribe(responce => {
           if (responce) {
             this.getEmployees();
             this.modal.close();
@@ -120,7 +120,7 @@ export class EmployeesComponent implements OnInit {
 
   private getEmployees() {
     this.loading = true;
-    this.empService.getAllEmployees(this.config).subscribe(employees => {
+    this.api.user.getAllUsers(this.config).subscribe(employees => {
       if (employees) {
         this.employees = employees.list;
         this.dataSource.data = this.employees;
