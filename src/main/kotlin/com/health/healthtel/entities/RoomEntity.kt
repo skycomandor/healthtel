@@ -6,7 +6,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity(name = "rooms")
-data class Rooms(
+data class RoomEntity(
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
         val id: Int = 0,
         val name: String? = null,

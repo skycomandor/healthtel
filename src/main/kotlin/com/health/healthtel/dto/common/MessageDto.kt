@@ -1,4 +1,4 @@
-package com.health.healthtel.dto
+package com.health.healthtel.dto.common
 
 import com.sun.net.httpserver.Authenticator
 

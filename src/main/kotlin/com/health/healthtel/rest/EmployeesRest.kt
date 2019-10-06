@@ -1,13 +1,11 @@
 package com.health.healthtel.rest
 
-import com.health.healthtel.dto.MessageDto
-import com.health.healthtel.dto.ResponseDto
+import com.health.healthtel.dto.common.MessageDto
+import com.health.healthtel.dto.common.ResponseDto
 import com.health.healthtel.entities.Employees
 import com.health.healthtel.repository.EmployeeRepository
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.PageRequest
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @CrossOrigin
@@ -35,13 +33,13 @@ class EmployeesRest(private val employeeRepository: EmployeeRepository) {
     }
 
     @PostMapping("employee")
-    fun addEmploees(@RequestBody employees: Employees): MessageDto{
+    fun addEmploees(@RequestBody employees: Employees): MessageDto {
         employeeRepository.save(employees)
         return MessageDto(true, "employee was created")
     }
 
     @DeleteMapping("employee/{id}")
-    fun removeEmploees(@PathVariable("id") id: Long): MessageDto{
+    fun removeEmploees(@PathVariable("id") id: Long): MessageDto {
         employeeRepository.deleteById(id)
         return MessageDto(true, "employee was deleted")
     }
