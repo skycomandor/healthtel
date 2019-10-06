@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { DashboardService } from '../../dashboard.service';
-import { EmployeesService } from '../employees.service';
 import { CreateEmployeeComponent } from '../create-employee/create-employee.component';
+import { ApiService } from 'src/app/_shared/services/api.service';
 
 @Component({
   selector: 'app-employee',
@@ -12,15 +12,15 @@ import { CreateEmployeeComponent } from '../create-employee/create-employee.comp
   styleUrls: ['./employee.component.sass']
 })
 export class EmployeeComponent implements OnInit {
-  public employee;
-  public loading: boolean = true;
+  employee;
+  loading: boolean = true;
 
   private employeeID: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private empService: EmployeesService,
+    private api: ApiService,
     private modal: ModalService,
     private dashService: DashboardService
     ) { }
@@ -33,7 +33,7 @@ export class EmployeeComponent implements OnInit {
     this.modal.deleteModalResult$.subscribe(res => {
       if (res && res.item === 'employee' && res.navigate) {
         this.loading = true;
-        this.empService.deleteEmployee(res.id).subscribe(responce => {
+        this.api.user.deleteUser(res.id).subscribe(responce => {
           if (responce) {
             this.dashService.setConfirmMsg('Пациент удалён!');
             this.clear();
@@ -54,7 +54,7 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
-  public openModal(mode: string) {
+  openModal(mode: string) {
     if (mode === 'delete') {
       this.modal.open({component: DeleteModalComponent});
       this.employee.role = 'employee';
@@ -71,16 +71,16 @@ export class EmployeeComponent implements OnInit {
     this.dashService.setMode(settedMode);
   }
 
-  public getInitials(): string {
+  getInitials(): string {
     return `${this.employee.lastname[0]}${this.employee.firstname[0]}`;
   }
 
-  public navigate() {
+  navigate() {
     this.router.navigateByUrl('/dashboard/employees');
   }
 
   private getEmployee() {
-    this.empService.getEmployeeById(this.employeeID).subscribe(employee => {
+    this.api.user.getUserById(this.employeeID).subscribe(employee => {
       this.employee = employee.list[0];
       console.log(this.employee)
       this.loading = false;

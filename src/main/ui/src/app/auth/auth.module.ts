@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AuthRoutingModule } from './auth.routing';
 
 import { SharedModule } from '../_shared/shared.module';
 import { InlineSVGModule } from 'ng-inline-svg';
@@ -13,13 +13,12 @@ import { AuthComponent } from './auth.component';
 @NgModule({
   declarations: [LoginComponent, AuthComponent],
   imports: [
-    BrowserModule,
     CommonModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    InlineSVGModule
+    InlineSVGModule,
+    AuthRoutingModule
   ]
 })
 export class AuthModule { }

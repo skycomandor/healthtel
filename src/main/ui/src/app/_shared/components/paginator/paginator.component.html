@@ -10,17 +10,17 @@
         class="paginator-block__left_navigation-icon left"
         [class.disabled]="activePage == 1"
         [inlineSVG]="'/assets/icons/pagination-arrow-2.svg'"
-        [cacheSVG]="false"
+
         (click)="onPageChange(1)"></span>
       <span
         class="paginator-block__left_navigation-icon left"
         [class.disabled]="activePage == 1"
         [inlineSVG]="'/assets/icons/pagination-arrow.svg'"
-        [cacheSVG]="false"
+
         (click)="updatePage('minus')"></span>
 
       <ng-container *ngIf="6 > totalPage">
-        <span 
+        <span
           class="paginator-block__left_navigation-item"
           [class.active]="activePage == (i + 1)"
           *ngFor="let page of generateSmallArr(); let i = index"
@@ -28,7 +28,7 @@
       </ng-container>
 
       <ng-container *ngIf="activePage > totalPage - 6">
-        <span 
+        <span
           class="paginator-block__left_navigation-item"
           [class.active]="activePage == page"
           *ngFor="let page of generateEndArr(); let i = index"
@@ -36,13 +36,13 @@
       </ng-container>
 
       <ng-container *ngIf="totalPage > 5 && totalPage - 5 > activePage">
-        <span 
+        <span
           class="paginator-block__left_navigation-item"
           [class.active]="activePage == page"
           *ngFor="let page of generateStartArr(); let i = index"
           (click)="onPageChange(page)">{{ page }}</span>
         <span class="paginator-block__left_navigation-item">. . .</span>
-        <span 
+        <span
           class="paginator-block__left_navigation-item"
           [class.active]="activePage == page"
           *ngFor="let page of generateEndArr(); let i = index"
@@ -53,13 +53,13 @@
         class="paginator-block__left_navigation-icon"
         [class.disabled]="activePage == totalPage"
         [inlineSVG]="'/assets/icons/pagination-arrow.svg'"
-        [cacheSVG]="false"
+
         (click)="updatePage('plus')"></span>
       <span
         class="paginator-block__left_navigation-icon"
         [class.disabled]="activePage == totalPage"
         [inlineSVG]="'/assets/icons/pagination-arrow-2.svg'"
-        [cacheSVG]="false"
+
         (click)="onPageChange(totalPage)"></span>
     </div>
   </div>

@@ -3,24 +3,24 @@
   <div class="input-holder">
     <input [id]="name" type="text" mask="00.00.0000" [formControl]="date" (input)="onInputDate($event)">
     <span *ngIf="errorMessage || error" class="error">{{errorMessage || error}}</span>
-    <span class="blue-icon" [inlineSVG]="'/assets/icons/date.svg'" [cacheSVG]="false" (click)="onOpenCalendar()"></span>
+    <span class="blue-icon" [inlineSVG]="'/assets/icons/date.svg'" (click)="onOpenCalendar()"></span>
   </div>
   <div class="calendar-content" [class.open]="openCalendar">
     <div class="calendar" *ngIf="mode === ''">
       <div class="header">
-        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" [cacheSVG]="false" (click)="prevMonth()"></span>
+        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" (click)="prevMonth()"></span>
         <div class="header_center">
           <span class="nav-icon"
                 [inlineSVG]="'/assets/icons/double-arrow-dropdown.svg'"
-                [cacheSVG]="false"
+
                 (click)="prevYear()"></span>
           <span class="header_text" (click)="mode='year'">{{ currentDate.format('MMMM') }} {{ currentDate.format('YYYY') }}</span>
           <span class="nav-icon"
                 [inlineSVG]="'/assets/icons/double-arrow-dropdown.svg'"
-                [cacheSVG]="false"
+
                 (click)="nextYear()"></span>
         </div>
-        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" [cacheSVG]="false" (click)="nextMonth()"></span>
+        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" (click)="nextMonth()"></span>
       </div>
       <div class="month-grid">
         <div class="day-names">
@@ -45,12 +45,12 @@
         </div>
       </div>
     </div>
-  
+
     <div class="years" *ngIf="mode === 'year'">
       <div class="years__navigate">
-        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" [cacheSVG]="false" (click)="prevYears()"></span>
+        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" (click)="prevYears()"></span>
         <span>{{yearsMinMax.min}} - {{yearsMinMax.max}}</span>
-        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" [cacheSVG]="false" (click)="nextYears()"></span>
+        <span class="nav-icon single" [inlineSVG]="'/assets/icons/arrow.svg'" (click)="nextYears()"></span>
       </div>
       <div class="years__content">
         <div class="years__item" *ngFor="let year of years" (click)="setCurrent(year)">
@@ -65,4 +65,4 @@
     </div>
   </div>
 </div>
-  
+

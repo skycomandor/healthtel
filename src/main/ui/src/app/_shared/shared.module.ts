@@ -8,7 +8,6 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { NgxMaskModule } from 'ngx-mask';
 
 import { ModalService } from './components/modal/modal.service';
-import { ApiService } from './services/api.service';
 
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
@@ -52,7 +51,6 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
   ],
   providers: [
     ModalService,
-    ApiService,
     ValidationService
   ]
 })

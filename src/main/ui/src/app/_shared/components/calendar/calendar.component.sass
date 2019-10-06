@@ -18,7 +18,6 @@
       height: 4px
       content: '*'
       color: $red
-      display: table
 
 .input-holder
   width: 100%
@@ -38,7 +37,7 @@
     right: 10px
     cursor: pointer
     align-self: center
-  input	
+  input
     @include input
     width: 100%
 
@@ -63,7 +62,7 @@
     opacity: 1
     transform: translateY(0)
     z-index: 10
- 
+
 .calendar
   display: block
   margin: 0 auto
@@ -72,15 +71,15 @@
   display: flex
   justify-content: space-between
   align-items: center
-  color: $dark	
-  font-family: $Roboto	
-  font-size: 13px	
+  color: $dark
+  font-family: $Roboto
+  font-size: 13px
   font-weight: 500
   &_center
     display: flex
     align-items: center
     .nav-icon:last-of-type
-      transform: scaleX(-1) 
+      transform: scaleX(-1)
   &_text
     margin: 0 12px
     cursor: pointer
@@ -107,9 +106,9 @@
 .day-names
   display: flex
   justify-content: space-between
-  color: $light-grey	
-  font-family: $Roboto	
-  font-size: 13px	
+  color: $light-grey
+  font-family: $Roboto
+  font-size: 13px
   font-weight: 500
   margin: 24px 0 5px
 
@@ -131,16 +130,16 @@
   justify-content: center
   align-items: center
 
-.date-text 
+.date-text
   z-index: 10
 
-.week-date 
+.week-date
   height: 26px
   position: relative
-  color: $dark	
-  font-family: $OpenSans	
+  color: $dark
+  font-family: $OpenSans
   font-size: 13px
-  &:after 
+  &:after
     content: ''
     height: 24px
     width: 24px
@@ -151,7 +150,7 @@
     border-radius: 50%
     transition: background-color 500ms linear, color 500ms linear
     z-index: 1
-  &.enabled 
+  &.enabled
     cursor: pointer
     &:hover
       .date-text
@@ -165,7 +164,7 @@
         background-color: lighten($green, 10%)
     &:after
       background-color: lighten($green, 10%)
-  &.disabled 
+  &.disabled
     color: $light-grey
 
 .today

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  public loginForm: FormGroup = this.fb.group({
+  loginForm: FormGroup = this.fb.group({
     login: [''],
     password: ['']
   });
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  public login() {
+  login() {
     this.router.navigateByUrl('dashboard');
   }
 

@@ -11,13 +11,13 @@
       [mask]="mask"
       [dropSpecialCharacters]="dropSpecialCharacters"
       [(ngModel)]="value">
-    <span *ngIf="search" class="search-icon grey-icon" [inlineSVG]="'/assets/icons/search.svg'" [cacheSVG]="false"></span>
-    <span class="caret" [class.active]="isActive" *ngIf="caret" [inlineSVG]="'/assets/icons/arrow.svg'" [cacheSVG]="false"></span>
-    <span *ngIf="type=='password'" 
+    <span *ngIf="search" class="search-icon grey-icon" [inlineSVG]="'/assets/icons/search.svg'"></span>
+    <span class="caret" [class.active]="isActive" *ngIf="caret" [inlineSVG]="'/assets/icons/arrow.svg'"></span>
+    <span *ngIf="type=='password'"
       class="pass-icon grey-icon"
       [class.blue-icon]="passIcon.includes('show')"
       [inlineSVG]="passIcon"
-      [cacheSVG]="false"
+
       (click)="toggleShowPass()"></span>
     <span class="error-message" *ngIf="error">{{error}}</span>
   </div>

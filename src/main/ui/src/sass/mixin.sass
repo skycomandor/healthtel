@@ -1,5 +1,9 @@
 @import './variables'
 
+@mixin none-scrollbar
+  &::-webkit-scrollbar
+    display: none
+
 @mixin modal
   width: fit-content
   height: fit-content
@@ -44,18 +48,6 @@
   font-size: 14px
   font-weight: 600
 
-@mixin blue-btn
-  height: 40px
-  padding: 0 16px
-  color: #FFFFFF
-  font-family: $OpenSans
-  font-size: 16px
-  font-weight: 600
-  background-color: $blue
-  border-radius: 3px
-  text-transform: capitalize
-  cursor: pointer
-
 @mixin content-table
   height: calc(100vh - 70px)
   padding-bottom: 60px
@@ -69,7 +61,7 @@
     > span:first-child
       color: $dark
       font-family: $Roboto
-      font-size: 20px	
+      font-size: 20px
       font-weight: 500
       position: relative
     > div:first-of-type
@@ -80,7 +72,7 @@
         display: flex
         align-items: center
         font-family: $OpenSans
-        font-size: 13px	
+        font-size: 13px
         font-weight: 600
       > span
         color: $green
@@ -191,9 +183,9 @@
   > div
     display: flex
     flex-direction: column
-    color: $dark	
-    font-family: $OpenSans	
-    font-size: 14px	
+    color: $dark
+    font-family: $OpenSans
+    font-size: 14px
     font-weight: 600
     // &:first-child
     &:last-child
@@ -216,9 +208,9 @@
     display: flex
     justify-content: center
     align-items: center
-    color: $grey	
-    font-family: $Roboto	
-    font-size: 38px	
+    color: $grey
+    font-family: $Roboto
+    font-size: 38px
     font-weight: 600
   > div:last-child
     display: flex
@@ -227,14 +219,14 @@
     height: 50%
     justify-content: space-evenly
     > span:first-child
-      color: $dark	
-      font-family: $Roboto	
-      font-size: 20px	
+      color: $dark
+      font-family: $Roboto
+      font-size: 20px
       font-weight: 600
     > span:last-child
-      color: $grey	
-      font-family: $OpenSans	
-      font-size: 13px	
+      color: $grey
+      font-family: $OpenSans
+      font-size: 13px
       font-weight: 600
 
 @mixin item-header
@@ -271,7 +263,7 @@
       display: flex
       align-items: center
       font-family: $OpenSans
-      font-size: 13px	
+      font-size: 13px
       font-weight: 600
       > span
         margin-right: 10px

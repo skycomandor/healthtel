@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, ViewChildren } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
-import { ClientsService } from './clients.service';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { DashboardService } from '../dashboard.service';
 import { CreateClientComponent } from './create-client/create-client.component';
 import { Router } from '@angular/router';
 import { PageConfig } from 'src/app/_shared/models/common.model';
+import { ApiService } from 'src/app/_shared/services/api.service';
 
 @Component({
   selector: 'app-clients',
@@ -14,19 +14,19 @@ import { PageConfig } from 'src/app/_shared/models/common.model';
   styleUrls: ['./clients.component.sass']
 })
 export class ClientsComponent implements OnInit {
-  public loading: boolean;
-  public isSearch: boolean;
-  public isEdit: boolean;
-  public activeRow: number = null;
-  public client = {};
-  public clients;
-  public comments = [];
+  loading: boolean;
+  isSearch: boolean;
+  isEdit: boolean;
+  activeRow: number = null;
+  client = {};
+  clients;
+  comments = [];
 
   @ViewChild('searchBlock')
-  public searchBlock: ElementRef;
+  searchBlock: ElementRef;
 
-  public dataSource: MatTableDataSource<any> = new MatTableDataSource;
-  public displayedColumns = ['fullName', 'birthdate', 'phone', 'doctor', 'discount', 'edit'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource;
+  displayedColumns = ['fullName', 'birthdate', 'phone', 'doctor', 'discount', 'edit'];
   @ViewChild(MatSort)
   private _sort: MatSort;
   @ViewChildren('editColumn')
@@ -41,7 +41,7 @@ export class ClientsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private clientsServ: ClientsService,
+    private api: ApiService,
     private modal: ModalService,
     private dashService: DashboardService
   ) { }
@@ -51,7 +51,7 @@ export class ClientsComponent implements OnInit {
     this.getClients();
     this.modal.deleteModalResult$.subscribe(res => {
       if (res && res.item === 'client' && !res.navigate) {
-        this.clientsServ.deleteClient(res.id).subscribe(responce => {
+        this.api.client.deleteClient(res.id).subscribe(responce => {
           if (responce) {
             this.getClients();
             this.modal.close();
@@ -69,7 +69,7 @@ export class ClientsComponent implements OnInit {
     });
   }
 
-  public onSearch(searchText: string) {
+  onSearch(searchText: string) {
     if (searchText) {
       this.config.search = searchText;
     } else {
@@ -78,16 +78,16 @@ export class ClientsComponent implements OnInit {
     this.getClients();
   }
 
-  public onPageChange(page: number) {
+  onPageChange(page: number) {
     this.config.page = page;
     this.getClients();
   }
 
-  public selectClient(client) {
+  selectClient(client) {
     this.router.navigateByUrl(`/dashboard/clients/${client.id}`);
   }
 
-  public openModal(mode: string, item?: any) {
+  openModal(mode: string, item?: any) {
     if (mode === 'delete') {
       this.modal.open({component: DeleteModalComponent});
       item.role = 'client';
@@ -104,13 +104,13 @@ export class ClientsComponent implements OnInit {
     this.dashService.setMode(settedMode);
   }
 
-  public openActions(event: Event, i: number) {
+  openActions(event: Event, i: number) {
     event.stopPropagation();
     this.isEdit = !this.isEdit;
     this.activeRow = i;
   }
 
-  public createCommentsArray(client): void {
+  createCommentsArray(client): void {
     if (this.comments.includes(client)) {
       this.comments = [];
     } else {
@@ -119,7 +119,7 @@ export class ClientsComponent implements OnInit {
     }
   }
 
-  public transformDate(number) {
+  transformDate(number) {
     number = number.toString();
     if (number.length < 2) {
       return '0' + number;
@@ -129,7 +129,7 @@ export class ClientsComponent implements OnInit {
   }
 
   @HostListener('document:click', ['$event.target'])
-  public onClick(targetElement) {
+  onClick(targetElement) {
     const notificationClickedInside: boolean = this.searchBlock.nativeElement.contains(targetElement);
     const clickedInside: boolean = this._editColumn.some(item => item.nativeElement.contains(targetElement));
 
@@ -143,7 +143,7 @@ export class ClientsComponent implements OnInit {
 
   private getClients() {
     this.loading = true;
-    this.clientsServ.getAllClients(this.config).subscribe(clients => {
+    this.api.client.getAllClients(this.config).subscribe(clients => {
       if (clients) {
         this.clients = clients.list;
         this.dataSource.data = this.clients;

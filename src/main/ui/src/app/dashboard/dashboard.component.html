@@ -4,13 +4,13 @@
     <div class="side-menu__menu">
       <div class="side-menu__menu_top">
         <div class="menu-item" *ngFor="let item of menuTop" routerLink="{{ item.routerLink }}" [class.active]="route.includes(item.routerLink)">
-          <span class="white-icon" inlineSVG="{{ item.icon }}" [cacheSVG]="false"></span>
+          <span class="white-icon" inlineSVG="{{ item.icon }}"></span>
           {{ item.title }}
         </div>
       </div>
       <div class="side-menu__menu_bottom">
         <div class="menu-item" *ngFor="let item of menuBottom" routerLink="{{ item.routerLink }}" [class.active]="route.includes(item.routerLink)">
-          <span class="white-icon" inlineSVG="{{ item.icon }}" [cacheSVG]="false"></span>
+          <span class="white-icon" inlineSVG="{{ item.icon }}"></span>
           {{ item.title }}
         </div>
       </div>
@@ -26,23 +26,23 @@
         <span [class.active]="confirmMsg&&isShowMsg" [class.alert]="!confirmMsg.includes('!')" class="confirm-msg">{{ confirmMsg }}</span>
         <div #quick class="quick-add">
           <span class="quick-add__title" (click)="isShowQuick=!isShowQuick">
-            <span class="blue-icon" [inlineSVG]="'/assets/icons/create.svg'" [cacheSVG]="false"></span>
+            <span class="blue-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
             Нужно быстро создать?
           </span>
           <div class="quick-add__list" [class.active]="isShowQuick">
             <span class="quick-add__list_item" (click)="openModal('client')">
-              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-customers.svg'" [cacheSVG]="false"></span>
+              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-customers.svg'"></span>
               Новый пациент
             </span>
             <span class="quick-add__list_item" (click)="openModal('employee')">
-              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-profile.svg'" [cacheSVG]="false"></span>
+              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-profile.svg'"></span>
               Новый сотрудник
             </span>
           </div>
         </div>
         <div #notification class="notifications" (click)="isNotification=!isNotification">
           <span class="notifications__marker">3</span>
-          <span class="grey-icon" [inlineSVG]="'/assets/icons/notification.svg'" [cacheSVG]="false"></span>
+          <span class="grey-icon" [inlineSVG]="'/assets/icons/notification.svg'"></span>
           <div class="notifications__list" [class.active]="isNotification">
             <div class="notifications__list_wrapper">
               <div class="notifications__list_item" *ngFor="let i of [1,2,3]">

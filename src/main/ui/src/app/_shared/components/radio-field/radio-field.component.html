@@ -5,7 +5,7 @@
     <div class="radio-btn">
       <div class="radio-btn__content">
         <div class="radio-holder">
-          <input 
+          <input
             #inp
             [id]="option.value"
             [name]="fieldName"
@@ -13,8 +13,8 @@
             [checked]="i == checkedItem"
             [value]="option.value"
             [formControlName]="fieldName">
-            <span class="unchecked" [class.active]="!inp.checked" [inlineSVG]="'/assets/icons/radiobutton.svg'" [cacheSVG]="false"></span>
-            <span class="checked" [class.active]="inp.checked" [inlineSVG]="'/assets/icons/radiobutton-checked.svg'" [cacheSVG]="false"></span>
+            <span class="unchecked" [class.active]="!inp.checked" [inlineSVG]="'/assets/icons/radiobutton.svg'"></span>
+            <span class="checked" [class.active]="inp.checked" [inlineSVG]="'/assets/icons/radiobutton-checked.svg'"></span>
         </div>
         <label class="radio-btn__content_label" [for]="option.value" *ngIf="option.label">{{ option.label }}</label>
       </div>

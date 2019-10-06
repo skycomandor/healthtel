@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DashboardService } from '../../dashboard.service';
-import { ValidationService } from 'src/app/_shared/services/validation.service';
 import { getErrors } from 'src/app/_shared/utils/getErrors.util';
 import { Option } from 'src/app/_shared/models/common.model';
-import { EmployeesService } from '../employees.service';
+import { ApiService } from 'src/app/_shared/services/api.service';
 
 @Component({
   selector: 'app-create-employee',
@@ -43,7 +42,7 @@ export class CreateEmployeeComponent implements OnInit {
     private modal: ModalService,
     private fb: FormBuilder,
     private dashServ: DashboardService,
-    private empService: EmployeesService
+    private api: ApiService
   ) { }
 
   ngOnInit() {
@@ -98,7 +97,7 @@ export class CreateEmployeeComponent implements OnInit {
         this.employeeID = mode.userID;
         this.mode = mode.type;
         if (this.mode === 'edit') {
-          this.empService.getEmployeeById(this.employeeID).subscribe(employee => {
+          this.api.user.getUserById(this.employeeID).subscribe(employee => {
             if (employee) {
               employee = employee.list[0];
               this.employeeForm.patchValue({
@@ -122,7 +121,7 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   private createEmployee(newEmployee) {
-    this.empService.createEmployee(newEmployee).subscribe(res => {
+    this.api.user.createUser(newEmployee).subscribe(res => {
       if (res) {
         this.dashServ.setCrudEvent({e: 'create', msg: `Сотрудник ${newEmployee.lastname} создан!`});
         this.close();
@@ -132,7 +131,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   private updateEmployee(employee) {
     employee.id = this.employeeID;
-    this.empService.updateEmployee(employee).subscribe(res => {
+    this.api.user.updateUser(employee).subscribe(res => {
       if (res) {
         this.dashServ.setCrudEvent({e: 'edit', msg: `Сотрудник ${employee.lastname} изменён!`});
         this.close();

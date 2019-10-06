@@ -3,17 +3,17 @@
     <span class="client__header_nav" (click)="navigate()">
       <span class="grey-icon"
         [inlineSVG]="'/assets/icons/back.svg'"
-        [cacheSVG]="false"></span>
+       ></span>
       Все пациенты
       <app-loader *ngIf="loading"></app-loader>
     </span>
     <div class="client__header_actions">
       <span class="action-item" (click)="openModal('edit')">
-        <span class="green-icon" [inlineSVG]="'/assets/icons/edit.svg'" [cacheSVG]="false"></span>
+        <span class="green-icon" [inlineSVG]="'/assets/icons/edit.svg'"></span>
         Изменить
       </span>
       <span class="action-item" (click)="openModal('delete')">
-        <span class="grey-icon" [inlineSVG]="'/assets/icons/remove.svg'" [cacheSVG]="false"></span>
+        <span class="grey-icon" [inlineSVG]="'/assets/icons/remove.svg'"></span>
         Удалить
       </span>
     </div>
