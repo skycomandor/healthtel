@@ -8,5 +8,5 @@ jobs:
       - checkout
 
       - run:
-          name: echo say hello
-          comand: echo Hello
+         name: echo say hello
+         comand: echo Hello
