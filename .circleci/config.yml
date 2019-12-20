@@ -1,9 +1,9 @@
 version: 2
-  jobs:
-    build:
-      docker:
-          - image: circleci/openjdk:8u232
-      working_directory: ~/healthtel
-      steps:
-        - checkout
-        - run: echo "A first hello"
+jobs:
+  build:
+    docker:
+        - image: circleci/openjdk:8u232
+    working_directory: ~/healthtel
+    steps:
+      - checkout
+      - run: echo "A first hello"
