@@ -8,5 +8,13 @@ jobs:
       - checkout
 
       - run:
-         name: run build
-         command: ./gradlew build
+         name: clean UI
+         command: ./gradlew cleanUi
+
+      - run:
+          name: build UI
+          command: ./gradlew buildUi
+
+      - run:
+          name: copy UI
+          command: ./gradlew copyUi
