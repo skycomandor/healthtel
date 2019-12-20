@@ -9,7 +9,7 @@ jobs:
 
       - run:
          name: clean UI
-         command: ./gradlew cleanUi
+         command: ./gradlew dropUi
 
       - run:
           name: build UI
