@@ -76,6 +76,14 @@ task copyUi(type: Copy) {
 //    }
 //}
 //
+task dropUi(type: Delete) {
+    def dirName = 'src/main/resources/static/'
+    file(dirName).list().each {
+        f ->
+            delete "${dirName}/${f}"
+    }
+}
+
 
 
 
