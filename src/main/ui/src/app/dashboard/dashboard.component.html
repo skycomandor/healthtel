@@ -24,21 +24,17 @@
       </div>
       <div class="content__header_actions">
         <span [class.active]="confirmMsg&&isShowMsg" [class.alert]="!confirmMsg.includes('!')" class="confirm-msg">{{ confirmMsg }}</span>
-        <div #quick class="quick-add">
-          <span class="quick-add__title" (click)="isShowQuick=!isShowQuick">
+        <div class="quick-add">
+          <span #quick class="quick-add__title" (click)="isShowQuick=!isShowQuick">
             <span class="blue-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
             Нужно быстро создать?
           </span>
-          <div class="quick-add__list" [class.active]="isShowQuick">
-            <span class="quick-add__list_item" (click)="openModal('client')">
-              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-customers.svg'"></span>
-              Новый пациент
-            </span>
-            <span class="quick-add__list_item" (click)="openModal('employee')">
-              <span class="grey-icon" [inlineSVG]="'/assets/icons/nav-profile.svg'"></span>
-              Новый сотрудник
-            </span>
-          </div>
+          <ul class="quick-add__list" [class.active]="isShowQuick">
+            <li *ngFor="let item of quickMenu" class="quick-add__list_item" [routerLink]="item.path">
+              <span class="grey-icon" [inlineSVG]="item.icon"></span>
+              {{item.title}}
+            </li>
+          </ul>
         </div>
         <div #notification class="notifications" (click)="isNotification=!isNotification">
           <span class="notifications__marker">3</span>

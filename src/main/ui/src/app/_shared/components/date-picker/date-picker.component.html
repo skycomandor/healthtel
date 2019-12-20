@@ -1,0 +1,71 @@
+<div [id]="name + '-picker'" class="date-picker" #datePicker>
+  <app-input
+    class="date-input"
+    small="true"
+    mask="00.00.0000"
+    [name]="name"
+    [label]="label"
+    [required]="required"
+    [value]="value?.view || accurateDate || ''"
+    [placeholder]="placeholder"
+    [error]="error"
+    (input)="inputDate($event?.target?.value)"></app-input>
+  <span #dateIcon class="grey-icon date-icon icon-hover-blue" [ngClass]="isCalendarOpen ? 'blue' : 'light-grey'" inlineSVG="/assets/icons/date.svg" (click)="openCalendar()"></span>
+  <div *ngIf="isCalendarOpen" class="calendar-content">
+    <div class="calendar" *ngIf="mode === ''">
+      <div class="header">
+        <span class="nav-icon light-grey icon-hover-blue single" [inlineSVG]="'/assets/icons/arrow.svg'" (click)="prevMonth()"></span>
+        <div class="header_center">
+          <span class="nav-icon light-grey icon-hover-blue rotate"
+                [inlineSVG]="'/assets/icons/double-arrow-dropdown.svg'"
+                (click)="prevYear()"></span>
+          <span class="header_text" (click)="$event.stopPropagation(); mode='year'">{{ currentDate?.format('MMMM') }} {{ currentDate?.format('YYYY') }}</span>
+          <span class="nav-icon light-grey icon-hover-blue rotate"
+                [inlineSVG]="'/assets/icons/double-arrow-dropdown.svg'"
+                (click)="nextYear()"></span>
+        </div>
+        <span class="nav-icon light-grey icon-hover-blue single" [inlineSVG]="'/assets/icons/arrow.svg'" (click)="nextMonth()"></span>
+      </div>
+      <div class="month-grid">
+        <div class="day-names">
+          <div *ngFor="let name of dayNames" class="day-name p9">
+            {{ name }}
+          </div>
+        </div>
+        <div class="weeks">
+          <div *ngFor="let week of weeks" class="week">
+            <ng-container *ngFor="let day of week">
+              <div class="week-date disabled" *ngIf="!isSelectedMonth(day.mDate)">
+                <span class="date-text">{{ day.mDate.date() }}</span>
+              </div>
+              <div class="week-date enabled"
+                    *ngIf="isSelectedMonth(day.mDate)"
+                    (click)="selectDate(day)"
+                    [ngClass]="{ today: (day.today && isTodayClass), selected: (day.selected || day.today && isTodayClass && !selectedDate?.viewDate) }">
+                <span class="date-text">{{ day.mDate.date() }}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="years" *ngIf="mode === 'year'">
+      <div class="years__navigate">
+        <span class="nav-icon light-grey icon-hover-blue single" [inlineSVG]="'/assets/images/icons/arrow-down.svg'" (click)="prevYears()"></span>
+        <span>{{yearsMinMax.min}} - {{yearsMinMax.max}}</span>
+        <span class="nav-icon light-grey icon-hover-blue single" [inlineSVG]="'/assets/images/icons/arrow-down.svg'" (click)="nextYears()"></span>
+      </div>
+      <div class="years__content">
+        <div class="years__item" *ngFor="let year of years" (click)="$event.stopPropagation(); setCurrent(year)">
+          <span>{{ year }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="months" *ngIf="mode === 'month'">
+      <div class="months__item" *ngFor="let month of months" (click)="$event.stopPropagation(); setCurrent(month)">
+        <span>{{ month.text }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,7 +18,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 export class CreateClientComponent implements OnInit, OnDestroy {
   submitted: boolean;
   phones: FormArray;
-  mode: string;
+  mode: string = 'add';
   users = [];
   clientForm: FormGroup = this.fb.group({
     lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -39,7 +39,7 @@ export class CreateClientComponent implements OnInit, OnDestroy {
     { label: 'Жен.', value: 'f' },
   ];
 
-  private clientID: string;
+  private clientId: string;
   private config: PageConfig = {
     page: 1,
     size: 10,
@@ -57,7 +57,8 @@ export class CreateClientComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.route.snapshot.params['clientId'] ? this.initialize() : this.mode = 'add'
+    this.clientId = this.route.snapshot.params['clientID']
+    if (this.clientId) this.initClient()
     this.getEmploeeys();
   }
 
@@ -68,9 +69,7 @@ export class CreateClientComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    if (this.clientForm.invalid) {
-      return;
-    }
+    if (this.clientForm.invalid) return
     const form = this.clientForm.value;
     const birthArr = form.birthDate.split('.');
     const client = {
@@ -84,13 +83,9 @@ export class CreateClientComponent implements OnInit, OnDestroy {
       birthMonth: +birthArr[1],
       birthyear: +birthArr[2],
       address: form.address,
-      doctor: null
-    };
-    form.doctor.title ?
-      client.doctor = {id: form.doctor.value}
-      : Number.isInteger(form.doctor) ?
-        client.doctor = {id: form.doctor}
-        : client.doctor = null;
+      doctor: form.doctor || null
+    }
+    console.log(form)
     this.mode === 'add' ? this.createClient(client) : this.updateClient(client);
   }
 
@@ -126,34 +121,30 @@ export class CreateClientComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initialize() {
-    this.dashService.mode$.pipe(
-      takeUntil(this.ngUnsubscribe),
-      filter(m => m && m.item === 'client')).subscribe(mode => {
-      this.mode = 'edit';
-      this.clientID = mode.userID;
-      this.api.client.getClient(this.clientID).subscribe(client => {
-        client = client.list[0];
-        this.clientForm.patchValue({
-          firstName: client.firstname,
-          lastName: client.lastname,
-          patronymic: client.patronymic,
-          gender: client.gender,
-          birthDate: this.checkDate([client.birthDay, client.birthMonth]) + `.${client.birthyear}`,
-          email: client.email || '',
-          address: client.address || '',
-          discount: client.discount || ''
-        });
-        if (client.doctor) {
-          this.clientForm.get('doctor')
-          .setValue({
-            title: `${client.doctor.lastname} ${client.doctor.firstname[0]}.${client.doctor.patronymic[0]}.`,
-            value: client.doctor.id
-          });
-        } else {
-          this.clientForm.get('doctor').setValue('');
-        }
+  private initClient() {
+    this.mode = 'edit';
+    this.api.client.getClient(this.clientId).subscribe(client => {
+      console.log(client)
+      client = client.list[0];
+      this.clientForm.patchValue({
+        firstName: client.firstname,
+        lastName: client.lastname,
+        patronymic: client.patronymic,
+        gender: client.gender,
+        birthDate: this.checkDate([client.birthDay, client.birthMonth]) + `.${client.birthyear}`,
+        email: client.email || '',
+        address: client.address || '',
+        discount: client.discount || ''
       });
+      if (client.doctor) {
+        this.clientForm.get('doctor')
+        .setValue({
+          title: `${client.doctor.lastname} ${client.doctor.firstname[0]}.${client.doctor.patronymic[0]}.`,
+          value: client.doctor.id
+        });
+      } else {
+        this.clientForm.get('doctor').setValue('');
+      }
     });
   }
 
@@ -165,8 +156,8 @@ export class CreateClientComponent implements OnInit, OnDestroy {
         users.forEach(user => {
           let nameFirstLetter: string;
           let patrFirstLetter: string;
-          user.firstname ? nameFirstLetter = `${user.firstname[0]}.` : nameFirstLetter = '';
-          user.patronymic ? patrFirstLetter = `${user.patronymic[0]}.` : patrFirstLetter = '';
+          nameFirstLetter = user.firstname ? `${user.firstname[0]}.` : '';
+          patrFirstLetter = user.patronymic ? `${user.patronymic[0]}.` : '';
           const userMock = {
             value: user.id,
             title: `${user.lastname} ${nameFirstLetter} ${patrFirstLetter}`
@@ -187,7 +178,7 @@ export class CreateClientComponent implements OnInit, OnDestroy {
   }
 
   private updateClient(client) {
-    client.id = this.clientID;
+    client.id = this.clientId;
     this.api.client.updateClient(client).subscribe(res => {
       if (res) {
         this.dashService.setCrudEvent({e: 'edit', msg: `Пациент ${client.lastname} изменён!`});

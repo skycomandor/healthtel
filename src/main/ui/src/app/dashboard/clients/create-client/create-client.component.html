@@ -1,7 +1,7 @@
 <div *ngIf="mode" class="create-client">
   <div class="create-client__header">
     <span class="create-client__header_title">
-      {{mode === 'add' ? 'Создать пациента' : 'Редактировать пациента'}}
+      {{mode === 'add' ? 'Создать' : 'Редактировать'}} пациента
     </span>
   </div>
   <div class="create-client__content">
@@ -40,14 +40,13 @@
           fieldName="gender"></app-radio-field>
       </div>
       <div class="form-row">
-        <app-calendar
+        <app-date-picker
           class="form-item col-3"
           name="birthDate"
           label="Дата рождения"
           required="true"
-          [value]="clientForm.value.birthDate"
           [error]="getErrors('birthDate')"
-          (dateSelect)="onSelectDate($event)"></app-calendar>
+          formControlName="birthDate"></app-date-picker>
         <app-input
           class="form-item col-3"
           label="E-Mail"
@@ -87,10 +86,10 @@
               <span *ngIf="phones && phones.value.length > 1" class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'" (click)="deletePhone(i)"></span>
             </div>
           </div>
-          <span (click)="addPhone()">
+          <button class="hover-green-btn" type="button" (click)="addPhone()">
             <span class="green-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
             Добавить телефон
-          </span>
+          </button>
         </div>
         <app-textarea
           class="form-item col-2"

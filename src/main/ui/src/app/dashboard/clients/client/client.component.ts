@@ -4,6 +4,8 @@ import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { DashboardService } from '../../dashboard.service';
 import { ApiService } from 'src/app/_shared/services/api.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client',
@@ -15,21 +17,19 @@ export class ClientComponent implements OnInit {
   loading: boolean = true;
 
   private clientID: string;
+  private ngUnsubscribe$$ = new Subject()
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private api: ApiService,
     private modal: ModalService,
-    private dashService: DashboardService
-    ) { }
+    private dashService: DashboardService) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.clientID = params.get('id');
-      this.getClient();
-    });
-    this.modal.deleteModalResult$.subscribe(res => {
+    this.clientID = this.route.snapshot.params.clientID
+    this.getClient();
+    this.modal.deleteModalResult$.pipe(takeUntil(this.ngUnsubscribe$$)).subscribe(res => {
       if (res && res.item === 'client' && res.navigate) {
         this.loading = true;
         this.api.client.deleteClient(res.id).subscribe(responce => {
@@ -44,7 +44,7 @@ export class ClientComponent implements OnInit {
         });
       }
     });
-    this.dashService.crudEvent$.subscribe(event => {
+    this.dashService.crudEvent$.pipe(takeUntil(this.ngUnsubscribe$$)).subscribe(event => {
       if (event && event.msg) {
         this.loading = true;
         this.getClient();

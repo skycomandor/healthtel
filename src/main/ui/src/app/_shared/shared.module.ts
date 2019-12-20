@@ -13,7 +13,6 @@ import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { LoaderComponent } from './components/loader/loader.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { RadioFieldComponent } from './components/radio-field/radio-field.component';
 import { ValidationService } from './services/validation.service';
@@ -25,7 +24,6 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     SelectComponent,
     ModalComponent,
     LoaderComponent,
-    CalendarComponent,
     TextareaComponent,
     RadioFieldComponent,
     PaginatorComponent
@@ -44,7 +42,6 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     SelectComponent,
     ModalComponent,
     LoaderComponent,
-    CalendarComponent,
     TextareaComponent,
     RadioFieldComponent,
     PaginatorComponent

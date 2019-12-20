@@ -1,67 +1,32 @@
 @import '../../../../sass/mixin'
 @import '../../../../sass/variables'
 
-\:host
+.date-picker
   position: relative
-
-.input-label
-  display: inline-block
-  margin-bottom: 10px
-  @include label
-  position: relative
-  &.required
-    &:after
-      position: absolute
-      top: 0
-      right: -7px
-      width: 4px
-      height: 4px
-      content: '*'
-      color: $red
-
-.input-holder
-  width: 100%
-  position: relative
-  display: flex
-  .error
+  .date-input
+    display: block
+    min-width: 120px
     width: 100%
+  .date-icon
     position: absolute
-    top: 100%
-    left: 0
-    color: $red
-    font-family: $OpenSans
-    font-size: 12px
-  .blue-icon
-    height: 16px
-    position: absolute
-    right: 10px
-    cursor: pointer
-    align-self: center
-  input
-    @include input
-    width: 100%
+    bottom: 8px
+    right: 12px
 
 .calendar-content
-  box-sizing: border-box
-  z-index: 1
+  z-index: 10
   position: absolute
   top: calc(100% + 3px)
   left: 0
+  width: 236px
+  min-height: 195px
   background-color: #ffffff
   border-radius: 5px
   box-shadow: 0px 2px 12px 0 rgba(0, 0, 0, 0.2)
   padding: 12px 12px 5px
-  width: 236px
-  height: fit-content
-  min-height: 195px
-  opacity: 0
-  transform: translateY(50px)
-  z-index: -10
-  transition: all .5s
-  &.open
-    opacity: 1
-    transform: translateY(0)
-    z-index: 10
+
+.grey-icon
+  height: 16px
+  cursor: pointer
 
 .calendar
   display: block
@@ -74,12 +39,13 @@
   color: $dark
   font-family: $Roboto
   font-size: 13px
-  font-weight: 500
+  font-weight: 600
   &_center
     display: flex
     align-items: center
-    .nav-icon:last-of-type
-      transform: scaleX(-1)
+    .nav-icon
+      &:last-child
+        transform: scaleX(-1)
   &_text
     margin: 0 12px
     cursor: pointer
@@ -91,12 +57,7 @@
   width: 16px
   height: 16px
   cursor: pointer
-  /deep/ use
-    fill: $light-grey
-    transition: all .5s
-  &:hover
-    /deep/ use
-      fill: $blue
+  transition: all .3s
   &.single
     &:first-of-type,
       transform: rotate(90deg)
@@ -109,7 +70,7 @@
   color: $light-grey
   font-family: $Roboto
   font-size: 13px
-  font-weight: 500
+  font-weight: 600
   margin: 24px 0 5px
 
 .weeks
@@ -156,14 +117,14 @@
       .date-text
         color: #ffffff
       &:after
-        background-color: lighten($green, 10%)
+        background-color: $green
   &.selected
     color: white
     &:hover
       &:after
-        background-color: lighten($green, 10%)
+        background-color: $green
     &:after
-      background-color: lighten($green, 10%)
+      background-color: $green
   &.disabled
     color: $light-grey
 
@@ -190,11 +151,11 @@
     font-family: $Roboto
     font-size: 13px
     color: $dark
-    font-weight: 500
+    font-weight: 600
   &__item
     font:
       size: 15px
-      weight: 500
+      weight: 600
 .months,
 .years
   &__item
@@ -223,4 +184,3 @@
       color: $blue
       &:after
         background-color: #f6f6f6
-
