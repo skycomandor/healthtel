@@ -2,11 +2,11 @@ version: 2
 jobs:
   build:
     docker:
-        - image: circleci/openjdk:8u232
+        - image: skycomandor/doctor:1.0
     working_directory: ~/healthtel
     steps:
       - checkout
 
       - run:
-         name: echo say hello
+         name:
          command: echo Hello
