@@ -8,5 +8,5 @@ jobs:
       - checkout
 
       - run:
-         name:
-         command: echo Hello
+         name: run build
+         command: ./gradlew build
