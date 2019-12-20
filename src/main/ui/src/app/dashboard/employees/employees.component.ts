@@ -100,8 +100,8 @@ export class EmployeesComponent implements OnInit {
 
   public openActions(event: Event, i: number) {
     event.stopPropagation();
-    this.isEdit = !this.isEdit;
-    this.activeRow = i;
+    this.isEdit = this.activeRow === i ? false : true;
+    this.activeRow = this.activeRow === i ? null : i;
   }
 
   @HostListener('document:click', ['$event.target'])

@@ -11,23 +11,26 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-  public route: string;
-  public isShowMsg: boolean;
-  public confirmMsg: string = '';
-  public isShowQuick: boolean;
-  public isNotification: boolean;
-  public menuTop = [
+  route: string;
+  isShowMsg: boolean;
+  confirmMsg: string = '';
+  isShowQuick: boolean;
+  isNotification: boolean;
+  menuTop = [
     { title: 'Пациенты', icon: '/assets/icons/nav-customers.svg', routerLink: 'clients' },
     { title: 'Сотрудники', icon: '/assets/icons/nav-profile.svg', routerLink: 'employees' },
   ];
-  public menuBottom = [
+  menuBottom = [
     { title: 'Выйти', icon: '/assets/icons/nav-logout.svg', routerLink: 'login' }
   ];
 
-  @ViewChild('notification')
-  public notification: ElementRef;
-  @ViewChild('quick')
-  public quick: ElementRef;
+  quickMenu = [
+    { title: 'Новый пациент', icon: '/assets/icons/nav-customers.svg', path: '/dashboard/clients/add-client' },
+    { title: 'Новый сотрудник', icon: '/assets/icons/nav-profile.svg', path: '/dashboard/clients/add-employee' }
+  ]
+
+  @ViewChild('notification') notification: ElementRef;
+  @ViewChild('quick') quick: ElementRef;
 
   constructor(
     private router: Router,
@@ -52,28 +55,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  public openModal(mode: string) {
-    if (mode === 'client') {
-      this.modal.open({component: CreateClientComponent});
-      this.dashService.setMode({type: 'add', item: 'client'});
-    } else {
-      this.modal.open({component: CreateEmployeeComponent});
-      this.dashService.setMode({type: 'add', item: 'employee'});
-    }
-  }
 
   @HostListener('document:click', ['$event.target'])
-  public onClick(targetElement) {
+  onClick(targetElement) {
     const notificationClickedInside: boolean = this.notification.nativeElement.contains(targetElement);
     const quickClickedInside: boolean = this.quick.nativeElement.contains(targetElement);
-
-    if (!notificationClickedInside) {
-      this.isNotification = false;
-    }
-
-    if (!quickClickedInside) {
-      this.isShowQuick = false;
-    }
+    if (!notificationClickedInside) this.isNotification = false
+    if (!quickClickedInside) this.isShowQuick = false
   }
 
 }

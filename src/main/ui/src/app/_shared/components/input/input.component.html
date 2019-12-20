@@ -3,22 +3,22 @@
   <div class="input-holder" [class.search]="search">
     <input
       class="input-item"
-      [class.active]="isActive"
+      autocomplete="off"
       [id]="name"
       [name]="name"
       [type]="currentType"
+      [class.active]="isActive"
       [placeholder]="placeholder"
       [mask]="mask"
       [dropSpecialCharacters]="dropSpecialCharacters"
       [(ngModel)]="value">
     <span *ngIf="search" class="search-icon grey-icon" [inlineSVG]="'/assets/icons/search.svg'"></span>
-    <span class="caret" [class.active]="isActive" *ngIf="caret" [inlineSVG]="'/assets/icons/arrow.svg'"></span>
+    <span *ngIf="caret" class="caret" [class.active]="isActive" [inlineSVG]="'/assets/icons/arrow.svg'"></span>
     <span *ngIf="type=='password'"
       class="pass-icon grey-icon"
       [class.blue-icon]="passIcon.includes('show')"
       [inlineSVG]="passIcon"
-
       (click)="toggleShowPass()"></span>
-    <span class="error-message" *ngIf="error">{{error}}</span>
+    <span *ngIf="error" class="error-message">{{error}}</span>
   </div>
 </div>

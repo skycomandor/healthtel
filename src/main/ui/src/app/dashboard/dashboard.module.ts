@@ -11,10 +11,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { DashboardService } from './dashboard.service';
 
 import { DashboardComponent } from './dashboard.component';
-import { ClientsComponent } from './clients/clients.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
-import { CreateClientComponent } from './clients/create-client/create-client.component';
-import { ClientComponent } from './clients/client/client.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee/employee.component';
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
@@ -22,10 +19,7 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
 @NgModule({
   declarations: [
     DashboardComponent,
-    ClientsComponent,
     DeleteModalComponent,
-    CreateClientComponent,
-    ClientComponent,
     EmployeesComponent,
     EmployeeComponent,
     CreateEmployeeComponent
@@ -43,7 +37,6 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
     DashboardService
   ],
   entryComponents: [
-    CreateClientComponent,
     DeleteModalComponent,
     CreateEmployeeComponent
   ]

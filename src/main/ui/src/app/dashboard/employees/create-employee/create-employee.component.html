@@ -32,13 +32,13 @@
         required="true"
         [error]="getErrors('patronymic')"
         formControlName="patronymic"></app-input>
-      <app-calendar
+      <!-- <app-date-picker
         class="form-item col-3"
         name="birthDate"
         label="Дата рождения"
         required="true"
         [error]="getErrors('birthDate')"
-        (dateSelect)="onSelectDate($event)"></app-calendar>
+        formControlName="birthDate"></app-date-picker> -->
       <app-radio-field
         class="form-item col-3 radio-field"
         label="."

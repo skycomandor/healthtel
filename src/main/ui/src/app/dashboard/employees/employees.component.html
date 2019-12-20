@@ -8,10 +8,10 @@
         <input type="text" (click)="$event.stopPropagation()" (input)="onSearch($event.target.value)">
         <span class="grey-icon" [inlineSVG]="'/assets/icons/search.svg'"></span>
       </div>
-      <span class="create-action action-item" (click)="openModal('add')">
+      <button class="hover-green-btn" type="button" (click)="openModal('add')">
         <span class="green-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
         Добавить
-      </span>
+      </button>
     </div>
   </div>
   <div class="content-wrapper__table">

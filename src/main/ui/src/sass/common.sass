@@ -22,23 +22,44 @@
   @extend .btn
   height: 40px
   color: #FFFFFF
-  font-size: 16px
+  font-size: 14px
   font-weight: 600
   background-color: $blue
   &:hover:not(:disabled)
-    background-color: darken($blue, 10%)
-    box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3)
+    background-color: lighten($blue, 5%)
+    box-shadow: $btn-shadow
 
 .grey-btn
   @extend .btn
   height: 40px
   color: $grey
-  font-size: 16px
+  font-size: 14px
   font-weight: 600
   background-color: $hover
   border: 1px solid $grey
   &:hover:not(:disabled)
-    box-shadow: 0px 2px 7px 0 rgba(0, 0, 0, 0.3)
+    box-shadow: $btn-shadow
+
+.hover-green-btn
+  @extend .btn
+  width: min-content
+  display: flex
+  align-items: center
+  font-family: $OpenSans
+  font-size: 13px
+  font-weight: 600
+  color: $green
+  cursor: pointer
+  height: 30px
+  padding: 0 5px
+  border-radius: 3px
+  transition: all .5s
+  white-space: nowrap
+  &:hover
+    background-color: lighten($green, 55%)
+  > span
+    height: 16px
+    margin-right: 5px
 
 .grey-icon
   use
@@ -52,3 +73,7 @@
 .green-icon
   use
     fill: $green
+
+.icon-hover-blue:hover
+  use
+    fill: $blue

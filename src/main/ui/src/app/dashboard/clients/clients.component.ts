@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, ViewChildren } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
-import { ModalService } from 'src/app/_shared/components/modal/modal.service';
-import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
-import { DashboardService } from '../dashboard.service';
-import { CreateClientComponent } from './create-client/create-client.component';
+import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
-import { PageConfig } from 'src/app/_shared/models/common.model';
-import { ApiService } from 'src/app/_shared/services/api.service';
+import { Subject } from 'rxjs';
+import { DashboardService } from '../dashboard.service';
+import { PageConfig } from '../../_shared/models/common.model';
+import { ApiService } from '../../_shared/services/api.service';
+import { ModalService } from '../../_shared/components/modal/modal.service';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clients',
@@ -22,15 +23,13 @@ export class ClientsComponent implements OnInit {
   clients;
   comments = [];
 
-  @ViewChild('searchBlock')
-  searchBlock: ElementRef;
+  @ViewChild('searchBlock') searchBlock: ElementRef
+  @ViewChild('searchInput') private searchInput: ElementRef
+  @ViewChild('clientsTable') table: ElementRef
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource;
-  displayedColumns = ['fullName', 'birthdate', 'phone', 'doctor', 'discount', 'edit'];
-  @ViewChild(MatSort)
-  private _sort: MatSort;
-  @ViewChildren('editColumn')
-  private _editColumn: ElementRef[];
+  displayedColumns = ['fullName', 'lastVisit', 'phone', 'doctor', 'discount', 'edit'];
+  @ViewChildren('editColumn') private _editColumn: ElementRef[];
 
   private config: PageConfig = {
     page: 1,
@@ -38,6 +37,8 @@ export class ClientsComponent implements OnInit {
     totalPage: null,
     search: null
   };
+
+  private ngUnsubscribe$$ = new Subject()
 
   constructor(
     private router: Router,
@@ -47,9 +48,9 @@ export class ClientsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataSource.sort = this._sort;
+    this.config.size = Math.floor(this.table.nativeElement.clientHeight / 40 - 1)
     this.getClients();
-    this.modal.deleteModalResult$.subscribe(res => {
+    this.modal.deleteModalResult$.pipe(takeUntil(this.ngUnsubscribe$$)).subscribe(res => {
       if (res && res.item === 'client' && !res.navigate) {
         this.api.client.deleteClient(res.id).subscribe(responce => {
           if (responce) {
@@ -61,7 +62,7 @@ export class ClientsComponent implements OnInit {
         });
       }
     });
-    this.dashService.crudEvent$.subscribe(event => {
+    this.dashService.crudEvent$.pipe(takeUntil(this.ngUnsubscribe$$)).subscribe(event => {
       if (event && event.msg) {
         this.getClients();
         this.dashService.setConfirmMsg(event.msg);
@@ -83,31 +84,18 @@ export class ClientsComponent implements OnInit {
     this.getClients();
   }
 
-  selectClient(client) {
-    this.router.navigateByUrl(`/dashboard/clients/${client.id}`);
-  }
-
   openModal(mode: string, item?: any) {
     if (mode === 'delete') {
       this.modal.open({component: DeleteModalComponent});
       item.role = 'client';
       this.dashService.setDeletedItem(item);
-      return;
     }
-    this.modal.open({component: CreateClientComponent});
-    const settedMode = {
-      type: mode,
-      userID: '',
-      item: 'client'
-    };
-    item ? settedMode.userID = item.id : settedMode.userID = '';
-    this.dashService.setMode(settedMode);
   }
 
   openActions(event: Event, i: number) {
     event.stopPropagation();
-    this.isEdit = !this.isEdit;
-    this.activeRow = i;
+    this.isEdit = this.activeRow === i ? false : true;
+    this.activeRow = this.activeRow === i ? null : i;
   }
 
   createCommentsArray(client): void {
@@ -119,13 +107,14 @@ export class ClientsComponent implements OnInit {
     }
   }
 
-  transformDate(number) {
+  transformDate(number: any) {
     number = number.toString();
-    if (number.length < 2) {
-      return '0' + number;
-    }
+    return number.length < 2 ? '0' + number : number;
+  }
 
-    return number;
+  showInput() {
+    this.isSearch = !this.isSearch;
+    setTimeout(() => this.searchInput.nativeElement.focus())
   }
 
   @HostListener('document:click', ['$event.target'])
@@ -133,12 +122,8 @@ export class ClientsComponent implements OnInit {
     const notificationClickedInside: boolean = this.searchBlock.nativeElement.contains(targetElement);
     const clickedInside: boolean = this._editColumn.some(item => item.nativeElement.contains(targetElement));
 
-    if (!notificationClickedInside) {
-      this.isSearch = false;
-    }
-    if (!clickedInside) {
-      this.isEdit = false;
-    }
+    if (!notificationClickedInside) this.isSearch = false
+    if (!clickedInside) this.isEdit = false
   }
 
   private getClients() {

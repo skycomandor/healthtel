@@ -14,10 +14,7 @@ export const dashboardRoutes: Route[] = [
     component: DashboardComponent,
     children: [
       { path: '', redirectTo: 'clients', pathMatch: 'full' },
-      { path: 'clients', component: ClientsComponent },
-      { path: 'clients/:clientId', component: ClientComponent },
-      { path: 'clients/:clientId/edit-client', component: CreateClientComponent },
-      { path: 'create-client', component: CreateClientComponent },
+      { path: 'clients', loadChildren: './clients/clients.module#ClientsModule' },
       { path: 'employees', component: EmployeesComponent },
       { path: 'employees/:id', component: EmployeeComponent },
     ]

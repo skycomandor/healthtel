@@ -15,27 +15,16 @@ import { Option } from '../../models/common.model';
   ]
 })
 export class SelectComponent implements OnInit {
-  @Input('value')
-  public _value: Option = {
-    title: '',
-    value: ''
-  };
-  @Input()
-  public name: string;
-  @Input()
-  public label: string;
-  @Input()
-  public options: Option[];
-  @Input()
-  public required: boolean;
-  @Input()
-  public placeholder: string = '';
-  @Input()
-  public error: string = '';
-  @Input()
-  public caret: boolean;
+  @Input('value')_value: Option = { title: '', value: '' };
+  @Input() name: string;
+  @Input() label: string;
+  @Input() options: Option[];
+  @Input() required: boolean;
+  @Input() placeholder: string = '';
+  @Input() error: string = '';
+  @Input() caret: boolean;
 
-  public isSelectOpen: boolean = false;
+  isSelectOpen: boolean = false;
   private _isNotFirstClick: boolean = false;
 
 
@@ -45,8 +34,10 @@ export class SelectComponent implements OnInit {
 
   set value(val) {
     this._value = val;
-    this.onChange(val.value);
-    this.onTouched();
+    setTimeout(() => {
+      this.onChange(val.value);
+      this.onTouched();
+    })
   }
 
   constructor(private _elementRef: ElementRef) { }
@@ -59,30 +50,28 @@ export class SelectComponent implements OnInit {
     this.value = option;
   }
 
-  public capitalize(str) {
+  capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   @HostListener('document:click', ['$event.target'])
-  public onClick(targetElement) {
+  onClick(targetElement) {
     const clickedInside: boolean = this._elementRef.nativeElement.contains(targetElement);
-    if (!clickedInside && this._isNotFirstClick) {
-      this.isSelectOpen = false;
-    }
+    if (!clickedInside && this._isNotFirstClick) this.isSelectOpen = false
     this._isNotFirstClick = true;
   }
 
-  public writeValue(value: any) {
+  writeValue(value: any) {
     if (value) {
       this.value = value;
     }
   }
 
-  public registerOnChange(fn) {
+  registerOnChange(fn) {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn) {
+  registerOnTouched(fn) {
     this.onTouched = fn;
   }
   private onChange: any = () => {};
