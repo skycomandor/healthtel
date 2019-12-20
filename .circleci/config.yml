@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    docker:
+        - image: skycomandor/doctor:1.0
+    working_directory: ~/healthtel
+    steps:
+      - checkout
+
+      - run:
+         name: run build
+         command: ./gradlew build
