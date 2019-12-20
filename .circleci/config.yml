@@ -9,4 +9,4 @@ jobs:
 
       - run:
          name: echo say hello
-         comand: echo Hello
+         command: echo Hello
