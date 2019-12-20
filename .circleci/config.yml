@@ -6,4 +6,7 @@ jobs:
     working_directory: ~/healthtel
     steps:
       - checkout
-      - run: echo "A first hello"
+
+      - run:
+          name: echo say hello
+          comand: echo Hello
