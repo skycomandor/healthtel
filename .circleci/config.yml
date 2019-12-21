@@ -12,6 +12,10 @@ jobs:
          command: ./gradlew dropUi
 
       - run:
+          name: install npm
+          command: ./gradlew installNpm
+
+      - run:
           name: build UI
           command: ./gradlew buildUi
 

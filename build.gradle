@@ -54,6 +54,15 @@ task buildUi {
     }
 }
 
+task installNpm {
+    doLast {
+        exec {
+            workingDir 'src/main/ui'
+            commandLine 'npm', 'i'
+        }
+    }
+}
+
 jar {
     baseName = 'health-service'
     version = '0.1.0'
