@@ -61,6 +61,8 @@
     height: 16px
     margin-right: 5px
 
+// ICONS
+
 .grey-icon
   use
     fill: $grey
@@ -77,3 +79,58 @@
 .icon-hover-blue:hover
   use
     fill: $blue
+
+// TEXT
+.regular-text
+  color: $dark
+  font-family: $OpenSans
+  font-size: 13px
+
+.roboto20
+  color: $dark
+  font-family: $Roboto
+  font-size: 20px
+
+.bold-text
+  font-weight: 600
+
+.grey-text
+  color: $grey
+
+.no-wrap
+  white-space: nowrap
+
+// ITEM PAGE STYLE
+.item-header
+  @include item-header
+
+.item-name-area
+  height: 140px
+  padding: 0 30px
+  display: flex
+  align-items: center
+.item-pic
+  width: 100px
+  height: 100px
+  border-radius: 50%
+  background-color: $light-grey
+  display: flex
+  justify-content: center
+  align-items: center
+  color: $grey
+  font-family: $Roboto
+  font-size: 38px
+  font-weight: 600
+.item-info
+  display: flex
+  flex-direction: column
+  margin-left: 40px
+  height: 50%
+  justify-content: space-evenly
+
+.info-block
+  display: grid
+  grid-gap: 14px 30px
+  align-content: flex-start
+  grid-template-columns: min-content 1fr
+

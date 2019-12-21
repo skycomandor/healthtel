@@ -5,7 +5,7 @@
     </span>
   </div>
   <div class="create-client__content">
-    <form [formGroup]="clientForm">
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
         <app-input
           class="form-item col-2"
@@ -97,14 +97,14 @@
           label="Кoмментарии"
           formControlName="comment"></app-textarea>
       </div>
+      <div class="btn-area">
+        <button class="grey-btn" type="button" (click)="close()">
+          <span class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'"></span>
+          Отмена</button>
+        <button class="blue-btn" type="submit">
+          <span class="white-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
+          {{mode === 'add' ? 'Создать' : 'Редактировать'}}</button>
+      </div>
     </form>
-    <div class="btn-area">
-      <button class="grey-btn" (click)="close()">
-        <span class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'"></span>
-        Отмена</button>
-      <button class="blue-btn" (click)="onSubmit()">
-        <span class="white-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
-        {{mode === 'add' ? 'Создать' : 'Редактировать'}}</button>
-    </div>
   </div>
 </div>

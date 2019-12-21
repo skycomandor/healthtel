@@ -17,8 +17,8 @@ const routes: Routes = [{
   children: [
     { path: '', component: ClientsComponent },
     { path: 'add-client', component: CreateClientComponent },
-    { path: ':clientID/edit-client', component: CreateClientComponent },
     { path: ':clientID', component: ClientComponent },
+    { path: ':clientID/edit-client', component: CreateClientComponent },
   ]
 }]
 
