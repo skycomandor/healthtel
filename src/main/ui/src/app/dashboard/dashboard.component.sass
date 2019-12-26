@@ -96,12 +96,18 @@
         position: relative
         margin-right: 30px
         &__title
+          min-height: 32px
+          padding: 0 10px
+          border-radius: 2px
           display: flex
           align-items: center
           color: $blue
           font-family: $OpenSans
           font-size: 13px
           cursor: pointer
+          transition: all .5s
+          &:hover
+            background-color: rgba(41,139,202,.1)
           > span
             margin-right: 10px
         &__list
@@ -133,9 +139,7 @@
               background-color: $hover
             > span
               margin-right: 10px
-              /deep/ svg
-                width: 16px
-                height: 16px
+              height: 16px
       .notifications
         display: inline-block
         position: relative

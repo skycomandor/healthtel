@@ -2,28 +2,24 @@
 @import '../../../../sass/variables'
 
 .input-label
-  display: inline-block
-  margin-bottom: 10px
   @include label
+  margin-bottom: 10px
+  display: inline-block
   position: relative
-  &.required
-    &:after
-      position: absolute
-      top: 0
-      right: -7px
-      width: 4px
-      height: 4px
-      content: '*'
-      color: $red
+  &.required:after
+    content: '*'
+    position: absolute
+    top: 0
+    right: -10px
+    color: $red
 
 .input-holder
   position: relative
   > span
     &:not(.error-message)
-    &:not(.caret)
       position: absolute
       right: 12px
-      top: 12px
+      top: calc((100% - 16px)/2)
     &.error-message
       width: 100%
       position: absolute
@@ -45,16 +41,7 @@
     border-color: $blue
 
 .caret
-  position: absolute
-  right: 12px
-  top: 10px
   cursor: pointer
-  &.active
-    top: 8px
-    /deep/ svg
-      transform: scaleY(-1)
-    /deep/ use
-      fill: $blue
 
 .pass-icon
   cursor: pointer

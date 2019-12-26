@@ -26,12 +26,12 @@
         <span [class.active]="confirmMsg&&isShowMsg" [class.alert]="confirmMsg?.color === 'red'" class="confirm-msg">{{ confirmMsg?.text }}</span>
         <div class="quick-add">
           <span #quick class="quick-add__title" (click)="isShowQuick=!isShowQuick">
-            <span class="blue-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
+            <span class="blue-icon size16" [inlineSVG]="'/assets/icons/create.svg'"></span>
             Нужно быстро создать?
           </span>
           <ul class="quick-add__list" [class.active]="isShowQuick">
             <li *ngFor="let item of quickMenu" class="quick-add__list_item" [routerLink]="item.path">
-              <span class="grey-icon" [inlineSVG]="item.icon"></span>
+              <span class="grey-icon size16" [inlineSVG]="item.icon"></span>
               {{item.title}}
             </li>
           </ul>

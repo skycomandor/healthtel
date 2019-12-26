@@ -9,15 +9,12 @@
     margin-bottom: 20px
     position: relative
     width: fit-content
-    &.required
-      &:after
-        position: absolute
-        top: 0
-        right: -7px
-        width: 4px
-        height: 4px
-        content: '*'
-        color: $red
+    &.required:after
+      content: '*'
+      position: absolute
+      top: 0
+      right: -10px
+      color: $red
 
 .form-group
   display: flex
@@ -51,14 +48,8 @@ input
   opacity: 0
   z-index: 1
 
-.checked,
-.unchecked
+.radiocheck-item
+  display: inline-block
   position: absolute
   left: 0
   top: 0
-  display: none
-  &.active
-    display: inline-block
-  /deep/ svg
-    width: 16px
-    height: 16px

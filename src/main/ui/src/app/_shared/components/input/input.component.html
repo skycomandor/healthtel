@@ -13,7 +13,7 @@
       [dropSpecialCharacters]="dropSpecialCharacters"
       [(ngModel)]="value">
     <span *ngIf="search" class="search-icon grey-icon" [inlineSVG]="'/assets/icons/search.svg'"></span>
-    <span *ngIf="caret" class="caret" [class.active]="isActive" [inlineSVG]="'/assets/icons/arrow.svg'"></span>
+    <span *ngIf="caret" class="caret" [ngClass]="{'blue-icon scaleY active': isActive}" [inlineSVG]="'/assets/icons/arrow.svg'"></span>
     <span *ngIf="type=='password'"
       class="pass-icon grey-icon"
       [class.blue-icon]="passIcon.includes('show')"
