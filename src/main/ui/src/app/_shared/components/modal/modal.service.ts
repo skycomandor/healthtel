@@ -12,25 +12,16 @@ export class ModalService {
   };
 
   private _modalSequence$$: Subject<any> = new Subject();
-  private deleteModalResult$$: BehaviorSubject<{item: string, id: any}> = new BehaviorSubject(this.result);
 
-    public open(componentObj: { component: any, context?: any }): void {
-        this._modalSequence$$.next(componentObj);
-    }
+  open(componentObj: { component: any, context?: any }): void {
+    this._modalSequence$$.next(componentObj);
+  }
 
-    public close(): void {
-        this._modalSequence$$.next(null);
-    }
+  close(): void {
+    this._modalSequence$$.next(null);
+  }
 
-    public get modalSequence$(): Observable<any> {
-        return this._modalSequence$$.asObservable();
-    }
-
-    public get deleteModalResult$(): Observable<any> {
-        return this.deleteModalResult$$.asObservable();
-    }
-
-    public setDeleteModalResult(result: {item: string, id: any, navigate: boolean}) {
-      this.deleteModalResult$$.next(result);
-    }
+  get modalSequence$(): Observable<any> {
+    return this._modalSequence$$.asObservable();
+  }
 }

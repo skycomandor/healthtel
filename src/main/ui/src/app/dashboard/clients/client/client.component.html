@@ -1,16 +1,16 @@
 <div *ngIf="client" class="client">
   <div class="client__header item-header">
-    <span class="client__header_nav" (click)="navigate()">
-      <span class="grey-icon" [inlineSVG]="'/assets/icons/back.svg'"></span>
+    <span class="client__header_nav" routerLink="/dashboard/clients">
+      <span class="grey-icon icon-hover-blue" [inlineSVG]="'/assets/icons/back.svg'"></span>
       Все пациенты
       <app-loader *ngIf="loading"></app-loader>
     </span>
     <div class="client__header_actions">
-      <span class="hover-green-btn" (click)="openModal('edit')">
+      <span class="hover-green-btn" routerLink="edit-client">
         <span class="green-icon" [inlineSVG]="'/assets/icons/edit.svg'"></span>
         Изменить
       </span>
-      <span class="action-item" (click)="openModal('delete')">
+      <span class="action-item" (click)="openDeleteModal()">
         <span class="grey-icon" [inlineSVG]="'/assets/icons/remove.svg'"></span>
         Удалить
       </span>
@@ -18,7 +18,7 @@
   </div>
   <div class="client__content">
     <div class="client__content_name-area item-name-area">
-      <div class="client-logo item-pic">{{getInitials()}}</div>
+      <div class="client-logo item-pic">{{client.lastname[0]}}{{client.firstname[0]}}</div>
       <div class="client-name item-info">
         <span class="roboto20 bold-text">{{ client.lastname }} {{ client.firstname }} {{ client.patronymic }}</span>
         <span class="regular-text grey-text bold-text">{{ getAge() }}
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="client__content_info">
+    <div class="client__content_info item-content">
       <div class="info-item info-block">
         <span class="regular-text bold-text no-wrap">Телефон:</span>
         <span class="regular-text">{{client.phone || '-'}}</span>

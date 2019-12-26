@@ -1,0 +1,19 @@
+@import '../../../../sass/mixin'
+@import '../../../../sass/variables'
+
+.manage-user
+  @include none-scrollbar
+  padding-left: 20px
+  height: calc(100vh - #{$app-header-height})
+  overflow: auto
+
+form
+  width: 100%
+  max-width: 580px
+  display: grid
+  grid-gap: 16px 12px
+  align-items: center
+  grid-template-columns: repeat(2, 1fr)
+
+.btn-area
+  grid-column: 1 / 3

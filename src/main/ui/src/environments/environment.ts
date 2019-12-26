@@ -2,8 +2,21 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import * as faker from 'faker'
+
 export const environment = {
   production: false,
+  signUpDefault: {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    patronimic: 'test',
+    email: faker.internet.exampleEmail(),
+    zip: faker.address.zipCode(),
+    city: faker.address.city(),
+    street: faker.address.streetAddress(),
+    telephone: faker.phone.phoneNumber(),
+    password: 'mypassword'
+  },
   baseUrl: 'http://18.185.2.217:8080/'
 };
 

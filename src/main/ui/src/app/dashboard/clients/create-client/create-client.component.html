@@ -1,110 +1,110 @@
-<div *ngIf="mode" class="create-client">
-  <div class="create-client__header">
-    <span class="create-client__header_title">
+<div *ngIf="mode" class="create-client manage-item">
+  <div class="create-client__header manage-item-header">
+    <span class="create-client__header_title roboto20 bold-text-500">
       {{mode === 'add' ? 'Создать' : 'Редактировать'}} пациента
     </span>
   </div>
-  <div class="create-client__content">
-    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
-      <div class="form-row">
-        <app-input
-          class="form-item col-2"
-          name="lastName"
-          label="Фамилия"
-          autofocus="true"
-          required="true"
-          [error]="getErrors('lastName')"
-          formControlName="lastName"></app-input>
-        <app-input
-          class="form-item col-2"
-          name="firstName"
-          label="Имя"
-          required="true"
-          [error]="getErrors('firstName')"
-          formControlName="firstName"></app-input>
-      </div>
-      <div class="form-row">
-        <app-input
-          class="form-item col-2"
-          name="patronymic"
-          label="Отчество"
-          required="true"
-          [error]="getErrors('patronymic')"
-          formControlName="patronymic"></app-input>
-        <app-radio-field
-          class="form-item col-2 radio-field"
-          label="."
-          checked="true"
-          [options]="genderOptions"
-          [radioForm]="clientForm"
-          fieldName="gender"></app-radio-field>
-      </div>
-      <div class="form-row">
-        <app-date-picker
-          class="form-item col-3"
-          name="birthDate"
-          label="Дата рождения"
-          required="true"
-          [error]="getErrors('birthDate')"
-          formControlName="birthDate"></app-date-picker>
-        <app-input
-          class="form-item col-3"
-          label="E-Mail"
-          [error]="getErrors('email')"
-          formControlName="email"></app-input>
-        <app-select
-          class="form-item col-3"
-          name="doctor"
-          label="Доктор"
-          caret="true"
-          [options]="users"
-          formControlName="doctor"></app-select>
-      </div>
-      <div class="form-row">
-        <app-input
-          class="form-item col-1"
-          label="Адрес"
-          formControlName="address"></app-input>
-        <app-input
-          class="form-item col-3"
-          label="Дисконт"
-          formControlName="discount"></app-input>
-      </div>
-      <div class="form-row">
-        <div class="col-2 form-item phone-creator">
-          <span class="label">Телефон</span>
-          <div formArrayName="phones" *ngFor="let item of clientForm.get('phones').controls; let i = index;">
-            <div class="phone-creator__wrapper">
-              <app-input
-                class="phone-creator__wrapper_input"
-                name="phone"
-                placeholder="000 000 00 00"
-                mask="(000) 000-00-00"
-                dropSpecialCharacters="false"
-                [error]="getErrors(i, 'phones')"
-                [formControlName]="i"></app-input>
-              <span *ngIf="phones && phones.value.length > 1" class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'" (click)="deletePhone(i)"></span>
-            </div>
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <app-input
+        class="form-item col-2"
+        name="lastName"
+        label="Фамилия"
+        autofocus="true"
+        required="true"
+        [error]="getErrors('lastName')"
+        formControlName="lastName"></app-input>
+      <app-input
+        class="form-item col-2"
+        name="firstName"
+        label="Имя"
+        required="true"
+        [error]="getErrors('firstName')"
+        formControlName="firstName"></app-input>
+    </div>
+    <div class="form-row">
+      <app-input
+        class="form-item col-2"
+        name="patronymic"
+        label="Отчество"
+        required="true"
+        [error]="getErrors('patronymic')"
+        formControlName="patronymic"></app-input>
+      <app-radio-field
+        class="form-item col-2 radio-field"
+        label="."
+        checked="true"
+        [options]="genderOptions"
+        [radioForm]="clientForm"
+        fieldName="gender"></app-radio-field>
+    </div>
+    <div class="form-row">
+      <app-date-picker
+        class="form-item col-3"
+        name="birthDate"
+        label="Дата рождения"
+        required="true"
+        [error]="getErrors('birthDate')"
+        formControlName="birthDate"></app-date-picker>
+      <app-input
+        class="form-item col-3"
+        label="E-Mail"
+        [error]="getErrors('email')"
+        formControlName="email"></app-input>
+      <app-select
+        class="form-item col-3"
+        name="doctor"
+        label="Доктор"
+        caret="true"
+        [options]="users"
+        formControlName="doctor"></app-select>
+    </div>
+    <div class="form-row">
+      <app-input
+        name="address"
+        class="form-item col-1"
+        label="Адрес"
+        formControlName="address"></app-input>
+      <app-input
+        name="discount"
+        class="form-item col-3"
+        label="Дисконт"
+        formControlName="discount"></app-input>
+    </div>
+    <div class="form-row">
+      <div class="col-2 form-item phone-creator">
+        <span class="label">Телефон</span>
+        <div formArrayName="phones" *ngFor="let item of clientForm.get('phones').controls; let i = index;">
+          <div class="phone-creator__wrapper">
+            <app-input
+              class="phone-creator__wrapper_input"
+              name="phone"
+              placeholder="000 000 00 00"
+              mask="(000) 000-00-00"
+              dropSpecialCharacters="false"
+              [error]="getErrors(i, 'phones')"
+              [formControlName]="i"></app-input>
+            <span *ngIf="phones && phones.value.length > 1" class="grey-icon icon-hover-blue" [inlineSVG]="'/assets/icons/close.svg'" (click)="deletePhone(i)"></span>
           </div>
-          <button class="hover-green-btn" type="button" (click)="addPhone()">
-            <span class="green-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
-            Добавить телефон
-          </button>
         </div>
-        <app-textarea
-          class="form-item col-2"
-          name="comment"
-          label="Кoмментарии"
-          formControlName="comment"></app-textarea>
+        <button class="hover-green-btn" type="button" (click)="addPhone()">
+          <span class="green-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
+          Добавить телефон
+        </button>
       </div>
-      <div class="btn-area">
-        <button class="grey-btn" type="button" (click)="close()">
-          <span class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'"></span>
-          Отмена</button>
-        <button class="blue-btn" type="submit">
-          <span class="white-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>
-          {{mode === 'add' ? 'Создать' : 'Редактировать'}}</button>
-      </div>
-    </form>
-  </div>
+      <app-textarea
+        class="form-item col-2"
+        name="comment"
+        label="Кoмментарии"
+        formControlName="comment"></app-textarea>
+    </div>
+    <div class="btn-area manage-item-btns">
+      <button class="grey-btn" type="button" (click)="close()">
+        <span class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'"></span>
+        Отмена</button>
+      <button class="blue-btn" type="submit">
+        <span class="white-icon" [inlineSVG]="mode === 'add' ? '/assets/icons/create.svg' : '/assets/icons/edit.svg'"></span>
+        {{mode === 'add' ? 'Создать' : 'Редактировать'}}</button>
+    </div>
+  </form>
 </div>

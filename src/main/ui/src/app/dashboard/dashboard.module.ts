@@ -8,21 +8,11 @@ import { SharedModule } from '../_shared/shared.module';
 import { MaterialModule } from '../_material/material.module';
 import { InlineSVGModule } from 'ng-inline-svg';
 
-import { DashboardService } from './dashboard.service';
-
 import { DashboardComponent } from './dashboard.component';
-import { DeleteModalComponent } from './delete-modal/delete-modal.component';
-import { EmployeesComponent } from './employees/employees.component';
-import { EmployeeComponent } from './employees/employee/employee.component';
-import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    DeleteModalComponent,
-    EmployeesComponent,
-    EmployeeComponent,
-    CreateEmployeeComponent
+    DashboardComponent
   ],
   imports: [
     DashboardRoutingModule,
@@ -32,13 +22,6 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
     InlineSVGModule,
     MaterialModule,
     SharedModule
-  ],
-  providers: [
-    DashboardService
-  ],
-  entryComponents: [
-    DeleteModalComponent,
-    CreateEmployeeComponent
   ]
 })
 export class DashboardModule { }

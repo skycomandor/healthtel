@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy, isDevMode} from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Subject } from 'rxjs';
 import { DashboardService } from '../../dashboard.service';
-import { ValidationService } from 'src/app/_shared/services/validation.service';
+import { ValidationService } from '../../../_shared/services/validation.service';
 import { getErrors } from '../../../_shared/utils/getErrors.util';
-import { PageConfig } from '../../../_shared/models/common.model';
 import { ApiService } from '../../../_shared/services/api.service';
 import { ActivatedRoute } from '@angular/router';
-import { filter, takeUntil } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { HtTypes } from '../../../_shared/services/ht.types';
 
 @Component({
   selector: 'app-create-client',
@@ -40,7 +40,7 @@ export class CreateClientComponent implements OnInit, OnDestroy {
   ];
 
   private clientId: string;
-  private config: PageConfig = {
+  private config: HtTypes.common.pageConfig = {
     page: 1,
     size: 10,
     totalPage: null
@@ -60,6 +60,17 @@ export class CreateClientComponent implements OnInit, OnDestroy {
     this.clientId = this.route.snapshot.params['clientID']
     if (this.clientId) this.initClient()
     this.getEmploeeys();
+
+    if (isDevMode()) {
+      this.clientForm.patchValue({
+        firstName: environment.signUpDefault.firstName,
+        lastName: environment.signUpDefault.lastName,
+        patronymic: environment.signUpDefault.patronimic,
+        birthDate: '07.10.1980',
+        email: environment.signUpDefault.email,
+        phones: [environment.signUpDefault.telephone]
+      })
+    }
   }
 
   ngOnDestroy() {
@@ -85,7 +96,6 @@ export class CreateClientComponent implements OnInit, OnDestroy {
       address: form.address,
       doctor: form.doctor || null
     }
-    console.log(form)
     this.mode === 'add' ? this.createClient(client) : this.updateClient(client);
   }
 
@@ -124,7 +134,6 @@ export class CreateClientComponent implements OnInit, OnDestroy {
   private initClient() {
     this.mode = 'edit';
     this.api.client.getClient(this.clientId).subscribe(client => {
-      console.log(client)
       client = client.list[0];
       this.clientForm.patchValue({
         firstName: client.firstname,
@@ -151,7 +160,6 @@ export class CreateClientComponent implements OnInit, OnDestroy {
   private getEmploeeys() {
     this.api.user.getAllUsers(this.config).subscribe(users => {
       if (users) {
-        console.log(users)
         users = users.list.filter(user => user.profile === 'doctor');
         users.forEach(user => {
           let nameFirstLetter: string;
@@ -169,22 +177,12 @@ export class CreateClientComponent implements OnInit, OnDestroy {
   }
 
   private createClient(newClient) {
-    this.api.client.createClient(newClient).subscribe(res => {
-      if (res) {
-        this.dashService.setCrudEvent({e: 'create', msg: `Пациент ${newClient.lastname} создан!`});
-        this.close();
-      }
-    });
+    this.api.client.createClient(newClient).subscribe(() => this.close(`Пациент ${newClient.lastname} создан!`));
   }
 
   private updateClient(client) {
     client.id = this.clientId;
-    this.api.client.updateClient(client).subscribe(res => {
-      if (res) {
-        this.dashService.setCrudEvent({e: 'edit', msg: `Пациент ${client.lastname} изменён!`});
-        this.close();
-      }
-    });
+    this.api.client.updateClient(client).subscribe(() => this.close(`Пациент ${client.lastname} изменён!`));
   }
 
   private checkDate(arr) {
@@ -197,8 +195,9 @@ export class CreateClientComponent implements OnInit, OnDestroy {
     return `${arr[0]}.${arr[1]}`;
   }
 
-  private close() {
+  private close(text?: string) {
     this.location.back()
+    if (text) this.dashService.setConfirmMsg({text, color: 'green'})
   }
 
 }

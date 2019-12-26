@@ -67,18 +67,18 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     if (val && !val.hasOwnProperty('date') && (typeof val === 'string' || typeof val === 'object')) {
       val = {
         date: val,
-        view: moment(val).format('DD.MM.YYYY')
+        view: moment(val, 'DD.MM.YYYY').format('DD.MM.YYYY')
       }
     }
     if (val && (!this.selectedDate || !this.selectedDate.mDate.isSame(moment(val.date)))) {
       this.selectedDate = {
-        today: this.isToday(moment(val.date)),
-        selected: this.isSelected(moment(val.date)),
-        mDate: moment(val.date).utc(true)
+        today: this.isToday(moment(val.date, 'DD.MM.YYYY')),
+        selected: this.isSelected(moment(val.date, 'DD.MM.YYYY')),
+        mDate: moment(val.date, 'DD.MM.YYYY').utc(true)
       }
     } else if (!val) { this.selectedDate = null }
     this._value = val;
-    if (val) this.onChange(moment(val.date).utc(true))
+    if (val) this.onChange(moment(val.date, 'DD.MM.YYYY').utc(true).format('DD.MM.YYYY'))
     this.onTouched();
   }
 

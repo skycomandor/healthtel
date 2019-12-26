@@ -1,49 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class DashboardService {
-  private deletedItem = {};
-  private crudEvent = {};
-  private confirmMsg: string = '';
   private mode: {type: string, userID?: string, item: string} = {
     type: '',
     userID: '',
     item: ''
   };
 
-  private deletedItem$$: BehaviorSubject<any> = new BehaviorSubject<any>(this.deletedItem);
-  private confirmMsg$$: BehaviorSubject<string> = new BehaviorSubject<string>(this.confirmMsg);
-  private crudEvent$$: BehaviorSubject<any> = new BehaviorSubject<any>(this.crudEvent);
+  deletedItem$ = new ReplaySubject<{name: string, item: any}>(1);
+  reloadEvent$ = new ReplaySubject<string>(1);
+  private confirmMsg$$ = new ReplaySubject<{text: string, color: 'red' | 'green'}>(1);
   private mode$$: BehaviorSubject<any> = new BehaviorSubject<any>(this.mode);
 
-  constructor() { }
-
-  get deletedItem$() {
-    return this.deletedItem$$.asObservable();
+  setDeletedItem(data: {name: string, item: any}) {
+    this.deletedItem$.next(data);
   }
 
-  setDeletedItem(item) {
-    this.deletedItem = item;
-    this.deletedItem$$.next(this.deletedItem);
+  setReloadEvent(item: string) {
+    return this.reloadEvent$.next(item)
   }
 
   get confirmMsg$() {
     return this.confirmMsg$$.asObservable();
   }
 
-  setConfirmMsg(msg: string) {
-    this.confirmMsg = msg;
-    this.confirmMsg$$.next(this.confirmMsg);
-  }
-
-  get crudEvent$() {
-    return this.crudEvent$$.asObservable();
-  }
-
-  setCrudEvent(event: any) {
-    this.crudEvent = event;
-    this.crudEvent$$.next(this.crudEvent);
+  setConfirmMsg(msg: {text: string, color: 'red' | 'green'}) {
+    this.confirmMsg$$.next(msg);
   }
 
   get mode$() {

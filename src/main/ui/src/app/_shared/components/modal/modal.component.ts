@@ -1,12 +1,4 @@
-import {
-  Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
-  ComponentRef,
-  OnInit, ViewChild,
-  ViewContainerRef,
-  ElementRef
-} from '@angular/core';
+import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef, HostListener, ElementRef } from '@angular/core';
 import { ModalService } from './modal.service';
 
 @Component({
@@ -15,43 +7,35 @@ import { ModalService } from './modal.service';
   styleUrls: ['./modal.component.sass']
 })
 export class ModalComponent implements OnInit {
-  @ViewChild('modalContent', { read: ViewContainerRef })
-  public modal: ViewContainerRef;
+  @ViewChild('modalWrapper') modalWrapper: ElementRef
+  @ViewChild('modalContent', { read: ViewContainerRef }) modal: ViewContainerRef;
 
-  public childComponent: ComponentFactory<any>;
-  public isOpen: boolean = false;
-  public modalContext: ComponentRef<any>;
+  childComponent: ComponentFactory<any>;
+  isOpen: boolean = false;
+  modalContext: ComponentRef<any>;
 
-  public constructor(
-      private _modalService: ModalService,
-      private _componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+  constructor(
+    private modalService: ModalService,
+    private componentFactoryResolver: ComponentFactoryResolver) { }
 
-  public ngOnInit(): void {
-      this._modalService.modalSequence$
-          .subscribe((componentObj: { component: any, context?: any }) => {
-              if (componentObj === null) {
-                  this.close();
-                  return;
-              }
-              this.isOpen = true;
-              this.childComponent = this._componentFactoryResolver
-                  .resolveComponentFactory(componentObj.component);
+  ngOnInit(): void {
+    this.modalService.modalSequence$.subscribe((componentObj: { component: any, context?: any }) => {
+      if (componentObj === null) return this.close()
+      this.isOpen = true;
+      this.childComponent = this.componentFactoryResolver.resolveComponentFactory(componentObj.component);
 
-              this.modalContext = this.modal.createComponent(this.childComponent);
-
-              if (componentObj.context) {
-                  Object.keys(componentObj.context)
-                      .forEach((key: string) =>
-                          this.modalContext.instance[key] = componentObj.context[key]);
-              }
-          });
-
+      this.modalContext = this.modal.createComponent(this.childComponent);
+    });
   }
 
-  public close(): void {
+  close(): void {
     this.modalContext.destroy();
     this.isOpen = false;
+  }
+
+  @HostListener('document:click', ['$event.target'])
+  onclick(targetEl: ElementRef) {
+    if (this.modalWrapper && this.modalWrapper.nativeElement.isEqualNode(targetEl) && this.isOpen) this.close()
   }
 }
 

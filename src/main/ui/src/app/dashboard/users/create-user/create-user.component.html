@@ -1,0 +1,84 @@
+<div class="manage-user manage-item">
+  <div class="manage-user__header manage-item-header">
+    <span class="manage-user__header_title roboto20 bold-text-500">{{mode === 'add' ? 'Создание нового ' : 'Редактирование '}}сотрудника</span>
+  </div>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <app-input
+      class="form-item col-2"
+      name="lastName"
+      label="Фамилия"
+      autofocus="true"
+      required="true"
+      [error]="getErrors('lastName')"
+      formControlName="lastName"></app-input>
+    <app-input
+      class="form-item col-2"
+      name="firstName"
+      label="Имя"
+      required="true"
+      [error]="getErrors('firstName')"
+      formControlName="firstName"></app-input>
+    <app-input
+      class="form-item col-3"
+      name="patronymic"
+      label="Отчество"
+      required="true"
+      [error]="getErrors('patronymic')"
+      formControlName="patronymic"></app-input>
+    <!-- <app-date-picker
+      class="form-item col-3"
+      name="birthDate"
+      label="Дата рождения"
+      required="true"
+      [error]="getErrors('birthDate')"
+      formControlName="birthDate"></app-date-picker> -->
+    <app-radio-field
+      class="form-item col-3 radio-field"
+      checked="true"
+      [options]="genderOptions"
+      [radioForm]="userForm"
+      fieldName="gender"></app-radio-field>
+    <app-input
+      class="form-item col-2"
+      name="phone"
+      label="Телефон"
+      placeholder="000 000 00 00"
+      required="true"
+      mask="(000) 000-00-00"
+      dropSpecialCharacters="false"
+      [error]="getErrors('phone')"
+      formControlName="phone"></app-input>
+    <app-select
+      class="form-item col-2"
+      name="position"
+      label="Должность"
+      caret="true"
+      required="true"
+      [error]="getErrors('position')"
+      [options]="positionsMock"
+      formControlName="position"></app-select>
+    <app-input
+      class="form-item col-2"
+      name="login"
+      label="Логин"
+      required="true"
+      [error]="getErrors('login')"
+      formControlName="login"></app-input>
+    <app-input
+      class="form-item col-2"
+      name="password"
+      type="password"
+      label="Пароль"
+      required="true"
+      [error]="getErrors('password')"
+      formControlName="password"></app-input>
+    <div class="btn-area manage-item-btns">
+      <button class="grey-btn" type="button" (click)="close()">
+        <span class="grey-icon" [inlineSVG]="'/assets/icons/close.svg'"></span>
+        Отмена</button>
+      <button class="blue-btn" type="submit">
+        <span class="white-icon" [inlineSVG]="mode === 'add' ? '/assets/icons/create.svg' : '/assets/icons/edit.svg'"></span>
+        {{mode === 'add' ? 'Создать' : 'Редактировать'}}</button>
+    </div>
+  </form>
+</div>

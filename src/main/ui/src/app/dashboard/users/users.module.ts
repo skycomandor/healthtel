@@ -1,33 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { InlineSVGModule } from 'ng-inline-svg';
 import { SharedModule } from '../../_shared/shared.module';
 import { MaterialModule } from '../../_material/material.module';
 import { DatePickerModule } from '../../_shared/components/date-picker/date-picker.module';
 
-import { ClientsComponent } from './clients.component';
-import { ClientComponent } from './client/client.component';
-import { CreateClientComponent } from './create-client/create-client.component';
+import { UsersComponent } from './users.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [{
   path: '',
   children: [
-    { path: '', component: ClientsComponent },
-    { path: 'add-client', component: CreateClientComponent },
-    { path: ':clientID', component: ClientComponent },
-    { path: ':clientID/edit-client', component: CreateClientComponent },
+    { path: '', component: UsersComponent },
+    { path: 'add-user', component: CreateUserComponent },
+    { path: ':userID', component: UserComponent },
+    { path: ':userID/edit-user', component: CreateUserComponent },
     { path: '**', redirectTo: '' }
   ]
 }]
 
 @NgModule({
   declarations: [
-    ClientsComponent,
-    ClientComponent,
-    CreateClientComponent
+    UsersComponent,
+    UserComponent,
+    CreateUserComponent
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -40,4 +40,5 @@ const routes: Routes = [{
     DatePickerModule
   ]
 })
-export class ClientsModule { }
+
+export class UsersModule { }

@@ -2,11 +2,6 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
-import { ClientsComponent } from './clients/clients.component';
-import { ClientComponent } from './clients/client/client.component';
-import { EmployeesComponent } from './employees/employees.component';
-import { EmployeeComponent } from './employees/employee/employee.component';
-import { CreateClientComponent } from './clients/create-client/create-client.component';
 
 export const dashboardRoutes: Route[] = [
   {
@@ -15,8 +10,7 @@ export const dashboardRoutes: Route[] = [
     children: [
       { path: '', redirectTo: 'clients', pathMatch: 'full' },
       { path: 'clients', loadChildren: './clients/clients.module#ClientsModule' },
-      { path: 'employees', component: EmployeesComponent },
-      { path: 'employees/:id', component: EmployeeComponent },
+      { path: 'users', loadChildren: './users/users.module#UsersModule' },
     ]
   }
 ];

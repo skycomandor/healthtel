@@ -1,0 +1,50 @@
+<div *ngIf="user" class="user">
+  <div class="user__header item-header">
+    <span class="user__header_nav" routerLink="/dashboard/users">
+      <span class="grey-icon icon-hover-blue" [inlineSVG]="'/assets/icons/back.svg'"></span>
+      Все сотрудники
+      <app-loader *ngIf="loading"></app-loader>
+    </span>
+    <div class="user__header_actions">
+      <span class="hover-green-btn" routerLink="edit-user">
+        <span class="green-icon" [inlineSVG]="'/assets/icons/edit.svg'"></span>
+        Изменить
+      </span>
+      <span class="action-item" (click)="openDeleteModal()">
+        <span class="grey-icon" [inlineSVG]="'/assets/icons/remove.svg'"></span>
+        Удалить
+      </span>
+    </div>
+  </div>
+  <div class="user__content">
+    <div class="user__content_name-area item-name-area">
+      <div class="user-logo  item-pic">{{ user.lastname[0] }}{{ user.firstname[0] }}</div>
+      <div class="user-name  item-info">
+        <span class="roboto20 bold-text">{{ user.lastname }} {{ user.firstname }} {{ user.patronymic }}</span>
+        <span class="regular-text grey-text bold-text">{{ user.profile }}</span>
+      </div>
+    </div>
+
+    <div class="user__content_info item-content">
+      <div class="info-item info-block">
+        <span class="regular-text bold-text no-wrap">Телефон:</span>
+        <span class="regular-text">{{user.phone || '-'}}</span>
+        <span class="regular-text bold-text no-wrap">E-Mail:</span>
+        <span class="regular-text">{{user.email || '-'}}</span>
+        <span class="regular-text bold-text no-wrap">Дата рождения</span>
+        <span class="regular-text">
+          <ng-container *ngIf="user.birthDay">{{user.birthDay}}.{{user.birthMonth}}.{{user.birthyear}}</ng-container>
+          <ng-container *ngIf="!user.birthDay">-</ng-container>
+        </span>
+      </div>
+      <div class="info-item info-block">
+        <span class="regular-text bold-text no-wrap">Логин:</span>
+        <span class="regular-text">{{user.login || '-'}}</span>
+        <span class="regular-text bold-text no-wrap">Пароль:</span>
+        <span class="regular-text">{{user.passwordHash || '-'}}</span>
+        <span class="regular-text bold-text no-wrap">Комментарий:</span>
+        <span class="regular-text">{{user.comment || '-'}}</span>
+      </div>
+    </div>
+  </div>
+</div>
