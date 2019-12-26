@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-    
+
       - run:
          name: clean UI
          command: ./gradlew dropUi
@@ -33,9 +33,7 @@ jobs:
 
       - run:
           name: build image
-          command: |
-              su -l root
-              docker build -t skycomandor/healthtel:1.0 .
+          command:  su -l root;  docker build -t skycomandor/healthtel:1.0 .
 
       - run:
           name: push image
