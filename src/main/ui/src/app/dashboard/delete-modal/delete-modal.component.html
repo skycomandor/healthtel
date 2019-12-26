@@ -1,8 +1,12 @@
-<div class="delete-modal">
+<div *ngIf="activeItem" class="delete-modal">
   <span class="delete-modal__title">Удалить?</span>
-  <span class="delete-modal__text">Вы действительно хотите удалить {{deletedItem.lastname}} {{deletedItem.firstname[0]}}.{{deletedItem.patronymic[0]}}.</span>
+  <span class="delete-modal__text">Вы действительно хотите удалить {{activeItem.text}} {{activeItem.item.lastname}} {{activeItem.item.firstname[0]}}.{{activeItem.item.patronymic[0]}}.</span>
   <div class="delete-modal__btns">
-    <button class="decline-btn blue-btn" (click)="close()">Отмена</button>
-    <button class="confirm-btn blue-btn" (click)="confirm()">Удалить</button>
+    <button class="decline-btn blue-btn" (click)="close()">
+      <span class="grey-icon" inlineSVG="/assets/icons/close.svg"></span>
+      Отмена</button>
+    <button class="confirm-btn blue-btn" (click)="confirm()">
+      <span class="white-icon" inlineSVG="/assets/icons/remove.svg"></span>
+      Удалить</button>
   </div>
 </div>

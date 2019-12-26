@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/_shared/components/modal/modal.service';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { DashboardService } from '../../dashboard.service';
 import { ApiService } from 'src/app/_shared/services/api.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.sass']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
   client;
   loading: boolean = true;
 
@@ -21,7 +21,6 @@ export class ClientComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private api: ApiService,
     private modal: ModalService,
     private dashService: DashboardService) { }
@@ -29,49 +28,17 @@ export class ClientComponent implements OnInit {
   ngOnInit() {
     this.clientID = this.route.snapshot.params.clientID
     this.getClient();
-    this.modal.deleteModalResult$.pipe(takeUntil(this.ngUnsubscribe$$)).subscribe(res => {
-      if (res && res.item === 'client' && res.navigate) {
-        this.loading = true;
-        this.api.client.deleteClient(res.id).subscribe(responce => {
-          if (responce) {
-            this.dashService.setConfirmMsg('Пациент удалён!');
-            this.clear();
-          } else {
-            this.dashService.setConfirmMsg('Что-то пошло не так...');
-          }
-          this.modal.close();
-          this.navigate();
-        });
-      }
-    });
-    this.dashService.crudEvent$.pipe(takeUntil(this.ngUnsubscribe$$)).subscribe(event => {
-      if (event && event.msg) {
-        this.loading = true;
-        this.getClient();
-        this.dashService.setConfirmMsg(event.msg);
-      }
-    });
+    this.subscribeToReloadEvent()
   }
 
-  openModal(mode: string) {
-    if (mode === 'delete') {
-      this.modal.open({component: DeleteModalComponent});
-      this.client.role = 'client';
-      this.client.navigate = true;
-      this.dashService.setDeletedItem(this.client);
-      return;
-    }
-    this.router.navigateByUrl(`/dashboard/clients/${this.clientID}/edit-client`)
-    const modalMode = {
-      type: mode,
-      userID: this.client.id,
-      item: 'client'
-    };
-    this.dashService.setMode(modalMode);
+  ngOnDestroy() {
+    this.ngUnsubscribe$$.next()
+    this.ngUnsubscribe$$.complete()
   }
 
-  getInitials(): string {
-    return `${this.client.lastname[0]}${this.client.firstname[0]}`;
+  openDeleteModal() {
+    this.modal.open({component: DeleteModalComponent});
+    this.dashService.setDeletedItem({name: 'deleteClient', item: this.client});
   }
 
   getAge() {
@@ -86,10 +53,6 @@ export class ClientComponent implements OnInit {
     return clientAge;
   }
 
-  navigate() {
-    this.router.navigateByUrl('/dashboard/clients');
-  }
-
   private getClient() {
     this.api.client.getClient(this.clientID).subscribe(client => {
       this.client = client.list[0];
@@ -97,11 +60,10 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  private clear() {
-    this.client = null;
-    this.clientID = null;
-    this.dashService.setDeletedItem(null);
-    this.modal.setDeleteModalResult(null);
+  private subscribeToReloadEvent() {
+    this.dashService.reloadEvent$.pipe(takeUntil(this.ngUnsubscribe$$), filter(e => e && e === 'client')).subscribe(() => {
+      this.dashService.setDeletedItem(null);
+      this.getClient()
+    })
   }
-
 }

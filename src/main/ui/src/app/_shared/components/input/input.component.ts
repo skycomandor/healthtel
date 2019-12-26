@@ -14,35 +14,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class InputComponent implements OnInit, ControlValueAccessor, AfterViewInit {
-  @Input()
-  public name: string = 'name';
-  @Input()
-  public type: string = 'text';
-  @Input()
-  public placeholder: string = '';
-  @Input()
-  public label: string;
-  @Input()
-  public required: boolean;
-  @Input()
-  public error: string;
-  @Input()
-  public mask: string;
-  @Input()
-  public dropSpecialCharacters: boolean;
-  @Input()
-  public autofocus: boolean;
-  @Input()
-  public search: boolean;
-  @Input()
-  public isActive: boolean = false;
-  @Input()
-  public caret: boolean;
-  @Input('value')
-  public _value: any = '';
+  @Input('value') _value: any = '';
+  @Input() name: string;
+  @Input() type: string = 'text';
+  @Input() placeholder: string = '';
+  @Input() label: string;
+  @Input() required: boolean;
+  @Input() error: string;
+  @Input() mask: string;
+  @Input() dropSpecialCharacters: boolean;
+  @Input() autofocus: boolean;
+  @Input() search: boolean;
+  @Input() isActive: boolean = false;
+  @Input() caret: boolean;
 
-  public currentType: string;
-  public passIcon: string;
+  currentType: string;
+  passIcon: string;
 
   private showPass = '/assets/icons/show.svg';
   private hidePass = '/assets/icons/hide.svg';
@@ -70,7 +57,7 @@ export class InputComponent implements OnInit, ControlValueAccessor, AfterViewIn
     }
   }
 
-  public toggleShowPass() {
+  toggleShowPass() {
     if (this.currentType === 'text') {
       this.currentType = 'password';
       this.passIcon = this.hidePass;
@@ -80,13 +67,13 @@ export class InputComponent implements OnInit, ControlValueAccessor, AfterViewIn
     }
   }
 
-  public writeValue(value) {
+  writeValue(value) {
     this.value = value;
   }
-  public registerOnChange(fn) {
+  registerOnChange(fn) {
     this.onChange = fn;
   }
-  public registerOnTouched(fn) {
+  registerOnTouched(fn) {
     this.onTouched = fn;
   }
   private onChange: any = () => {};

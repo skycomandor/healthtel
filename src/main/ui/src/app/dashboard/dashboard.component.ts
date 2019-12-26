@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DashboardService } from './dashboard.service';
-import { ModalService } from '../_shared/components/modal/modal.service';
-import { CreateClientComponent } from './clients/create-client/create-client.component';
-import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
+import { ApiService } from '../_shared/services/api.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,12 +13,12 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
 export class DashboardComponent implements OnInit {
   route: string;
   isShowMsg: boolean;
-  confirmMsg: string = '';
+  confirmMsg: {text: string, color: 'red' | 'green'};
   isShowQuick: boolean;
   isNotification: boolean;
   menuTop = [
     { title: 'Пациенты', icon: '/assets/icons/nav-customers.svg', routerLink: 'clients' },
-    { title: 'Сотрудники', icon: '/assets/icons/nav-profile.svg', routerLink: 'employees' },
+    { title: 'Сотрудники', icon: '/assets/icons/nav-profile.svg', routerLink: 'users' },
   ];
   menuBottom = [
     { title: 'Выйти', icon: '/assets/icons/nav-logout.svg', routerLink: 'login' }
@@ -26,32 +26,32 @@ export class DashboardComponent implements OnInit {
 
   quickMenu = [
     { title: 'Новый пациент', icon: '/assets/icons/nav-customers.svg', path: '/dashboard/clients/add-client' },
-    { title: 'Новый сотрудник', icon: '/assets/icons/nav-profile.svg', path: '/dashboard/clients/add-employee' }
+    { title: 'Новый сотрудник', icon: '/assets/icons/nav-profile.svg', path: '/dashboard/users/add-user' }
   ]
 
   @ViewChild('notification') notification: ElementRef;
   @ViewChild('quick') quick: ElementRef;
 
+  private ngUnsubscribe$$ = new Subject()
+
   constructor(
     private router: Router,
-    private dashServ: DashboardService,
-    private modal: ModalService,
-    private dashService: DashboardService
-  ) { }
+    private api: ApiService,
+    private dashService: DashboardService) { }
 
   ngOnInit() {
+    this.api.error.localErrors$$
+      .pipe(takeUntil(this.ngUnsubscribe$$))
+      .subscribe(e => this.dashService.setConfirmMsg({text: e.message, color: 'red'}))
     this.route = this.router.url;
     this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-        return;
-      }
-      this.route = event.url;
+      if (event instanceof NavigationEnd) this.route = event.url
     });
-    this.dashServ.confirmMsg$.subscribe(msg => {
+    this.dashService.confirmMsg$.pipe(takeUntil(this.ngUnsubscribe$$)).subscribe(msg => {
       this.confirmMsg = msg;
       this.isShowMsg = true;
       setTimeout(() => this.isShowMsg = false, 2000);
-      setTimeout(() => this.confirmMsg = '', 2500);
+      setTimeout(() => this.confirmMsg = null, 2500);
     });
   }
 

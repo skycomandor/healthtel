@@ -61,6 +61,8 @@
     height: 16px
     margin-right: 5px
 
+// ICONS
+
 .grey-icon
   use
     fill: $grey
@@ -77,3 +79,88 @@
 .icon-hover-blue:hover
   use
     fill: $blue
+
+// TEXT
+.regular-text
+  color: $dark
+  font-family: $OpenSans
+  font-size: 13px
+
+.roboto20
+  color: $dark
+  font-family: $Roboto
+  font-size: 20px
+
+.bold-text
+  font-weight: 600
+
+.bold-text-500
+  font-weight: 500
+
+.grey-text
+  color: $grey
+
+.no-wrap
+  white-space: nowrap
+
+// ITEM PAGE STYLE
+.item-header
+  @include item-header
+
+.item-name-area
+  height: 140px
+  padding: 0 $padding-left
+  display: flex
+  align-items: center
+  background-color: #fff
+.item-pic
+  width: 100px
+  height: 100px
+  border-radius: 50%
+  background-color: $light-grey
+  display: flex
+  justify-content: center
+  align-items: center
+  color: $grey
+  font-family: $Roboto
+  font-size: 38px
+  font-weight: 600
+.item-info
+  display: flex
+  flex-direction: column
+  margin-left: 40px
+  height: 50%
+  justify-content: space-evenly
+
+.item-content
+  min-height: calc(100vh - #{$app-header-height} - #{$item-page-nav-height} - 140px)
+  padding: 20px $padding-left
+  box-shadow: $inset-shadow
+  display: grid
+  grid-gap: 100px
+  grid-template-columns: repeat(2, max-content)
+
+.info-block
+  display: grid
+  grid-gap: 14px 30px
+  align-content: flex-start
+  grid-template-columns: min-content 1fr
+
+// MANAGE ITEM PAGE
+.manage-item
+  @include none-scrollbar
+  padding-left: 20px
+  height: calc(100vh - #{$app-header-height})
+  overflow: auto
+
+.manage-item-header
+  height: $manage-item-header-height
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.manage-item-btns
+  margin: 30px 0
+  display: flex
+  > *:not(:last-child)
+    margin-right: 16px

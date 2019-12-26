@@ -66,14 +66,14 @@
             <span class="grey-icon" [inlineSVG]="'/assets/icons/actions.svg'"></span>
             <div *ngIf="isEdit && activeRow == i" class="edit-block_menu">
               <span [routerLink]="'/dashboard/clients/' + element.id + '/edit-client'">Изменить</span>
-              <span (click)="openModal('delete', element)">Удалить</span>
+              <span (click)="openDeleteModal(element)">Удалить</span>
             </div>
           </div>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="'/dashboard/clients/' + row.id"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="'/dashboard/clients/' + row.id"></tr>
     </table>
   </div>
   <app-paginator *ngIf="config.totalPage" [currentPage]="config.page" [totalPage]="config.totalPage" (pageChange)="onPageChange($event)"></app-paginator>

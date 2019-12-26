@@ -1,6 +1,6 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output, HostListener, ElementRef } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, HostListener, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Option } from '../../models/common.model';
+import { HtTypes } from '../../services/ht.types';
 
 @Component({
   selector: 'app-select',
@@ -15,10 +15,10 @@ import { Option } from '../../models/common.model';
   ]
 })
 export class SelectComponent implements OnInit {
-  @Input('value')_value: Option = { title: '', value: '' };
+  @Input('value')_value: HtTypes.common.option = { title: '', value: '' };
   @Input() name: string;
   @Input() label: string;
-  @Input() options: Option[];
+  @Input() options: HtTypes.common.option[];
   @Input() required: boolean;
   @Input() placeholder: string = '';
   @Input() error: string = '';

@@ -23,7 +23,7 @@
         <span class="content__header_user-role">Admin</span>
       </div>
       <div class="content__header_actions">
-        <span [class.active]="confirmMsg&&isShowMsg" [class.alert]="!confirmMsg.includes('!')" class="confirm-msg">{{ confirmMsg }}</span>
+        <span [class.active]="confirmMsg&&isShowMsg" [class.alert]="confirmMsg?.color === 'red'" class="confirm-msg">{{ confirmMsg?.text }}</span>
         <div class="quick-add">
           <span #quick class="quick-add__title" (click)="isShowQuick=!isShowQuick">
             <span class="blue-icon" [inlineSVG]="'/assets/icons/create.svg'"></span>

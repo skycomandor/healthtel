@@ -7,11 +7,8 @@ import { MaterialModule } from '../_material/material.module';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { NgxMaskModule } from 'ngx-mask';
 
-import { ModalService } from './components/modal/modal.service';
-
 import { InputComponent } from './components/input/input.component';
 import { SelectComponent } from './components/select/select.component';
-import { ModalComponent } from './components/modal/modal.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { RadioFieldComponent } from './components/radio-field/radio-field.component';
@@ -22,7 +19,6 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
   declarations: [
     InputComponent,
     SelectComponent,
-    ModalComponent,
     LoaderComponent,
     TextareaComponent,
     RadioFieldComponent,
@@ -40,15 +36,11 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
   exports: [
     InputComponent,
     SelectComponent,
-    ModalComponent,
     LoaderComponent,
     TextareaComponent,
     RadioFieldComponent,
     PaginatorComponent
   ],
-  providers: [
-    ModalService,
-    ValidationService
-  ]
+  providers: [ValidationService]
 })
 export class SharedModule { }

@@ -11,17 +11,20 @@ import { ApiInterseptor } from './_shared/services/api.interseptor';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './_shared/shared.module';
 import { MaterialModule } from './_material/material.module';
-import { AuthModule } from './auth/auth.module';
-import { DashboardModule } from './dashboard/dashboard.module';
 
 import { ApiService } from './_shared/services/api.service';
 import { ModalService } from './_shared/components/modal/modal.service';
 
 import { AppComponent } from './app.component';
+import { ModalComponent } from './_shared/components/modal/modal.component';
+import { DeleteModalComponent } from './dashboard/delete-modal/delete-modal.component';
+import { DashboardService } from './dashboard/dashboard.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ModalComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,
@@ -36,12 +39,14 @@ import { AppComponent } from './app.component';
   providers: [
     ApiService,
     ModalService,
+    DashboardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterseptor,
       multi: true
     }
   ],
+  entryComponents: [DeleteModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

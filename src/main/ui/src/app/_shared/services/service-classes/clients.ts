@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PageConfig } from '../../../_shared/models/common.model';
 import { HtHttp } from './http';
+import { HtTypes } from '../ht.types';
 
 @Injectable()
 export class Client {
 
 constructor(private http: HtHttp) {}
 
-  getAllClients(config: PageConfig): Observable<any> {
+  getAllClients(config: HtTypes.common.pageConfig): Observable<any> {
     let searchData: string = '';
     if (config.search) {
       searchData = `lastname=${config.search}&`;
