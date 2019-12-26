@@ -5,6 +5,7 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -54,9 +55,19 @@ task buildUi {
     }
 }
 
+task installNpm {
+    doLast {
+        exec {
+            workingDir 'src/main/ui'
+            commandLine 'npm', 'i'
+        }
+    }
+}
+
 jar {
-    baseName = 'health-service'
-    version = '0.1.0'
+    enabled true
+    baseName = 'healthtel'
+    version = '1'
 	  manifest {
 		  attributes 'Main-Class' : 'com.health.healthtel.HealthtelApplication'
 	  }
@@ -75,11 +86,6 @@ task dropUi(type: Delete) {
             delete "${dirName}/${f}"
     }
 }
-
-
-
-
-
 
 
 
