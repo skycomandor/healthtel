@@ -113,9 +113,8 @@
     width: 200px!important
     opacity: 1!important
     border-color: $blue!important
-  span
-    /deep/ use
-      fill: $blue
+  span use
+    fill: $blue
 
 @mixin table
   width: 100%
@@ -231,7 +230,7 @@
       margin-right: 15px
       height: 16px
       &:hover
-        /deep/ use
+        use
           transition: all .5s
           fill: $blue
   > div

@@ -13,8 +13,7 @@
             [checked]="i == checkedItem"
             [value]="option.value"
             [formControlName]="fieldName">
-            <span class="unchecked" [class.active]="!inp.checked" [inlineSVG]="'/assets/icons/radiobutton.svg'"></span>
-            <span class="checked" [class.active]="inp.checked" [inlineSVG]="'/assets/icons/radiobutton-checked.svg'"></span>
+          <span class="radiocheck-item size16" [inlineSVG]="inp.checked ? '/assets/icons/radiobutton-checked.svg' : '/assets/icons/radiobutton.svg'"></span>
         </div>
         <label class="radio-btn__content_label" [for]="option.value" *ngIf="option.label">{{ option.label }}</label>
       </div>
