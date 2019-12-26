@@ -27,6 +27,10 @@ jobs:
           command: ./gradlew copyUi
 
       - run:
+          name: build jar
+          command: ./gradlew jar
+
+      - run:
           name: build image
           command: |
           docker build -t skycomandor/healthtel:1.0 .
