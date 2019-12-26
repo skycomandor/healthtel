@@ -26,4 +26,9 @@ jobs:
           name: copy UI
           command: ./gradlew copyUi
 
-
+      - run:
+          name: build image
+          command: |
+          docker build -t skycomandor/healthtel:1.0 .
+          docker login -u "$DOCKER_USER" -p "DOCKER_PASSWORD"
+          docker push skycomandor/healthtel:1.0
