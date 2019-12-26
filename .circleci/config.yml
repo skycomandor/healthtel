@@ -35,5 +35,9 @@ jobs:
           command: |
               su -l root
               docker build -t skycomandor/healthtel:1.0 .
+
+      - run:
+          name: push image
+          command: |
               docker login -u "$DOCKER_USER" -p "DOCKER_PASSWORD"
               docker push skycomandor/healthtel:1.0
