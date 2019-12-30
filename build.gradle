@@ -69,7 +69,7 @@ jar {
     baseName = 'healthtel'
     version = '1'
 	  manifest {
-		  attributes 'Main-Class' : 'com.health.healthtel.HealthtelApplication'
+		  attributes 'Main-Class' : 'com.health.healthtel.HealthtelApplicationKt'
 	  }
 }
 
