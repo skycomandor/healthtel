@@ -40,6 +40,13 @@ jobs:
           command: |
               docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
               docker push skycomandor/healthtel:1.0
+
+      - add_ssh_keys:
+          fingerprints:
+             - 'SHA256:0PkBqft7ictEJ4oiBG+YP9FzqBBxRE8uNwKNz8g4KgQ'
+
+      - run: ssh-keyscan ec2-18-185-2-217.eu-central-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+
       - run:
           name: Deploy
           command: |
