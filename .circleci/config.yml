@@ -43,7 +43,7 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-             - 'SHA256:0PkBqft7ictEJ4oiBG+YP9FzqBBxRE8uNwKNz8g4KgQ'
+              - 'SHA256:0PkBqft7ictEJ4oiBG+YP9FzqBBxRE8uNwKNz8g4KgQ'
 
       - run: ssh-keyscan ec2-18-185-2-217.eu-central-1.compute.amazonaws.com >> ~/.ssh/known_hosts
 
