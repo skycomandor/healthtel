@@ -48,12 +48,15 @@ jobs:
       - run: ssh-keyscan ec2-18-185-2-217.eu-central-1.compute.amazonaws.com >> ~/.ssh/known_hosts
 
       - run:
-          name: DEPLOY
+          name: create file
           command: |
-            echo  ${AWS_KEY} >> file
-            sed 's/ //g' file >> key.pem
-            chmod 400 key.pem
+            echo  ${AWS_KEY} >> file &&
+            sed 's/ //g' file >> key.pem &&
+            chmod 400 key.pem &&
             ssh -t -i key.pem ec2-user@ec2-18-185-2-217.eu-central-1.compute.amazonaws.com "/home/ec2-user/run_container.sh"
 
+       - run:
+          name: deploy
+          command: ssh -t -i key.pem ec2-user@ec2-18-185-2-217.eu-central-1.compute.amazonaws.com "/home/ec2-user/run_container.sh"
 
 
