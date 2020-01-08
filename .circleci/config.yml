@@ -50,9 +50,11 @@ jobs:
       - run:
           name: crate file
           command: |
-            touch key.pem
-            echo $(sed -e 's/[[:space:]]*$//' <<<${AWS_KEY}) >> key.pem
-            chmod 400 key.pem
+            echo $AWS_KEY &&
+            touch key.pem &&
+            echo $(sed -e 's/[[:space:]]*$//' <<<${AWS_KEY}) >> key.pem &&
+            chmod 400 key.pem &&
+
 
       - run:
           name: crate file
