@@ -50,8 +50,7 @@ jobs:
       - run:
           name: crate file
           command: |
-            echo $AWS_KEY >> key.pem
-            sed -i "s/^M//" key.pem
+            echo $TOKEN >> key.pem
             chmod 400 key.pem
 
 
