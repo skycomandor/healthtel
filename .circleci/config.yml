@@ -5,7 +5,7 @@ jobs:
       only:
         - master
     docker:
-        - image: skycomandor/doctor:1.5
+        - image: skycomandor/doctor:1.6
     working_directory: ~/healthtel
     steps:
       - checkout
@@ -48,14 +48,13 @@ jobs:
       - run: ssh-keyscan ec2-18-185-2-217.eu-central-1.compute.amazonaws.com >> ~/.ssh/known_hosts
 
       - run:
-          name: crate file
+          name: prepare file
           command: |
-            echo $TOKEN >> key.pem
-            chmod 400 key.pem
+            chmod 400 /key.pem
 
 
       - run:
           name: deploy
-          command: ssh -vvv -i key.pem ec2-user@ec2-18-185-2-217.eu-central-1.compute.amazonaws.com "/home/ec2-user/run_container.sh"
+          command: ssh -vvv -i /key.pem ec2-user@ec2-18-185-2-217.eu-central-1.compute.amazonaws.com "/home/ec2-user/run_container.sh"
 
 
