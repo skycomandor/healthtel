@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping
 class RestModule {
 
     @GetMapping("/")
-    fun  start() = "index.html"
+    fun  start(): String {
+        print("requested index")
+        return "index.html"
+    }
 
 }
 
