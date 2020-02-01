@@ -13,7 +13,7 @@ jobs:
 
       - run:
          name: clean UI
-         command: ./gradlew dropUi
+         command: ./gradlew clean
 
       - run:
           name: install npm
