@@ -12,7 +12,6 @@ import java.io.IOException;
 
 @Configuration
 public class MyAppWebMvcConfigurer implements WebMvcConfigurer {
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**/*")
