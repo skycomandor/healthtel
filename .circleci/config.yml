@@ -33,7 +33,7 @@ jobs:
 
       - run:
           name: build jar
-          command: ./gradlew build
+          command: ./gradlew bootJar
 
       - run:
           name: build image
