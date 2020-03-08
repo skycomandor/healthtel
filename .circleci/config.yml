@@ -28,6 +28,10 @@ jobs:
           command: ./gradlew copyUi
 
       - run:
+          name: clean jar
+          command: ./gradlew clean
+
+      - run:
           name: build jar
           command: ./gradlew build
 
