@@ -52,7 +52,7 @@ class ClientRest(private val clientRepo: ClientRepository, private val clientSer
                 lastname = lastname,
                 patronymic = patronymic,
                 email = email))
-        
+
         var resultContent = clientService.getClientInfo(id, firstname, lastname, patronymic, email, size, page)
 
         return ResponseDto(resultContent, (clientRepo.count() / size) - 1, true)
