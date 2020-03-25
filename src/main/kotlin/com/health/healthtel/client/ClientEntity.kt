@@ -1,5 +1,6 @@
-package com.health.healthtel.entities
+package com.health.healthtel.client
 
+import com.health.healthtel.entities.Employees
 import org.hibernate.annotations.NotFound
 import org.hibernate.annotations.NotFoundAction
 import javax.persistence.*

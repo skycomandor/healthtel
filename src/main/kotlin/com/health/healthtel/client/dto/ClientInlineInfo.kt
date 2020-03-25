@@ -1,5 +1,6 @@
-package com.health.healthtel.dto.common.clients
+package com.health.healthtel.client.dto
 
+import com.health.healthtel.client.ClientEntity
 import com.health.healthtel.entities.*
 import java.util.*
 

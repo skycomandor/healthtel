@@ -1,15 +1,12 @@
-package com.health.healthtel.rest
+package com.health.healthtel.client
 
 import com.health.healthtel.dto.common.MessageDto
 import com.health.healthtel.dto.common.ResponseDto
-import com.health.healthtel.dto.common.clients.ClientInlineInfo
-import com.health.healthtel.entities.ClientEntity
-import com.health.healthtel.repository.ClientRepository
-import com.health.healthtel.service.ClientService
+import com.health.healthtel.client.dto.ClientInlineInfo
+import com.health.healthtel.client.dto.CreateClientDTO
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*
-import java.sql.ClientInfoStatus
 
 @CrossOrigin
 @RestController
@@ -59,8 +56,9 @@ class ClientRest(private val clientRepo: ClientRepository, private val clientSer
     }
 
    @PostMapping("clients")
-    fun addClient(@RequestBody clientEntity: ClientEntity): MessageDto {
-        clientRepo.save(clientEntity)
+    fun addClient(@RequestBody clientDTO: CreateClientDTO): MessageDto {
+          System.out.println("got this" + clientDTO.toString())
+          clientService.createNewClient(clientDTO)
         return MessageDto(true, "clientEntity was created")
     }
 

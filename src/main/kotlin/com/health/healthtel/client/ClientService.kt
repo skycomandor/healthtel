@@ -1,17 +1,15 @@
-package com.health.healthtel.service
+package com.health.healthtel.client
 
-import com.health.healthtel.dto.common.clients.ClientInlineInfo
-import com.health.healthtel.dto.common.clients.createDto
-import com.health.healthtel.entities.ClientEntity
+import com.health.healthtel.client.dto.ClientInlineInfo
+import com.health.healthtel.client.dto.CreateClientDTO
+import com.health.healthtel.client.dto.createDto
 import org.springframework.stereotype.Service
-import com.health.healthtel.repository.ClientRepository
 import com.health.healthtel.repository.EmployeeRepository
 import com.health.healthtel.repository.PhoneRepository
 import com.health.healthtel.repository.VisitRepository
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.PageRequest
 import org.springframework.transaction.annotation.Transactional
-import java.sql.ClientInfoStatus
 
 @Service
 @Transactional
@@ -47,6 +45,24 @@ class ClientService(private val clientRepository: ClientRepository,
             )
 
         }
+    }
+
+    @Transactional
+    fun createNewClient(dto: CreateClientDTO): Long {
+        val entity = ClientEntity(
+                firstname = dto.firstname,
+                lastname = dto.lastname,
+                patronymic = dto.patronymic,
+                gender = dto.gender,
+                email = dto.email,
+                discount = dto.discount,
+                birthDay = dto.birthDay,
+                birthMonth = dto.birthMonth,
+                birthyear = dto.birthyear,
+                address = dto.address,
+                doctor = employeeRepository.findById(dto.doctor).get()
+                )
+        return clientRepository.save(entity).id!!
     }
 
 }
