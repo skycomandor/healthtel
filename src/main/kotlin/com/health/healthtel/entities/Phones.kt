@@ -9,5 +9,5 @@ data class Phones(
         @Column(name = "client_id")
         val clientId: Long = 0,
         val phone: String = "",
-        val main: Boolean? = null
+        val main: Boolean = false
 )

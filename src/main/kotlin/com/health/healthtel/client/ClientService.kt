@@ -3,6 +3,7 @@ package com.health.healthtel.client
 import com.health.healthtel.client.dto.ClientInlineInfo
 import com.health.healthtel.client.dto.CreateClientDTO
 import com.health.healthtel.client.dto.createDto
+import com.health.healthtel.entities.Phones
 import org.springframework.stereotype.Service
 import com.health.healthtel.repository.EmployeeRepository
 import com.health.healthtel.repository.PhoneRepository
@@ -62,7 +63,9 @@ class ClientService(private val clientRepository: ClientRepository,
                 address = dto.address,
                 doctor = employeeRepository.findById(dto.doctor).get()
                 )
-        return clientRepository.save(entity).id!!
+        val id = clientRepository.save(entity).id!!
+        phoneRepository.saveAll(dto.phones.map { p ->  Phones(clientId = id, phone = p.number, main = p.isMain) })
+        return id
     }
 
 }

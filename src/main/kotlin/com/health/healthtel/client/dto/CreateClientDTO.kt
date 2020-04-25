@@ -11,5 +11,6 @@ data class CreateClientDTO(
         val birthMonth: Int,
         val birthyear: Int,
         val address: String,
-        val doctor: Long
+        val doctor: Long,
+        val phones: List<PhoneDTO>
 )
