@@ -9,5 +9,6 @@ data class Phones(
         @Column(name = "client_id")
         val clientId: Long = 0,
         val phone: String = "",
+        val commentary: String = "",
         val main: Boolean = false
 )

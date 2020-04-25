@@ -64,7 +64,7 @@ class ClientService(private val clientRepository: ClientRepository,
                 doctor = employeeRepository.findById(dto.doctor).get()
                 )
         val id = clientRepository.save(entity).id!!
-        phoneRepository.saveAll(dto.phones.map { p ->  Phones(clientId = id, phone = p.number, main = p.isMain) })
+        phoneRepository.saveAll(dto.phones.map { p ->  Phones(clientId = id, phone = p.number, main = p.isMain, commentary = p.comment) })
         return id
     }
 
