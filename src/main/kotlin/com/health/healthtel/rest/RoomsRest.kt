@@ -41,16 +41,12 @@ class RoomsRest(val roomRepository: RoomRepository){
 
     @PatchMapping("rooms")
     fun updateRooms(@RequestBody roomEntity: RoomEntity): MessageDto {
-        if(roomEntity.id != null) {
             if (roomRepository.findById(roomEntity.id).isPresent) {
                 roomRepository.save(roomEntity)
                 return MessageDto(true, "phone was updated")
             } else {
                 return MessageDto(false, "can not find phone by id " + roomEntity.id)
             }
-        } else {
-            return MessageDto(false, "error during update of phone")
-        }
     }
 
 }
