@@ -3,6 +3,8 @@ package com.health.healthtel
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import springfox.documentation.builders.PathSelectors
 import springfox.documentation.builders.RequestHandlerSelectors
 import springfox.documentation.spi.DocumentationType
@@ -11,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 @EnableSwagger2
 @SpringBootApplication
-class HealthtelApplication
+class HealthtelApplication : WebMvcConfigurer {
 
     fun main(args: Array<String>) {
         runApplication<HealthtelApplication>(*args)
@@ -26,3 +28,11 @@ class HealthtelApplication
                 .build()
     }
 
+
+     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        //enabling swagger-ui part for visual documentation
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+}

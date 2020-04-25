@@ -10,7 +10,6 @@ class RestModule {
 
     @GetMapping("/")
     fun  start(): String {
-        print("requested index")
         return "index.html"
     }
 

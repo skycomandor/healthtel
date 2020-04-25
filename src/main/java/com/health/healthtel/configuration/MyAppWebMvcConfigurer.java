@@ -10,7 +10,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import java.io.IOException;
 
-@Configuration
+//@Configuration
 public class MyAppWebMvcConfigurer
 //        implements WebMvcConfigurer
 {
