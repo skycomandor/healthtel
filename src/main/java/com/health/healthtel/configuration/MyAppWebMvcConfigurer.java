@@ -12,10 +12,10 @@ import java.io.IOException;
 
 @Configuration
 public class MyAppWebMvcConfigurer
-        implements WebMvcConfigurer
+//        implements WebMvcConfigurer
 {
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        registry.addResourceHandler("/**/*")
 //                .addResourceLocations("classpath:/static/")
 //                .resourceChain(true)
@@ -26,5 +26,5 @@ public class MyAppWebMvcConfigurer
 //                        return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/static/index.html");
 //                    }
 //                });
-    }
+//    }
 }
