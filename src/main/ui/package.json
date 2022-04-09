@@ -24,7 +24,7 @@
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
     "faker": "^4.1.0",
-    "moment": "^2.23.0",
+    "moment": "^2.29.2",
     "ng-inline-svg": "^8.3.0",
     "ngx-mask": "^7.3.5",
     "rxjs": "^6.3.3",
